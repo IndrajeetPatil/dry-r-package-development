@@ -1,0 +1,84 @@
+---
+#title: "DRY R Package Development"
+format:
+  revealjs: 
+    theme: simple
+    slide-number: true
+    preview-links: auto
+    footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/)."
+#author: "Indrajeet Patil"
+#affiliation: 
+execute:
+  echo: true
+---
+
+## DRY R Package Development {style="margin-top: 3em;"}
+
+::: {style="margin-top: 2em; margin-bottom: 1em; font-size: 0.75em"}
+
+Indrajeet Patil
+
+Software Engineer
+
+:::
+
+
+::: {style="margin-top: 2em; font-size:0.5em"}
+
+- [Link to slides](https://indrajeetpatil.github.io/dry-r-package-development/)
+- [Github repo](https://github.com/IndrajeetPatil/dry-r-package-development/)
+
+:::
+
+![](media/simpsons.png){.absolute width="400" height="250" right="100" top="100"}
+
+<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
+<!-- > quarto install extension quarto-ext/fontawesome -->
+
+# DRY it up
+
+Why should you not repeat yourself?
+
+## Don't Repeat Yourself (DRY) Principle
+
+# Documentation
+
+- Rmd in man 
+- vignette + README
+- example datasets in data-raw
+
+# Unit testing
+
+- parametrized unit testing
+- testing datasets in helper.R
+
+# Condition messages
+
+- error messages as an output of R functions saved in a list instead of bare strings
+
+# Dependency specification
+
+- a single place to specify NAMESPACE (avoid many importFrom calls)
+
+# Find me at...
+
+{{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets)
+
+{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/)
+
+{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
+
+{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
+
+{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
+
+# Thank You 
+
+And Happy Package Development! 😊
+
+## Session information {.smaller}
+
+```{r}
+sessioninfo::session_info(include_base = TRUE)
+```
+
