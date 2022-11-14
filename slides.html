@@ -410,7 +410,7 @@
 <h1>DRY it up</h1>
 <p>Why should you not repeat yourself?</p>
 </section>
-<section id="dont-repeat-yourself-dry-principle" class="slide level2">
+<section id="dont-repeat-yourself-dry-principle" class="slide level2 smaller">
 <h2>Don’t Repeat Yourself (DRY) Principle</h2>
 </section></section>
 <section>
@@ -418,26 +418,90 @@
 <h1>Documentation</h1>
 <p>How not to repeat yourself while writing documentation.</p>
 </section>
-<section id="what-do-users-consult-to-find-the-needed-information" class="slide level2">
-<h2>What do users consult to find the needed information?</h2>
-<div class="callout callout-tip callout-captioned callout-style-default">
+<section id="what-do-users-read" class="slide level2 smaller">
+<h2>What do users read?</h2>
+<p>What users consult to find needed information will depend on the context.</p>
+<div class="fragment">
+<p><br></p>
+<p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: When users are exploring the package repository.</p>
+<p><br></p>
+<p><i class="fa-solid fa-file-pdf fa-2xl" aria-label="file-pdf"></i> <strong>Manual</strong>: When users are reading CRAN manual or help pages in the IDE.</p>
+<p><br></p>
+<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>: When users are reading CRAN documentation.</p>
+</div>
+<div class="fragment">
+<p><br></p>
+<div class="callout callout-caution callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Sources users most likely to consult</strong></p>
+<p><strong>Possible duplication</strong></p>
 </div>
 <div class="callout-content">
-<p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: Most likely to be useful when users are exploring the package repository.</p>
-<p><i class="fa-solid fa-file-pdf fa-2xl" aria-label="file-pdf"></i> <strong>Manual</strong>:</p>
-<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>:</p>
+<p>This means that sometimes we may need to duplicate the same information in more than one place.</p>
+<p>How can we do so without repeating ourselves?</p>
 </div>
 </div>
 </div>
-<!-- - Rmd in man  -->
-<!-- - vignette + README -->
-<!-- - example datasets in data-raw -->
+</div>
+</section></section>
+<section>
+<section id="data" class="title-slide slide level1 center">
+<h1>Data</h1>
+<p>How not to repeat yourself while creating and re-using example datasets.</p>
+</section>
+<section id="example-data" class="slide level2">
+<h2>Example data</h2>
+<p>Sometimes none of the existing datasets might be usable to illustrate your functions. In such cases, you may create your own example dataset.</p>
+<p>But you don’t need to define it every time you use it. Otherwise, you will need to define it in examples, vignettes, README, etc.</p>
+<p>How can you avoid this repetition?</p>
+</section>
+<section id="shipping-data-in-a-package" class="slide level2 smaller">
+<h2>Shipping data in a package</h2>
+<p>Let’s say your example dataset <code>exdat</code> is defined as:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Saving data</strong></p>
+<p>You can save the script to generate the data in <code>data-raw/exdat.R</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">save</span>(exdat, <span class="at">file =</span> <span class="st">"data/exdat.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This will store data in <code>data/exdat.rdata</code>.</p>
+<p>You can document it in <code>R/data.R</code>.</p>
+</div><div class="column" style="width:40%;">
+<p><strong>Directory structure</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── data-raw
+│   └── exdat.R
+├── data
+│   └── exdat.rdata
+├── R
+│   └── data.R</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Now <code>exdat</code> is defined only once, and can be used in examples, tests, vignettes, README, etc.!</p>
+
+</div>
+<aside><div>
+<p>Don’t forget to set <code>LazyData:true</code> in the <code>DESCRIPTION</code> file.</p>
+</div></aside></section>
+<section id="self-study" class="slide level2">
+<h2>Self-study</h2>
+<p>Examples of R packages that define datasets and use them repeatedly in their documentation.</p>
+<ul>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot"><code>{ggstatsplot}</code></a></p></li>
+<li><p><a href="https://github.com/easystats/effectsize"><code>{effectsize}</code></a></p></li>
+</ul>
 </section></section>
 <section id="unit-testing" class="title-slide slide level1 center">
 <h1>Unit testing</h1>
@@ -478,7 +542,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value

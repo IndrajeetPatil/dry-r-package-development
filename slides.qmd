@@ -39,29 +39,121 @@ Software Engineer
 
 Why should you not repeat yourself?
 
-## Don't Repeat Yourself (DRY) Principle
+## Don't Repeat Yourself (DRY) Principle {.smaller}
 
 # Documentation
 
 How not to repeat yourself while writing documentation.
 
-## What do users consult to find the needed information?
+## What do users read? {.smaller}
 
-:::{.callout-tip collapse=false appearance='default' icon=true}
+What users consult to find needed information will depend on the context.
 
-## Sources users are most likely to consult
+. . .
+
+</br>
 
 {{< fa brands readme size=2xl >}} **README**: When users are exploring the package repository.
 
+</br>
+
 {{< fa file-pdf size=2xl >}} **Manual**: When users are reading CRAN manual or help pages in the IDE.
+
+</br>
 
 {{< fa file size=2xl >}} **Vignettes**: When users are reading CRAN documentation.
 
+. . . 
+
+</br>
+
+:::{.callout-caution}
+
+## Possible duplication
+
+This means that sometimes we may need to duplicate the same information in more than one place. 
+
+How can we do so without repeating ourselves?
+
 :::
 
-<!-- - Rmd in man  -->
-<!-- - vignette + README -->
-<!-- - example datasets in data-raw -->
+# Data
+
+How not to repeat yourself while creating and re-using example datasets.
+
+## Example data
+
+Sometimes none of the existing datasets might be usable to illustrate your functions. In such cases, you may create your own example dataset.
+
+But you don't need to define it every time you use it. Otherwise, you will need to define it in examples, vignettes, README, etc.
+
+How can you avoid this repetition?
+
+## Shipping data in a package {.smaller}
+
+Let's say your example dataset `exdat` is defined as:
+
+```{r}
+exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
+```
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+**Saving data**
+
+You can save the script to generate the data in `data-raw/exdat.R`.
+
+```{r, eval=FALSE}
+exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
+save(exdat, file = "data/exdat.rdata")
+```
+
+This will store data in `data/exdat.rdata`.
+
+You can document it in `R/data.R`.
+
+:::
+
+::: {.column width='40%'}
+
+**Directory structure**
+
+```
+├── DESCRIPTION
+├── R
+├── data-raw
+│   └── exdat.R
+├── data
+│   └── exdat.rdata
+├── R
+│   └── data.R
+```
+
+:::
+
+::::
+
+. . . 
+
+Now `exdat` is defined only once, and can be used in examples, tests, vignettes, README, etc.!
+
+::: aside
+
+Don't forget to set `LazyData:true` in the `DESCRIPTION` file.
+
+:::
+
+## Self-study 
+
+Examples of R packages that define datasets and use them repeatedly in their documentation.
+
+- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot)
+
+- [`{effectsize}`](https://github.com/easystats/effectsize)
 
 # Unit testing
 
