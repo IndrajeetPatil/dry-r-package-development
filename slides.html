@@ -403,7 +403,7 @@
 </div>
 <p><img data-src="media/simpsons.png" class="absolute" style="top: 100px; right: 100px; width: 400px; height: 250px; "></p>
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
-<!-- > quarto install extension quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 </section>
 <section>
 <section id="dry-it-up" class="title-slide slide level1 center">
@@ -420,32 +420,37 @@
 </section>
 <section id="what-do-users-read" class="slide level2 smaller">
 <h2>What do users read?</h2>
-<p>What users consult to find needed information will depend on the context.</p>
+<p>What users consult to find needed information maybe context-dependent.</p>
+<p><br></p>
+<div class="fragment">
+<p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: While exploring the package repository.</p>
+<p><br></p>
+<p><i class="fa-solid fa-file-pdf fa-2xl" aria-label="file-pdf"></i> <strong>Manual</strong>: While reading PDF manual or help pages in the IDE.</p>
+<p><br></p>
+<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>: While reading documentation on CRAN.</p>
+</div>
 <div class="fragment">
 <p><br></p>
-<p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: When users are exploring the package repository.</p>
-<p><br></p>
-<p><i class="fa-solid fa-file-pdf fa-2xl" aria-label="file-pdf"></i> <strong>Manual</strong>: When users are reading CRAN manual or help pages in the IDE.</p>
-<p><br></p>
-<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>: When users are reading CRAN documentation.</p>
+<p>This highlights that including crucial information <strong>only in one place</strong> makes it likely that the users might miss out on it in certain contexts.</p>
 </div>
-<div class="fragment">
-<p><br></p>
-<div class="callout callout-caution callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Possible duplication</strong></p>
-</div>
-<div class="callout-content">
-<p>This means that sometimes we may need to duplicate the same information in more than one place.</p>
-<p>How can we do so without repeating ourselves?</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+<section id="go-forth-and-multiply-without-repetition" class="slide level2">
+<h2>Go forth and multiply (without repetition)</h2>
+<p>Some documentation is important enough to be included in multiple places (e.g.&nbsp;in the function documentation and in a vignette).</p>
+<p>How can this be done while avoiding repetition?</p>
+<p>That is, how can we document something just once but include it in multiple locations?</p>
+</section>
+<section id="child-documents" class="slide level2 smaller">
+<h2>Child documents</h2>
+<p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a></p>
+</section>
+<section id="self-study" class="slide level2 smaller">
+<h2>Self-study</h2>
+<p>Example packages that use this method to repeat docs across manual, README, and vignettes.</p>
+<ul>
+<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments"><code>{pkgdown}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments"><code>{statsExpressions}</code></a></p></li>
+</ul>
 </section></section>
 <section>
 <section id="data" class="title-slide slide level1 center">
@@ -454,8 +459,8 @@
 </section>
 <section id="example-data" class="slide level2">
 <h2>Example data</h2>
-<p>Sometimes none of the existing datasets might be usable to illustrate your functions. In such cases, you may create your own example dataset.</p>
-<p>But you don’t need to define it every time you use it. Otherwise, you will need to define it in examples, vignettes, README, etc.</p>
+<p>If none of the existing datasets are usable to illustrate your functions, you can create your own example dataset.</p>
+<p>But using it in examples, vignettes, README, etc. will require that you define it multiple times.</p>
 <p>How can you avoid this repetition?</p>
 </section>
 <section id="shipping-data-in-a-package" class="slide level2 smaller">
@@ -466,16 +471,16 @@
 </div>
 <div class="fragment">
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:70%;">
 <p><strong>Saving data</strong></p>
-<p>You can save the script to generate the data in <code>data-raw/exdat.R</code>.</p>
+<p>For future reference, save script to create the dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">save</span>(exdat, <span class="at">file =</span> <span class="st">"data/exdat.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This will store data in <code>data/exdat.rdata</code>.</p>
+<p>This stores dataset in <code>data/exdat.rdata</code>.</p>
 <p>You can document it in <code>R/data.R</code>.</p>
-</div><div class="column" style="width:40%;">
+</div><div class="column" style="width:30%;">
 <p><strong>Directory structure</strong></p>
 <pre><code>├── DESCRIPTION
 ├── R
@@ -489,15 +494,25 @@
 </div>
 </div>
 <div class="fragment">
-<p>Now <code>exdat</code> is defined only once, and can be used in examples, tests, vignettes, README, etc.!</p>
-
+<p><code>exdat</code> can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.</p>
+<div class="callout callout-caution callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<aside><div>
-<p>Don’t forget to set <code>LazyData:true</code> in the <code>DESCRIPTION</code> file.</p>
-</div></aside></section>
-<section id="self-study" class="slide level2">
+<p><strong>Don’t forget!</strong></p>
+</div>
+<div class="callout-content">
+<p>If you include datasets, set <code>LazyData: true</code> in the <code>DESCRIPTION</code> file.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-1" class="slide level2 smaller">
 <h2>Self-study</h2>
-<p>Examples of R packages that define datasets and use them repeatedly in their documentation.</p>
+<p>Examples of R packages that define datasets and use them repeatedly.</p>
 <ul>
 <li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot"><code>{ggstatsplot}</code></a></p></li>
 <li><p><a href="https://github.com/easystats/effectsize"><code>{effectsize}</code></a></p></li>

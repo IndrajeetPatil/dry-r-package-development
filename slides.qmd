@@ -33,7 +33,7 @@ Software Engineer
 ![](media/simpsons.png){.absolute width="400" height="250" right="100" top="100"}
 
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
-<!-- > quarto install extension quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 
 # DRY it up
 
@@ -47,35 +47,47 @@ How not to repeat yourself while writing documentation.
 
 ## What do users read? {.smaller}
 
-What users consult to find needed information will depend on the context.
+What users consult to find needed information maybe context-dependent.
+
+</br>
+
+. . .
+
+{{< fa brands readme size=2xl >}} **README**: While exploring the package repository.
+
+</br>
+
+{{< fa file-pdf size=2xl >}} **Manual**: While reading PDF manual or help pages in the IDE.
+
+</br>
+
+{{< fa file size=2xl >}} **Vignettes**: While reading documentation on CRAN.
 
 . . .
 
 </br>
 
-{{< fa brands readme size=2xl >}} **README**: When users are exploring the package repository.
+This highlights that including crucial information **only in one place** makes it likely that the users might miss out on it in certain contexts.
 
-</br>
+## Go forth and multiply (without repetition)
 
-{{< fa file-pdf size=2xl >}} **Manual**: When users are reading CRAN manual or help pages in the IDE.
+Some documentation is important enough to be included in multiple places (e.g. in the function documentation and in a vignette).
 
-</br>
+How can this be done while avoiding repetition?
 
-{{< fa file size=2xl >}} **Vignettes**: When users are reading CRAN documentation.
+That is, how can we document something just once but include it in multiple locations?
 
-. . . 
+## Child documents {.smaller}
 
-</br>
+[child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html)
 
-:::{.callout-caution}
+## Self-study {.smaller}
 
-## Possible duplication
+Example packages that use this method to repeat docs across manual, README, and vignettes.
 
-This means that sometimes we may need to duplicate the same information in more than one place. 
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments)
 
-How can we do so without repeating ourselves?
-
-:::
+- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments)
 
 # Data
 
@@ -83,9 +95,9 @@ How not to repeat yourself while creating and re-using example datasets.
 
 ## Example data
 
-Sometimes none of the existing datasets might be usable to illustrate your functions. In such cases, you may create your own example dataset.
+If none of the existing datasets are usable to illustrate your functions, you can create your own example dataset.
 
-But you don't need to define it every time you use it. Otherwise, you will need to define it in examples, vignettes, README, etc.
+But using it in examples, vignettes, README, etc. will require that you define it multiple times.
 
 How can you avoid this repetition?
 
@@ -101,24 +113,24 @@ exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
 
 :::: {.columns}
 
-::: {.column width='60%'}
+::: {.column width='70%'}
 
 **Saving data**
 
-You can save the script to generate the data in `data-raw/exdat.R`.
+For future reference, save script to create the dataset.
 
 ```{r, eval=FALSE}
 exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
 save(exdat, file = "data/exdat.rdata")
 ```
 
-This will store data in `data/exdat.rdata`.
+This stores dataset in `data/exdat.rdata`.
 
 You can document it in `R/data.R`.
 
 :::
 
-::: {.column width='40%'}
+::: {.column width='30%'}
 
 **Directory structure**
 
@@ -139,17 +151,19 @@ You can document it in `R/data.R`.
 
 . . . 
 
-Now `exdat` is defined only once, and can be used in examples, tests, vignettes, README, etc.!
+`exdat` can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.
 
-::: aside
+:::{.callout-caution}
 
-Don't forget to set `LazyData:true` in the `DESCRIPTION` file.
+## Don't forget!
+
+If you include datasets, set `LazyData: true` in the `DESCRIPTION` file.
 
 :::
 
-## Self-study 
+## Self-study {.smaller}
 
-Examples of R packages that define datasets and use them repeatedly in their documentation.
+Examples of R packages that define datasets and use them repeatedly.
 
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot)
 
