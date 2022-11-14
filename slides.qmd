@@ -43,9 +43,25 @@ Why should you not repeat yourself?
 
 # Documentation
 
-- Rmd in man 
-- vignette + README
-- example datasets in data-raw
+How not to repeat yourself while writing documentation.
+
+## What do users consult to find the needed information?
+
+:::{.callout-tip collapse=false appearance='default' icon=true}
+
+## Sources users are most likely to consult
+
+{{< fa brands readme size=2xl >}} **README**: When users are exploring the package repository.
+
+{{< fa file-pdf size=2xl >}} **Manual**: When users are reading CRAN manual or help pages in the IDE.
+
+{{< fa file size=2xl >}} **Vignettes**: When users are reading CRAN documentation.
+
+:::
+
+<!-- - Rmd in man  -->
+<!-- - vignette + README -->
+<!-- - example datasets in data-raw -->
 
 # Unit testing
 
