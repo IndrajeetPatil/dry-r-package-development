@@ -63,19 +63,36 @@ What users consult to find needed information maybe context-dependent.
 
 {{< fa file size=2xl >}} **Vignettes**: While reading documentation on CRAN.
 
-. . .
-
 </br>
 
-This highlights that including crucial information **only in one place** makes it likely that the users might miss out on it in certain contexts.
+. . .
 
-## Go forth and multiply (without repetition)
+Thus, including crucial information **only in one place** makes it likely that the users might miss out on it in certain contexts.
+
+## Go forth and multiply (without repetition) {.smaller}
+
+:::: {.columns}
+
+::: {.column width='40%'}
 
 Some documentation is important enough to be included in multiple places (e.g. in the function documentation and in a vignette).
 
-How can this be done while avoiding repetition?
+</br>
 
-That is, how can we document something just once but include it across multiple locations?
+> How can we document something just *once* but include it in *multiple* locations?
+
+:::
+
+::: {.column width='60%'}
+
+```{r, echo=FALSE, out.width="100%"}
+knitr::include_graphics("media/spiderman.jpeg")
+```
+
+:::
+
+::::
+
 
 ## Child documents {.smaller}
 
