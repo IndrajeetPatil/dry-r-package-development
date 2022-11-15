@@ -12,25 +12,23 @@ execute:
   echo: true
 ---
 
-## DRY R Package Development {style="margin-top: 3em;"}
+## DRY Package Development in R {style="text-align: center;"}
 
-::: {style="margin-top: 2em; margin-bottom: 1em; font-size: 0.75em"}
+::: {style="text-align: center;"}
 
-Indrajeet Patil
-
-Software Engineer
+[Indrajeet Patil](https://sites.google.com/site/indrajeetspatilmorality/)
 
 :::
 
 
-::: {style="margin-top: 2em; font-size:0.5em"}
+<!-- ::: {style="margin-top: 10em; font-size:0.75em"} -->
 
-- [Link to slides](https://indrajeetpatil.github.io/dry-r-package-development/)
-- [Github repo](https://github.com/IndrajeetPatil/dry-r-package-development/)
+<!-- - [Link to slides](https://indrajeetpatil.github.io/dry-r-package-development/) -->
+<!-- - [Github repo](https://github.com/IndrajeetPatil/dry-r-package-development/) -->
 
-:::
+<!-- ::: -->
 
-![](media/simpsons.png){.absolute width="400" height="250" right="100" top="100"}
+![](media/simpsons.png){.absolute width="900" height="500" left="70" top="155"}
 
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
 <!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
@@ -92,7 +90,6 @@ knitr::include_graphics("media/spiderman.jpeg")
 :::
 
 ::::
-
 
 ## Child documents {.smaller}
 
@@ -190,7 +187,7 @@ Examples of R packages that define datasets and use them repeatedly.
 
 How not to repeat yourself while writing unit tests.
 
-## Repetition in unit testing {.smaller}
+## Repeated test patterns {.smaller}
 
 A **unit test** records the code to describe expected output.
 
@@ -206,7 +203,7 @@ A **unit test** records the code to describe expected output.
 
 ::: {.column width='40%'}
 
-Unit testing involves checking function output with a **range of inputs**, and this can involve recycling a test pattern. 
+Unit testing involves checking function output with a **range of inputs**, and this can involve recycling a test pattern.
 
 :::{.callout-caution}
 
@@ -299,15 +296,78 @@ patrick::with_parameters_test_that(
 
 ::::
 
-## Test datasets
+## Repeated usage of testing datasets {.smaller}
 
 # Condition messages
 
 - error messages as an output of R functions saved in a list instead of bare strings
 
-# Dependency specification
+# Import specification
 
-- a single place to specify NAMESPACE (avoid many importFrom calls)
+How not to repeat yourself while importing external package functions.
+
+## Imports {.smaller}
+
+Instead of using `::` to access external package function (`rlang::warn()`), you can specify imports explicitly via roxygen directive `#' @importFrom`.
+
+But if you are importing some functions multiple times, you should avoid specifying the import multiple times, and instead collect all imports in a single file.
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+Import statements scattered across files:
+
+```{.r}
+# file-1
+#' @importFrom rlang warn
+...
+
+# file-2
+#' @importFrom rlang warn
+...
+
+#' @importFrom purrr pluck
+...
+
+# file-3
+#' @importFrom rlang warn seq2
+...
+
+# file-4, file-5, etc.
+...
+```
+
+:::
+
+::: {.column width='50%'}
+
+In `{pkgname}-package.R` file:
+
+```{.r}
+## {pkgname} namespace: start
+#'
+#' @importFrom rlang warn seq2
+#' @importFrom purrr pluck
+#'
+## {pkgname} namespace: end
+NULL
+```
+
+:::
+
+::::
+
+
+## Self-study {.smaller}
+
+Examples of R packages that list the `NAMESPACE` imports in a single file this way.
+
+- [`{usethis}`](https://github.com/r-lib/usethis/blob/main/R/usethis-package.R)
+
+- [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R)
 
 # Find me at...
 
