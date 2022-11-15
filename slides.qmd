@@ -75,7 +75,7 @@ Some documentation is important enough to be included in multiple places (e.g. i
 
 How can this be done while avoiding repetition?
 
-That is, how can we document something just once but include it in multiple locations?
+That is, how can we document something just once but include it across multiple locations?
 
 ## Child documents {.smaller}
 
@@ -171,8 +171,118 @@ Examples of R packages that define datasets and use them repeatedly.
 
 # Unit testing
 
-- parametrized unit testing
-- testing datasets in helper.R
+How not to repeat yourself while writing unit tests.
+
+## Repetition in unit testing {.smaller}
+
+A **unit test** records the code to describe expected output.
+
+</br>
+
+(actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
+
+</br>
+
+. . .
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+Unit testing involves checking function output with a **range of inputs**, and this can involve recycling a test pattern. 
+
+:::{.callout-caution}
+
+## Not DRY
+
+But such recycling violates the DRY principle. How can we avoid this?
+
+:::
+
+:::
+
+::: {.column width='60%'}
+
+```{.r}
+# Function to test
+multiplier <- function(x, y) {
+  x * y
+}
+
+# Tests
+test_that(
+  desc = "multiplier works as expected",
+  code = {
+    expect_identical(multiplier(-1, 3),  -3)
+    expect_identical(multiplier(0,  3.4), 0)
+    expect_identical(multiplier(NA, 4),   NA_real_)
+    expect_identical(multiplier(-2, -2),  4)
+    expect_identical(multiplier(3,  3),   9)
+  }
+)
+```
+
+:::
+
+::::
+
+## Parametrized unit testing {.smaller}
+
+To avoid such repetition, we can run parameterized tests. [`{patrick}`](https://github.com/google/patrick), an extension package of [`{testthat}`](https://testthat.r-lib.org/), provides a way to write parameterized unit tests.
+
+</br>
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='52%'}
+
+**Repeated test pattern**
+
+`expect_identical()` used repeatedly.
+
+```{.r}
+test_that(
+  desc = "multiplier works as expected",
+  code = {
+    expect_identical(multiplier(-1, 3),  -3)
+    expect_identical(multiplier(0,  3.4), 0)
+    expect_identical(multiplier(NA, 4),   NA_real_)
+    expect_identical(multiplier(-2, -2),  4)
+    expect_identical(multiplier(3,  3),   9)
+  }
+)
+```
+
+:::
+
+::: {.column width='48%'}
+
+**DRY testing**
+
+`expect_identical()` used once.
+
+```{.r}
+patrick::with_parameters_test_that(
+  desc_stub = "multiplier works as expected",
+  code = expect_identical(multiplier(x, y), res),
+  .cases = tibble::tribble(
+    ~x,  ~y,  ~res,
+    -1,  3,   -3,
+    0,   3.4,  0,
+    NA,  4,    NA_real_,
+    -2,  -2,   4,
+    3,   3,    9
+  )
+)
+```
+
+:::
+
+::::
+
+## Test datasets
 
 # Condition messages
 

@@ -438,7 +438,7 @@
 <h2>Go forth and multiply (without repetition)</h2>
 <p>Some documentation is important enough to be included in multiple places (e.g.&nbsp;in the function documentation and in a vignette).</p>
 <p>How can this be done while avoiding repetition?</p>
-<p>That is, how can we document something just once but include it in multiple locations?</p>
+<p>That is, how can we document something just once but include it across multiple locations?</p>
 </section>
 <section id="child-documents" class="slide level2 smaller">
 <h2>Child documents</h2>
@@ -518,14 +518,96 @@
 <li><p><a href="https://github.com/easystats/effectsize"><code>{effectsize}</code></a></p></li>
 </ul>
 </section></section>
+<section>
 <section id="unit-testing" class="title-slide slide level1 center">
 <h1>Unit testing</h1>
-<ul>
-<li>parametrized unit testing</li>
-<li>testing datasets in helper.R</li>
-</ul>
+<p>How not to repeat yourself while writing unit tests.</p>
 </section>
-
+<section id="repetition-in-unit-testing" class="slide level2 smaller">
+<h2>Repetition in unit testing</h2>
+<p>A <strong>unit test</strong> records the code to describe expected output.</p>
+<p><br></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-code fa-2xl" aria-label="file-code"></i> (expected)</p>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Unit testing involves checking function output with a <strong>range of inputs</strong>, and this can involve recycling a test pattern.</p>
+<div class="callout callout-caution callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Not DRY</strong></p>
+</div>
+<div class="callout-content">
+<p>But such recycling violates the DRY principle. How can we avoid this?</p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Function to test</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  x <span class="sc">*</span> y</span>
+<span id="cb4-4"><a href="#cb4-4"></a>}</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Tests</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="fu">test_that</span>(</span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="at">code =</span> {</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb4-13"><a href="#cb4-13"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb4-14"><a href="#cb4-14"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb4-15"><a href="#cb4-15"></a>  }</span>
+<span id="cb4-16"><a href="#cb4-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="parametrized-unit-testing" class="slide level2 smaller">
+<h2>Parametrized unit testing</h2>
+<p>To avoid such repetition, we can run parameterized tests. <a href="https://github.com/google/patrick"><code>{patrick}</code></a>, an extension package of <a href="https://testthat.r-lib.org/"><code>{testthat}</code></a>, provides a way to write parameterized unit tests.</p>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:52%;">
+<p><strong>Repeated test pattern</strong></p>
+<p><code>expect_identical()</code> used repeatedly.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">test_that</span>(</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">code =</span> {</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb5-9"><a href="#cb5-9"></a>  }</span>
+<span id="cb5-10"><a href="#cb5-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:48%;">
+<p><strong>DRY testing</strong></p>
+<p><code>expect_identical()</code> used once.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="sc">~</span>x,  <span class="sc">~</span>y,  <span class="sc">~</span>res,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">3</span>,   <span class="sc">-</span><span class="dv">3</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="dv">0</span>,   <span class="fl">3.4</span>,  <span class="dv">0</span>,</span>
+<span id="cb6-8"><a href="#cb6-8"></a>    <span class="cn">NA</span>,  <span class="dv">4</span>,    <span class="cn">NA_real_</span>,</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="sc">-</span><span class="dv">2</span>,  <span class="sc">-</span><span class="dv">2</span>,   <span class="dv">4</span>,</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  )</span>
+<span id="cb6-12"><a href="#cb6-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="test-datasets" class="slide level2">
+<h2>Test datasets</h2>
+</section></section>
 <section id="condition-messages" class="title-slide slide level1 center">
 <h1>Condition messages</h1>
 <ul>
@@ -557,7 +639,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
@@ -569,7 +651,7 @@
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Berlin
- date     2022-11-14
+ date     2022-11-15
  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
