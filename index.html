@@ -389,19 +389,16 @@
     <div class="slides">
 
 
-<section id="dry-r-package-development" class="slide level2" style="margin-top: 3em;">
-<h2>DRY R Package Development</h2>
-<div style="margin-top: 2em; margin-bottom: 1em; font-size: 0.75em">
-<p>Indrajeet Patil</p>
-<p>Software Engineer</p>
+<section id="dry-package-development-in-r" class="slide level2" style="text-align: center;">
+<h2>DRY Package Development in R</h2>
+<div style="text-align: center;">
+<p><a href="https://sites.google.com/site/indrajeetspatilmorality/">Indrajeet Patil</a></p>
 </div>
-<div style="margin-top: 2em; font-size:0.5em">
-<ul>
-<li><a href="https://indrajeetpatil.github.io/dry-r-package-development/">Link to slides</a></li>
-<li><a href="https://github.com/IndrajeetPatil/dry-r-package-development/">Github repo</a></li>
-</ul>
-</div>
-<p><img data-src="media/simpsons.png" class="absolute" style="top: 100px; right: 100px; width: 400px; height: 250px; "></p>
+<!-- ::: {style="margin-top: 10em; font-size:0.75em"} -->
+<!-- - [Link to slides](https://indrajeetpatil.github.io/dry-r-package-development/) -->
+<!-- - [Github repo](https://github.com/IndrajeetPatil/dry-r-package-development/) -->
+<!-- ::: -->
+<p><img data-src="media/simpsons.png" class="absolute" style="top: 155px; left: 70px; width: 900px; height: 500px; "></p>
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
 <!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 </section>
@@ -452,9 +449,14 @@
 </div>
 </div>
 </section>
-<section id="child-documents" class="slide level2 smaller">
+<section id="child-documents" class="slide level2">
 <h2>Child documents</h2>
-<p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a></p>
+<p>You can stitch together an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
+<p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-5x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp;&nbsp; <i class="fa-soliud fa-equals fa-5x" aria-label="equals"></i> &nbsp;&nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
+<p>(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
+<div class="fragment">
+<p>Thus, the information to repeat can be stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
+</div>
 </section>
 <section id="self-study" class="slide level2 smaller">
 <h2>Self-study</h2>
@@ -535,8 +537,8 @@
 <h1>Unit testing</h1>
 <p>How not to repeat yourself while writing unit tests.</p>
 </section>
-<section id="repetition-in-unit-testing" class="slide level2 smaller">
-<h2>Repetition in unit testing</h2>
+<section id="repeated-test-patterns" class="slide level2 smaller">
+<h2>Repeated test patterns</h2>
 <p>A <strong>unit test</strong> records the code to describe expected output.</p>
 <p><br></p>
 <p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-code fa-2xl" aria-label="file-code"></i> (expected)</p>
@@ -617,8 +619,8 @@
 </div>
 </div>
 </section>
-<section id="test-datasets" class="slide level2">
-<h2>Test datasets</h2>
+<section id="repeated-usage-of-testing-datasets" class="slide level2 smaller">
+<h2>Repeated usage of testing datasets</h2>
 </section></section>
 <section id="condition-messages" class="title-slide slide level1 center">
 <h1>Condition messages</h1>
@@ -627,13 +629,57 @@
 </ul>
 </section>
 
-<section id="dependency-specification" class="title-slide slide level1 center">
-<h1>Dependency specification</h1>
-<ul>
-<li>a single place to specify NAMESPACE (avoid many importFrom calls)</li>
-</ul>
+<section>
+<section id="import-specification" class="title-slide slide level1 center">
+<h1>Import specification</h1>
+<p>How not to repeat yourself while importing external package functions.</p>
 </section>
-
+<section id="imports" class="slide level2 smaller">
+<h2>Imports</h2>
+<p>Instead of using <code>::</code> to access external package function (<code>rlang::warn()</code>), you can specify imports explicitly via roxygen directive <code>#' @importFrom</code>.</p>
+<p>But if you are importing some functions multiple times, you should avoid specifying the import multiple times, and instead collect all imports in a single file.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Import statements scattered across files:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># file-1</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>...</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># file-2</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>...</span>
+<span id="cb7-8"><a href="#cb7-8"></a></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>...</span>
+<span id="cb7-11"><a href="#cb7-11"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co"># file-3</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>...</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<p>In <code>{pkgname}-package.R</code> file:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#'</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#'</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-2" class="slide level2 smaller">
+<h2>Self-study</h2>
+<p>Examples of R packages that list the <code>NAMESPACE</code> imports in a single file this way.</p>
+<ul>
+<li><p><a href="https://github.com/r-lib/usethis/blob/main/R/usethis-package.R"><code>{usethis}</code></a></p></li>
+<li><p><a href="https://github.com/r-lib/lintr/blob/main/R/lintr-package.R"><code>{lintr}</code></a></p></li>
+</ul>
+</section></section>
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
 <p><i class="fa-brands fa-twitter" aria-label="twitter"></i> <a href="http://twitter.com/patilindrajeets">Twitter</a></p>
@@ -651,7 +697,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
@@ -663,7 +709,7 @@
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Berlin
- date     2022-11-15
+ date     2022-11-16
  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────

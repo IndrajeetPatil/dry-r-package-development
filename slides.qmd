@@ -91,9 +91,17 @@ knitr::include_graphics("media/spiderman.jpeg")
 
 ::::
 
-## Child documents {.smaller}
+## Child documents
 
-[child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html)
+You can stitch together an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
+
+&nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa soliud equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
+
+(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)
+
+. . .
+
+Thus, the information to repeat can be stored *once* in child documents and reused *multiple* times across parents.
 
 ## Self-study {.smaller}
 

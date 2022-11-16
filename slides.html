@@ -449,9 +449,14 @@
 </div>
 </div>
 </section>
-<section id="child-documents" class="slide level2 smaller">
+<section id="child-documents" class="slide level2">
 <h2>Child documents</h2>
-<p><a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a></p>
+<p>You can stitch together an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
+<p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-5x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp;&nbsp; <i class="fa-soliud fa-equals fa-5x" aria-label="equals"></i> &nbsp;&nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
+<p>(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
+<div class="fragment">
+<p>Thus, the information to repeat can be stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
+</div>
 </section>
 <section id="self-study" class="slide level2 smaller">
 <h2>Self-study</h2>
@@ -631,7 +636,7 @@
 </section>
 <section id="imports" class="slide level2 smaller">
 <h2>Imports</h2>
-<p>Instead of using <code>::</code> to access package function (<code>rlang::warn</code>), you can specify imports explicitly via roxygen directive <code>#' @importFrom</code>.</p>
+<p>Instead of using <code>::</code> to access external package function (<code>rlang::warn()</code>), you can specify imports explicitly via roxygen directive <code>#' @importFrom</code>.</p>
 <p>But if you are importing some functions multiple times, you should avoid specifying the import multiple times, and instead collect all imports in a single file.</p>
 <div class="fragment">
 <div class="columns">
@@ -704,7 +709,7 @@
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Berlin
- date     2022-11-15
+ date     2022-11-16
  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
