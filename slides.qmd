@@ -93,7 +93,7 @@ knitr::include_graphics("media/spiderman.jpeg")
 
 ## Child documents
 
-You can stitch together an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
+You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
 
 &nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa soliud equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
 
@@ -102,6 +102,137 @@ You can stitch together an R Markdown document from smaller [child documents](ht
 . . .
 
 Thus, the information to repeat can be stored *once* in child documents and reused *multiple* times across parents.
+
+## Storing child documents in package {.smaller}
+
+Stratagem: You can store child documents in the manual directory and reuse them.
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+**Child documents**
+
+```
+├── DESCRIPTION
+├── man
+│   └── rmd-children
+│       └── doc1.Rmd
+│       └── ...
+```
+
+:::
+
+::: {.column width='70%'}
+
+`man/rmd-children/doc1.Rmd` example.
+
+````{verbatim}
+This is some crucial information to be repeated across documentation.
+
+```{r}
+1 + 1
+```
+
+````
+
+:::
+
+::::
+
+:::{.callout-tip}
+
+## Tips
+
+- You can include as many child documents as you want.
+- The child document is just like any `.Rmd` file and can include everything that any other `.Rmd` file can include.
+- You can choose a different name for the folder containing child documents.
+- Make sure to include `Roxygen: list(markdown = TRUE)` field in the `DESCRIPTION` file.
+
+:::
+
+## Using child documents in package {.smaller}
+
+You can now insert contents of these child documents in the package documentation anywhere and as many as times as you want.
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+**Vignette**
+
+```
+├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── ...
+│   └── web_only
+│       └── vignette2.Rmd
+│       └── ...
+```
+
+:::
+
+::: {.column width='70%'}
+
+**Example** (`vignettes/vignette1.Rmd`)
+
+````{verbatim}
+---
+output: rmarkdown::html_vignette
+---
+
+Some content.
+
+```{r, child="../man/rmd-children/doc1.Rmd"}
+```
+
+````
+
+:::
+
+::::
+
+. . .
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+**README**
+
+```
+├── DESCRIPTION
+├── README.Rmd
+```
+
+:::
+
+::: {.column width='70%'}
+
+**Example** (`README.Rmd`)
+
+````{verbatim}
+---
+output: github_document
+---
+
+Some content.
+
+```{r, child = "man/rmd-children/doc1.Rmd"}
+```
+
+````
+
+:::
+
+::::
+
+. . . 
+
+**etc.**
 
 ## Self-study {.smaller}
 
@@ -368,7 +499,6 @@ NULL
 
 ::::
 
-
 ## Self-study {.smaller}
 
 Examples of R packages that list the `NAMESPACE` imports in a single file this way.
@@ -376,6 +506,10 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 - [`{usethis}`](https://github.com/r-lib/usethis/blob/main/R/usethis-package.R)
 
 - [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R)
+
+# Conclusion
+
+You can use these techniques to avoid repetition while developing R packages, which should make the development workflow faster, more maintainable, and less error-prone.
 
 # Find me at...
 
@@ -391,7 +525,7 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 
 # Thank You 
 
-And Happy Package Development! 😊
+And Happy (DRY) Package Development! 😊
 
 ## Session information {.smaller}
 
