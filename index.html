@@ -451,19 +451,218 @@
 </section>
 <section id="child-documents" class="slide level2">
 <h2>Child documents</h2>
-<p>You can stitch together an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
+<p>You can stitch an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
 <p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-5x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp;&nbsp; <i class="fa-soliud fa-equals fa-5x" aria-label="equals"></i> &nbsp;&nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
 <p>(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
 <div class="fragment">
 <p>Thus, the information to repeat can be stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
 </div>
 </section>
+<section id="storing-child-documents-in-package" class="slide level2 smaller">
+<h2>Storing child documents in package</h2>
+<p>Stratagem: You can store child documents in the manual directory and reuse them.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Child documents</strong></p>
+<pre><code>├── DESCRIPTION
+├── man
+│   └── rmd-children
+│       └── doc1.Rmd
+│       └── ...</code></pre>
+</div><div class="column" style="width:70%;">
+<p><code>man/rmd-children/doc1.Rmd</code> example.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1"></a>This is some crucial information to be repeated across documentation.</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>```{r}</span>
+<span id="cb2-4"><a href="#cb2-4"></a>1 + 1</span>
+<span id="cb2-5"><a href="#cb2-5"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tips</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>You can include as many child documents as you want.</li>
+<li>The child document is just like any <code>.Rmd</code> file and can include everything that any other <code>.Rmd</code> file can include.</li>
+<li>You can choose a different name for the folder containing child documents (e.g.&nbsp;<code>rmd-fragments</code>).</li>
+<li>Make sure to include <code>Roxygen: list(markdown = TRUE)</code> field in the <code>DESCRIPTION</code> file.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="using-child-documents-in-package" class="slide level2 smaller">
+<h2>Using child documents in package</h2>
+<p>You can now insert contents of these child documents in the package documentation anywhere and as many as times as you want.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Vignette</strong></p>
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── ...
+│   └── web_only
+│       └── vignette2.Rmd
+│       └── ...</code></pre>
+</div><div class="column" style="width:70%;">
+<p><strong>Example</strong> (<code>vignettes/vignette1.Rmd</code>)</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1"></a>---</span>
+<span id="cb4-2"><a href="#cb4-2"></a>output: rmarkdown::html_vignette</span>
+<span id="cb4-3"><a href="#cb4-3"></a>---</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>Some content.</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>```{r, child="../man/rmd-children/doc1.Rmd"}</span>
+<span id="cb4-8"><a href="#cb4-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>README</strong></p>
+<pre><code>├── DESCRIPTION
+├── README.Rmd</code></pre>
+</div><div class="column" style="width:70%;">
+<p><strong>Example</strong> (<code>README.Rmd</code>)</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1"></a>---</span>
+<span id="cb6-2"><a href="#cb6-2"></a>output: github_document</span>
+<span id="cb6-3"><a href="#cb6-3"></a>---</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>Some content.</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a>```{r, child = "man/rmd-children/doc1.Rmd"}</span>
+<span id="cb6-8"><a href="#cb6-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><strong>etc.</strong></p>
+</div>
+</section>
 <section id="self-study" class="slide level2 smaller">
 <h2>Self-study</h2>
-<p>Example packages that use this method to repeat docs across manual, README, and vignettes.</p>
+<p>Example packages that use child documents to repeat documentation.</p>
 <ul>
 <li><p><a href="https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments"><code>{pkgdown}</code></a></p></li>
 <li><p><a href="https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments"><code>{statsExpressions}</code></a></p></li>
+</ul>
+</section></section>
+<section>
+<section id="vignette-setup" class="title-slide slide level1 center">
+<h1>Vignette Setup</h1>
+<p>How not to repeat yourself while setting up vignettes.</p>
+</section>
+<section id="setup-chunks-in-vignettes" class="slide level2 smaller">
+<h2>Setup chunks in vignettes</h2>
+<p>Another duplication that occurs is in setup chunks for vignettes.</p>
+<p>For example, some parts of the setup can be same across vignettes.</p>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:25%;">
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── vignette2.Rmd
+│   └── ...</code></pre>
+</div><div class="column" style="width:37%;">
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1"></a>---</span>
+<span id="cb8-2"><a href="#cb8-2"></a>title: "Vignette-1"</span>
+<span id="cb8-3"><a href="#cb8-3"></a>output: rmarkdown::html_vignette</span>
+<span id="cb8-4"><a href="#cb8-4"></a>---</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>```{r}</span>
+<span id="cb8-7"><a href="#cb8-7"></a>knitr::opts_chunk$set(</span>
+<span id="cb8-8"><a href="#cb8-8"></a>  message = FALSE,</span>
+<span id="cb8-9"><a href="#cb8-9"></a>  collapse = TRUE,</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  comment = "#&gt;"</span>
+<span id="cb8-11"><a href="#cb8-11"></a>)</span>
+<span id="cb8-12"><a href="#cb8-12"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:37%;">
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1"></a>---</span>
+<span id="cb9-2"><a href="#cb9-2"></a>title: "Vignette-2"</span>
+<span id="cb9-3"><a href="#cb9-3"></a>output: rmarkdown::html_vignette</span>
+<span id="cb9-4"><a href="#cb9-4"></a>---</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a>```{r}</span>
+<span id="cb9-7"><a href="#cb9-7"></a>knitr::opts_chunk$set(</span>
+<span id="cb9-8"><a href="#cb9-8"></a>  message = FALSE,</span>
+<span id="cb9-9"><a href="#cb9-9"></a>  collapse = TRUE,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>  comment = "#&gt;"</span>
+<span id="cb9-11"><a href="#cb9-11"></a>)</span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a>options(crayon.enabled = TRUE)</span>
+<span id="cb9-14"><a href="#cb9-14"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
+<p>How can this repetition be avoided?</p>
+</section>
+<section id="sourcing-setup-chunks-in-vignettes" class="slide level2 smaller">
+<h2>Sourcing setup chunks in vignettes</h2>
+<div class="columns">
+<div class="column" style="width:80%;">
+<p>To avoid repeating the same setup across vignettes, we can extract the <strong>common</strong> setup out into a script (<code>vignettes/setup/setup.R</code>), and source it from vignettes.</p>
+</div><div class="column" style="width:20%;">
+<pre><code>
+├── DESCRIPTION
+├── vignettes
+│   └── setup
+│       └── setup.R</code></pre>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:26%;">
+<p><code>setup.R</code> contents</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:37%;">
+<p>Sourcing common setup</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1"></a>---</span>
+<span id="cb12-2"><a href="#cb12-2"></a>title: "Vignette-1"</span>
+<span id="cb12-3"><a href="#cb12-3"></a>output: rmarkdown::html_vignette</span>
+<span id="cb12-4"><a href="#cb12-4"></a>---</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a>```{r setup, include = FALSE}</span>
+<span id="cb12-7"><a href="#cb12-7"></a>source("setup/setup.R")</span>
+<span id="cb12-8"><a href="#cb12-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:37%;">
+<p>Sourcing common setup</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1"></a>---</span>
+<span id="cb13-2"><a href="#cb13-2"></a>title: "Vignette-2"</span>
+<span id="cb13-3"><a href="#cb13-3"></a>output: rmarkdown::html_vignette</span>
+<span id="cb13-4"><a href="#cb13-4"></a>---</span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a>```{r setup, include = FALSE}</span>
+<span id="cb13-7"><a href="#cb13-7"></a>source("setup/setup.R")</span>
+<span id="cb13-8"><a href="#cb13-8"></a>options(crayon.enabled = TRUE)</span>
+<span id="cb13-9"><a href="#cb13-9"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>Now common setup can be modified with a single change in setup script!</p>
+</div>
+</section>
+<section id="self-study-1" class="slide level2 smaller">
+<h2>Self-study</h2>
+<p>Packages in the wild that use this trick.</p>
+<ul>
+<li><a href="https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R"><code>{dm}</code></a></li>
 </ul>
 </section></section>
 <section>
@@ -481,7 +680,7 @@
 <h2>Shipping data in a package</h2>
 <p>Let’s say your example dataset <code>exdat</code> is defined as:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="columns">
@@ -489,8 +688,8 @@
 <p><strong>Saving data</strong></p>
 <p>For future reference, save script to create the dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">save</span>(exdat, <span class="at">file =</span> <span class="st">"data/exdat.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>, <span class="dv">30</span>, <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">save</span>(exdat, <span class="at">file =</span> <span class="st">"data/exdat.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This stores dataset in <code>data/exdat.rdata</code>.</p>
 <p>You can document it in <code>R/data.R</code>.</p>
@@ -524,7 +723,7 @@
 </div>
 </div>
 </section>
-<section id="self-study-1" class="slide level2 smaller">
+<section id="self-study-2" class="slide level2 smaller">
 <h2>Self-study</h2>
 <p>Examples of R packages that define datasets and use them repeatedly.</p>
 <ul>
@@ -561,22 +760,22 @@
 </div>
 </div>
 </div><div class="column" style="width:60%;">
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Function to test</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  x <span class="sc">*</span> y</span>
-<span id="cb4-4"><a href="#cb4-4"></a>}</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Tests</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="fu">test_that</span>(</span>
-<span id="cb4-8"><a href="#cb4-8"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="at">code =</span> {</span>
-<span id="cb4-10"><a href="#cb4-10"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
-<span id="cb4-11"><a href="#cb4-11"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
-<span id="cb4-12"><a href="#cb4-12"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
-<span id="cb4-13"><a href="#cb4-13"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
-<span id="cb4-14"><a href="#cb4-14"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
-<span id="cb4-15"><a href="#cb4-15"></a>  }</span>
-<span id="cb4-16"><a href="#cb4-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Function to test</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  x <span class="sc">*</span> y</span>
+<span id="cb17-4"><a href="#cb17-4"></a>}</span>
+<span id="cb17-5"><a href="#cb17-5"></a></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># Tests</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="fu">test_that</span>(</span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="at">code =</span> {</span>
+<span id="cb17-10"><a href="#cb17-10"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb17-11"><a href="#cb17-11"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb17-12"><a href="#cb17-12"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb17-13"><a href="#cb17-13"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb17-14"><a href="#cb17-14"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb17-15"><a href="#cb17-15"></a>  }</span>
+<span id="cb17-16"><a href="#cb17-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -590,31 +789,31 @@
 <div class="column" style="width:52%;">
 <p><strong>Repeated test pattern</strong></p>
 <p><code>expect_identical()</code> used repeatedly.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">test_that</span>(</span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">code =</span> {</span>
-<span id="cb5-4"><a href="#cb5-4"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
-<span id="cb5-5"><a href="#cb5-5"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
-<span id="cb5-6"><a href="#cb5-6"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
-<span id="cb5-7"><a href="#cb5-7"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
-<span id="cb5-8"><a href="#cb5-8"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
-<span id="cb5-9"><a href="#cb5-9"></a>  }</span>
-<span id="cb5-10"><a href="#cb5-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">test_that</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">code =</span> {</span>
+<span id="cb18-4"><a href="#cb18-4"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb18-5"><a href="#cb18-5"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb18-6"><a href="#cb18-6"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb18-7"><a href="#cb18-7"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb18-8"><a href="#cb18-8"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb18-9"><a href="#cb18-9"></a>  }</span>
+<span id="cb18-10"><a href="#cb18-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:48%;">
 <p><strong>DRY testing</strong></p>
 <p><code>expect_identical()</code> used once.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="sc">~</span>x,  <span class="sc">~</span>y,  <span class="sc">~</span>res,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>    <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">3</span>,   <span class="sc">-</span><span class="dv">3</span>,</span>
-<span id="cb6-7"><a href="#cb6-7"></a>    <span class="dv">0</span>,   <span class="fl">3.4</span>,  <span class="dv">0</span>,</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    <span class="cn">NA</span>,  <span class="dv">4</span>,    <span class="cn">NA_real_</span>,</span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="sc">-</span><span class="dv">2</span>,  <span class="sc">-</span><span class="dv">2</span>,   <span class="dv">4</span>,</span>
-<span id="cb6-10"><a href="#cb6-10"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>  )</span>
-<span id="cb6-12"><a href="#cb6-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb19-5"><a href="#cb19-5"></a>    <span class="sc">~</span>x,  <span class="sc">~</span>y,  <span class="sc">~</span>res,</span>
+<span id="cb19-6"><a href="#cb19-6"></a>    <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">3</span>,   <span class="sc">-</span><span class="dv">3</span>,</span>
+<span id="cb19-7"><a href="#cb19-7"></a>    <span class="dv">0</span>,   <span class="fl">3.4</span>,  <span class="dv">0</span>,</span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="cn">NA</span>,  <span class="dv">4</span>,    <span class="cn">NA_real_</span>,</span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="sc">-</span><span class="dv">2</span>,  <span class="sc">-</span><span class="dv">2</span>,   <span class="dv">4</span>,</span>
+<span id="cb19-10"><a href="#cb19-10"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>  )</span>
+<span id="cb19-12"><a href="#cb19-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -642,37 +841,37 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># file-1</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>...</span>
-<span id="cb7-4"><a href="#cb7-4"></a></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co"># file-2</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>...</span>
-<span id="cb7-8"><a href="#cb7-8"></a></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb7-10"><a href="#cb7-10"></a>...</span>
-<span id="cb7-11"><a href="#cb7-11"></a></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co"># file-3</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a>...</span>
-<span id="cb7-15"><a href="#cb7-15"></a></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># file-4, file-5, etc.</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># file-1</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>...</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co"># file-2</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>...</span>
+<span id="cb20-8"><a href="#cb20-8"></a></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>...</span>
+<span id="cb20-11"><a href="#cb20-11"></a></span>
+<span id="cb20-12"><a href="#cb20-12"></a><span class="co"># file-3</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a>...</span>
+<span id="cb20-15"><a href="#cb20-15"></a></span>
+<span id="cb20-16"><a href="#cb20-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb20-17"><a href="#cb20-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="do">## {pkgname} namespace: start</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#'</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#'</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="do">## {pkgname} namespace: end</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co">#'</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">#'</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="self-study-2" class="slide level2 smaller">
+<section id="self-study-3" class="slide level2 smaller">
 <h2>Self-study</h2>
 <p>Examples of R packages that list the <code>NAMESPACE</code> imports in a single file this way.</p>
 <ul>
@@ -680,6 +879,11 @@
 <li><p><a href="https://github.com/r-lib/lintr/blob/main/R/lintr-package.R"><code>{lintr}</code></a></p></li>
 </ul>
 </section></section>
+<section id="conclusion" class="title-slide slide level1 center">
+<h1>Conclusion</h1>
+<p>You can use these techniques to avoid repetition while developing R packages, which should make the development workflow faster, more maintainable, and less error-prone.</p>
+</section>
+
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
 <p><i class="fa-brands fa-twitter" aria-label="twitter"></i> <a href="http://twitter.com/patilindrajeets">Twitter</a></p>
@@ -692,12 +896,12 @@
 <section>
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank You</h1>
-<p>And Happy Package Development! 😊</p>
+<p>And Happy (DRY) Package Development! 😊</p>
 </section>
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value

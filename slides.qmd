@@ -140,13 +140,15 @@ This is some crucial information to be repeated across documentation.
 
 ::::
 
+</br>
+
 :::{.callout-tip}
 
 ## Tips
 
 - You can include as many child documents as you want.
 - The child document is just like any `.Rmd` file and can include everything that any other `.Rmd` file can include.
-- You can choose a different name for the folder containing child documents.
+- You can choose a different name for the folder containing child documents (e.g. `rmd-fragments`).
 - Make sure to include `Roxygen: list(markdown = TRUE)` field in the `DESCRIPTION` file.
 
 :::
@@ -236,11 +238,180 @@ Some content.
 
 ## Self-study {.smaller}
 
-Example packages that use this method to repeat docs across manual, README, and vignettes.
+Example packages that use child documents to repeat documentation.
 
 - [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments)
 
 - [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments)
+
+# Vignette Setup
+
+How not to repeat yourself while setting up vignettes.
+
+## Setup chunks in vignettes {.smaller}
+
+Another duplication that occurs is in setup chunks for vignettes. 
+
+For example, some parts of the setup can be same across vignettes.
+
+</br>
+
+:::: {.columns}
+
+::: {.column width='25%'}
+
+```
+├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── vignette2.Rmd
+│   └── ...
+```
+
+:::
+
+::: {.column width='37%'}
+
+````{verbatim}
+---
+title: "Vignette-1"
+output: rmarkdown::html_vignette
+---
+
+```{r}
+knitr::opts_chunk$set(
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+````
+
+:::
+
+::: {.column width='37%'}
+
+````{verbatim}
+---
+title: "Vignette-2"
+output: rmarkdown::html_vignette
+---
+
+```{r}
+knitr::opts_chunk$set(
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(crayon.enabled = TRUE)
+```
+
+````
+
+:::
+
+::::
+
+</br>
+
+How can this repetition be avoided?
+
+## Sourcing setup chunks in vignettes {.smaller}
+
+:::: {.columns}
+
+::: {.column width='80%'}
+
+To avoid repeating the same setup across vignettes, we can extract the **common** setup out into a script (`vignettes/setup/setup.R`), and source it from vignettes.
+
+:::
+
+::: {.column width='20%'}
+
+```
+
+├── DESCRIPTION
+├── vignettes
+│   └── setup
+│       └── setup.R
+```
+
+:::
+
+::::
+
+</br>
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='26%'}
+
+`setup.R` contents
+
+```{.r}
+knitr::opts_chunk$set(
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+:::
+
+::: {.column width='37%'}
+
+Sourcing common setup
+
+````{verbatim}
+---
+title: "Vignette-1"
+output: rmarkdown::html_vignette
+---
+
+```{r setup, include = FALSE}
+source("setup/setup.R")
+```
+
+````
+
+:::
+
+::: {.column width='37%'}
+
+Sourcing common setup
+
+````{verbatim}
+---
+title: "Vignette-2"
+output: rmarkdown::html_vignette
+---
+
+```{r setup, include = FALSE}
+source("setup/setup.R")
+options(crayon.enabled = TRUE)
+```
+
+````
+
+:::
+
+::::
+
+. . . 
+
+</br>
+
+Now common setup can be modified with a single change in setup script!
+
+## Self-study {.smaller}
+
+Packages in the wild that use this trick.
+
+- [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R)
 
 # Data
 

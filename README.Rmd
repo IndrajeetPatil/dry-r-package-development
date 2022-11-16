@@ -13,6 +13,14 @@ knitr::opts_chunk$set(
 
 # DRY R Package Development 
 
+This presentation contains tips on how to develop R packages without violating the DRY (Don't Repeat Yourself) Principle in
+
+- documentation
+- unit testing
+- vignettes
+- datasets
+- etc.
+
 ```{r, echo=FALSE, out.width="50%"}
 knitr::include_graphics("media/simpsons.png")
 ```
