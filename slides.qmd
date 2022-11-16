@@ -2,7 +2,7 @@
 #title: "DRY R Package Development"
 format:
   revealjs: 
-    theme: simple
+    theme: solarized
     slide-number: true
     preview-links: auto
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/)."
@@ -16,7 +16,7 @@ execute:
 
 ::: {style="text-align: center;"}
 
-[Indrajeet Patil](https://sites.google.com/site/indrajeetspatilmorality/)
+Indrajeet Patil
 
 :::
 
@@ -33,11 +33,13 @@ execute:
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
 <!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 
-# DRY it up
+# Why So DRY
 
 Why should you not repeat yourself?
 
 ## Don't Repeat Yourself (DRY) Principle {.smaller}
+
+
 
 # Documentation
 
