@@ -2,7 +2,7 @@
 #title: "DRY R Package Development"
 format:
   revealjs: 
-    theme: beige
+    theme: solarized
     slide-number: true
     preview-links: auto
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/)."
@@ -37,9 +37,51 @@ Indrajeet Patil
 
 Why should you not repeat yourself?
 
+# 
+
+*"Copy and paste is a design error."* &nbsp; \- David Parnas
+
 ## Don't Repeat Yourself (DRY) Principle {.smaller}
 
+The DRY Principles states that:
 
+*Every piece of **knowledge** must have a **single** representation in the codebase.*
+
+That is, you should not express the same thing in multiple places in multiple ways.
+
+</br>
+
+:::{.callout-note}
+
+## It's about *knowledge* and not just *code*
+
+The DRY principle is about duplication of knowledge. 
+Thus, it applies to all programming entities that encode knowledge: 
+
+- You should not duplicate code.
+- You should not duplicate intent across code and comments.
+- You should not duplicate knowledge in data structures.
+- ...
+
+:::
+
+# Benefits of DRY codebase
+
+## {.smaller}
+
+- When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.
+
+- Easy to maintain since there is only a single source of knowledge that needs to be updated.
+
+# Plan
+
+Following slides show how to apply DRY principle to remove duplication in following parts of R package development:
+
+- Documentation
+- Unit testing
+- Vignette setup
+- Importing external functions
+- Conditions
 
 # Documentation
 
@@ -755,9 +797,122 @@ Examples of R packages that save datasets required for unit testing.
 
 - [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
-# Condition messages
+# Conditions
 
-- error messages as an output of R functions saved in a list instead of bare strings
+How not to repeat yourself while signalling conditions.
+
+## Sending signals {.smaller}
+
+Conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. And, often, similar conditions need to be signalled across functions.
+
+</br>
+
+. . . 
+
+For example, a class of functions might not accept negative values, and will have the same condition repeated during input validation.
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+foo1 <- function(x) {
+  if (x < 0) {
+    stop("Argument `x` should be positive.")
+  }
+  
+  ...
+}
+```
+
+:::
+
+::: {.column width='50%'}
+
+```r
+foo2 <- function(y) {
+  if (y < 0) {
+    stop("Argument `y` should be positive.")
+  }
+  
+  ...
+}
+```
+
+:::
+
+::::
+
+. . . 
+
+</br>
+
+How can this repetition be avoided?
+
+## List of condition functions {.smaller}
+
+We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing all such functions in a list.
+
+```r
+conditions <- list(
+  only_positives_allowed = function(arg_name) {
+    paste0("Argument `", arg_name, "` should be positive.")
+  },
+  
+  ... # you can store as many functions as you want
+)
+```
+
+. . . 
+
+We can then use these functions to signal conditions. 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```r
+foo1 <- function(x) {
+  if (x < 0) {
+    stop(conditions$only_positives_allowed("x"))
+  }
+  
+  ...
+}
+```
+
+:::
+
+::: {.column width='50%'}
+
+```r
+foo2 <- function(y) {
+  if (y < 0) {
+    stop(conditions$only_positives_allowed("y"))
+  }
+  
+  ...
+}
+```
+
+:::
+
+::::
+
+:::{.callout-tip}
+
+## No parallel modification
+
+Note that if we now wish to change the condition string, this change needs to be made only in *one* place.
+
+:::
+
+
+## Self-study {.smaller}
+
+Examples of R packages that use a list of condition functions.
+
+- [`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R)
 
 # Import specification
 

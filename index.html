@@ -402,14 +402,66 @@
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
 <!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 </section>
-<section>
 <section id="why-so-dry" class="title-slide slide level1 center">
 <h1>Why So DRY</h1>
 <p>Why should you not repeat yourself?</p>
 </section>
+
+<section>
+<section id="section" class="title-slide slide level1 center">
+<h1></h1>
+<p><em>“Copy and paste is a design error.”</em> &nbsp; - David Parnas</p>
+</section>
 <section id="dont-repeat-yourself-dry-principle" class="slide level2 smaller">
 <h2>Don’t Repeat Yourself (DRY) Principle</h2>
+<p>The DRY Principles states that:</p>
+<p><em>Every piece of <strong>knowledge</strong> must have a <strong>single</strong> representation in the codebase.</em></p>
+<p>That is, you should not express the same thing in multiple places in multiple ways.</p>
+<p><br></p>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>It’s about <em>knowledge</em> and not just <em>code</em></strong></p>
+</div>
+<div class="callout-content">
+<p>The DRY principle is about duplication of knowledge. Thus, it applies to all programming entities that encode knowledge:</p>
+<ul>
+<li>You should not duplicate code.</li>
+<li>You should not duplicate intent across code and comments.</li>
+<li>You should not duplicate knowledge in data structures.</li>
+<li>…</li>
+</ul>
+</div>
+</div>
+</div>
 </section></section>
+<section>
+<section id="benefits-of-dry-codebase" class="title-slide slide level1 center">
+<h1>Benefits of DRY codebase</h1>
+
+</section>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
+<ul>
+<li><p>When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.</p></li>
+<li><p>Easy to maintain since there is only a single source of knowledge that needs to be updated.</p></li>
+</ul>
+</section></section>
+<section id="plan" class="title-slide slide level1 center">
+<h1>Plan</h1>
+<p>Following slides show how to apply DRY principle to remove duplication in following parts of R package development:</p>
+<ul>
+<li>Documentation</li>
+<li>Unit testing</li>
+<li>Vignette setup</li>
+<li>Importing external functions</li>
+<li>Conditions</li>
+</ul>
+</section>
+
 <section>
 <section id="documentation" class="title-slide slide level1 center">
 <h1>Documentation</h1>
@@ -917,13 +969,95 @@
 <li><p><a href="https://github.com/cynkra/dm/tree/main/tests/testthat/dm"><code>{dm}</code></a></p></li>
 </ul>
 </section></section>
-<section id="condition-messages" class="title-slide slide level1 center">
-<h1>Condition messages</h1>
-<ul>
-<li>error messages as an output of R functions saved in a list instead of bare strings</li>
-</ul>
+<section>
+<section id="conditions" class="title-slide slide level1 center">
+<h1>Conditions</h1>
+<p>How not to repeat yourself while signalling conditions.</p>
 </section>
-
+<section id="sending-signals" class="slide level2 smaller">
+<h2>Sending signals</h2>
+<p>Conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. And, often, similar conditions need to be signalled across functions.</p>
+<p><br></p>
+<div class="fragment">
+<p>For example, a class of functions might not accept negative values, and will have the same condition repeated during input validation.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="fu">stop</span>(<span class="st">"Argument `x` should be positive."</span>)</span>
+<span id="cb26-4"><a href="#cb26-4"></a>  }</span>
+<span id="cb26-5"><a href="#cb26-5"></a>  </span>
+<span id="cb26-6"><a href="#cb26-6"></a>  ...</span>
+<span id="cb26-7"><a href="#cb26-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="fu">stop</span>(<span class="st">"Argument `y` should be positive."</span>)</span>
+<span id="cb27-4"><a href="#cb27-4"></a>  }</span>
+<span id="cb27-5"><a href="#cb27-5"></a>  </span>
+<span id="cb27-6"><a href="#cb27-6"></a>  ...</span>
+<span id="cb27-7"><a href="#cb27-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><br></p>
+<p>How can this repetition be avoided?</p>
+</div>
+</section>
+<section id="list-of-condition-functions" class="slide level2 smaller">
+<h2>List of condition functions</h2>
+<p>We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing all such functions in a list.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>conditions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
+<span id="cb28-3"><a href="#cb28-3"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
+<span id="cb28-4"><a href="#cb28-4"></a>  },</span>
+<span id="cb28-5"><a href="#cb28-5"></a>  </span>
+<span id="cb28-6"><a href="#cb28-6"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>We can then use these functions to signal conditions.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb29-3"><a href="#cb29-3"></a>    <span class="fu">stop</span>(conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
+<span id="cb29-4"><a href="#cb29-4"></a>  }</span>
+<span id="cb29-5"><a href="#cb29-5"></a>  </span>
+<span id="cb29-6"><a href="#cb29-6"></a>  ...</span>
+<span id="cb29-7"><a href="#cb29-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb30-3"><a href="#cb30-3"></a>    <span class="fu">stop</span>(conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
+<span id="cb30-4"><a href="#cb30-4"></a>  }</span>
+<span id="cb30-5"><a href="#cb30-5"></a>  </span>
+<span id="cb30-6"><a href="#cb30-6"></a>  ...</span>
+<span id="cb30-7"><a href="#cb30-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>No parallel modification</strong></p>
+</div>
+<div class="callout-content">
+<p>Note that if we now wish to change the condition string, this change needs to be made only in <em>one</em> place.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-4" class="slide level2 smaller">
+<h2>Self-study</h2>
+<p>Examples of R packages that use a list of condition functions.</p>
+<ul>
+<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R"><code>{ospsuite.utils}</code></a></li>
+</ul>
+</section></section>
 <section>
 <section id="import-specification" class="title-slide slide level1 center">
 <h1>Import specification</h1>
@@ -937,37 +1071,37 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># file-1</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>...</span>
-<span id="cb26-4"><a href="#cb26-4"></a></span>
-<span id="cb26-5"><a href="#cb26-5"></a><span class="co"># file-2</span></span>
-<span id="cb26-6"><a href="#cb26-6"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb26-7"><a href="#cb26-7"></a>...</span>
-<span id="cb26-8"><a href="#cb26-8"></a></span>
-<span id="cb26-9"><a href="#cb26-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb26-10"><a href="#cb26-10"></a>...</span>
-<span id="cb26-11"><a href="#cb26-11"></a></span>
-<span id="cb26-12"><a href="#cb26-12"></a><span class="co"># file-3</span></span>
-<span id="cb26-13"><a href="#cb26-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb26-14"><a href="#cb26-14"></a>...</span>
-<span id="cb26-15"><a href="#cb26-15"></a></span>
-<span id="cb26-16"><a href="#cb26-16"></a><span class="co"># file-4, file-5, etc.</span></span>
-<span id="cb26-17"><a href="#cb26-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># file-1</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>...</span>
+<span id="cb31-4"><a href="#cb31-4"></a></span>
+<span id="cb31-5"><a href="#cb31-5"></a><span class="co"># file-2</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>...</span>
+<span id="cb31-8"><a href="#cb31-8"></a></span>
+<span id="cb31-9"><a href="#cb31-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb31-10"><a href="#cb31-10"></a>...</span>
+<span id="cb31-11"><a href="#cb31-11"></a></span>
+<span id="cb31-12"><a href="#cb31-12"></a><span class="co"># file-3</span></span>
+<span id="cb31-13"><a href="#cb31-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a>...</span>
+<span id="cb31-15"><a href="#cb31-15"></a></span>
+<span id="cb31-16"><a href="#cb31-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb31-17"><a href="#cb31-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="do">## {pkgname} namespace: start</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="co">#'</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a><span class="co">#'</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a><span class="do">## {pkgname} namespace: end</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="co">#'</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="co">#'</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="self-study-4" class="slide level2 smaller">
+<section id="self-study-5" class="slide level2 smaller">
 <h2>Self-study</h2>
 <p>Examples of R packages that list the <code>NAMESPACE</code> imports in a single file this way.</p>
 <ul>
@@ -997,7 +1131,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
