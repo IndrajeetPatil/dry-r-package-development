@@ -2,7 +2,7 @@
 #title: "DRY R Package Development"
 format:
   revealjs: 
-    theme: solarized
+    theme: beige
     slide-number: true
     preview-links: auto
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/)."
@@ -260,7 +260,7 @@ For example, some parts of the setup can be same across vignettes.
 
 :::: {.columns}
 
-::: {.column width='33%'}
+::: {.column width='25%'}
 
 ```
 ├── DESCRIPTION

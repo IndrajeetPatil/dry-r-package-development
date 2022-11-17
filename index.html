@@ -438,7 +438,7 @@
 <p>Some documentation is important enough to be included in multiple places (e.g.&nbsp;in the function documentation and in a vignette).</p>
 <p><br></p>
 <blockquote>
-<p>How can we document something just <em>once</em> but include it in <em>multiple</em> locations?</p>
+<p>How can you document something just <em>once</em> but include it in <em>multiple</em> locations?</p>
 </blockquote>
 </div><div class="column" style="width:60%;">
 <div class="cell">
@@ -610,7 +610,7 @@
 <h2>Sourcing setup chunks in vignettes</h2>
 <div class="columns">
 <div class="column" style="width:80%;">
-<p>To avoid repeating the same setup across vignettes, we can extract the <strong>common</strong> setup out into a script (<code>vignettes/setup/setup.R</code>), and source it from vignettes.</p>
+<p>To avoid repeating the same setup across vignettes, you can extract the <strong>common</strong> setup out into a script (<code>vignettes/setup/setup.R</code>), and source it from vignettes.</p>
 </div><div class="column" style="width:20%;">
 <pre><code>
 ├── DESCRIPTION
@@ -755,7 +755,7 @@
 <p><strong>Not DRY</strong></p>
 </div>
 <div class="callout-content">
-<p>But such recycling violates the DRY principle. How can we avoid this?</p>
+<p>But such recycling violates the DRY principle. How can you avoid this?</p>
 </div>
 </div>
 </div>
@@ -782,7 +782,7 @@
 </section>
 <section id="parametrized-unit-testing" class="slide level2 smaller">
 <h2>Parametrized unit testing</h2>
-<p>To avoid such repetition, we can run parameterized tests. <a href="https://github.com/google/patrick"><code>{patrick}</code></a>, an extension package of <a href="https://testthat.r-lib.org/"><code>{testthat}</code></a>, provides a way to write parameterized unit tests.</p>
+<p>To avoid such repetition, you can run parameterized tests. <a href="https://github.com/google/patrick"><code>{patrick}</code></a>, an extension package of <a href="https://testthat.r-lib.org/"><code>{testthat}</code></a>, provides a way to write parameterized unit tests.</p>
 <p><br></p>
 <div class="fragment">
 <div class="columns">
@@ -820,6 +820,102 @@
 </section>
 <section id="repeated-usage-of-testing-datasets" class="slide level2 smaller">
 <h2>Repeated usage of testing datasets</h2>
+<p>You have already seen how <em>user</em>-facing datasets - useful for illustrating function usage - can be defined and saved once and then used repeatedly.</p>
+<p>Similarly, you can define and save <em>developer</em>-facing datasets - useful for testing purposes - and use them across multiple tests.</p>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Saving datasets in either of these locations is fine.</p>
+</div><div class="column" style="width:30%;">
+<pre><code>├── DESCRIPTION
+├── tests
+│   └── data
+│       └── script.R
+│       └── testdat1.rdata
+│       └── testdat2.rdata
+│       └── ...</code></pre>
+</div><div class="column" style="width:30%;">
+<pre><code>├── DESCRIPTION
+├── tests
+│   └── testthat
+│       └── data
+│           └── script.R
+│           └── testdat1.rdata
+│           └── testdat2.rdata
+│           └── ...</code></pre>
+</div>
+</div>
+<div class="callout callout-caution callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Save the script!</strong></p>
+</div>
+<div class="callout-content">
+<p>Always save the script used to create datasets. This script act as documentation for the datasets and also makes it easy to modify the datasets in the future (if needed).</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-test-datasets" class="slide level2 smaller">
+<h2>Using test datasets</h2>
+<p>Without stored datasts, you define the same datasets <strong>multiple</strong> times across test files.</p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<p>In <code>test-foo1.R</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">foo1</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:35%;">
+<p>In <code>test-foo2.R</code>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:30%;">
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
+</div>
+</div>
+<p><br></p>
+<div class="fragment">
+<p>Without saved datasets, you define just <strong>once</strong> and load them from test files.</p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<p>In <code>test-foo1.R</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">foo1</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:35%;">
+<p>In <code>test-foo2.R</code>:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:30%;">
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
+</div>
+</div>
+<p><br></p>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The exact path provided to <code>readRDS()</code> will depend on where the datasets are stored inside the <code>tests/</code> folder.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-3" class="slide level2 smaller">
+<h2>Self-study</h2>
+<p>Examples of R packages that save datasets required for unit testing.</p>
+<ul>
+<li><p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data"><code>{ospsuite}</code></a></p></li>
+<li><p><a href="https://github.com/cynkra/dm/tree/main/tests/testthat/dm"><code>{dm}</code></a></p></li>
+</ul>
 </section></section>
 <section id="condition-messages" class="title-slide slide level1 center">
 <h1>Condition messages</h1>
@@ -841,37 +937,37 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># file-1</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a>...</span>
-<span id="cb20-4"><a href="#cb20-4"></a></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="co"># file-2</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>...</span>
-<span id="cb20-8"><a href="#cb20-8"></a></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>...</span>
-<span id="cb20-11"><a href="#cb20-11"></a></span>
-<span id="cb20-12"><a href="#cb20-12"></a><span class="co"># file-3</span></span>
-<span id="cb20-13"><a href="#cb20-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a>...</span>
-<span id="cb20-15"><a href="#cb20-15"></a></span>
-<span id="cb20-16"><a href="#cb20-16"></a><span class="co"># file-4, file-5, etc.</span></span>
-<span id="cb20-17"><a href="#cb20-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># file-1</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>...</span>
+<span id="cb26-4"><a href="#cb26-4"></a></span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="co"># file-2</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>...</span>
+<span id="cb26-8"><a href="#cb26-8"></a></span>
+<span id="cb26-9"><a href="#cb26-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb26-10"><a href="#cb26-10"></a>...</span>
+<span id="cb26-11"><a href="#cb26-11"></a></span>
+<span id="cb26-12"><a href="#cb26-12"></a><span class="co"># file-3</span></span>
+<span id="cb26-13"><a href="#cb26-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb26-14"><a href="#cb26-14"></a>...</span>
+<span id="cb26-15"><a href="#cb26-15"></a></span>
+<span id="cb26-16"><a href="#cb26-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb26-17"><a href="#cb26-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="do">## {pkgname} namespace: start</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="co">#'</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="co">#'</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="do">## {pkgname} namespace: end</span></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co">#'</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="co">#'</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="self-study-3" class="slide level2 smaller">
+<section id="self-study-4" class="slide level2 smaller">
 <h2>Self-study</h2>
 <p>Examples of R packages that list the <code>NAMESPACE</code> imports in a single file this way.</p>
 <ul>
@@ -901,7 +997,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
@@ -913,7 +1009,7 @@
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Berlin
- date     2022-11-16
+ date     2022-11-17
  pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
@@ -941,7 +1037,7 @@
    stringr       1.4.1   2022-08-20 [1] CRAN (R 4.2.1)
  P tools         4.2.2   2022-10-31 [1] local
  P utils       * 4.2.2   2022-10-31 [1] local
-   xfun          0.34    2022-10-18 [1] CRAN (R 4.2.1)
+   xfun          0.35    2022-11-16 [1] CRAN (R 4.2.2)
    yaml          2.3.6   2022-10-18 [1] CRAN (R 4.2.1)
 
  [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
