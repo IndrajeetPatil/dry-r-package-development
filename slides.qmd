@@ -43,13 +43,29 @@ Why should you not repeat yourself?
 
 ## Don't Repeat Yourself (DRY) Principle {.smaller}
 
+:::: {.columns}
+
+::: {.column width='60%'}
+
 The DRY Principles states that:
 
 *Every piece of **knowledge** must have a **single** representation in the codebase.*
 
 That is, you should not express the same thing in multiple places in multiple ways.
 
-</br>
+:::
+
+::: {.column width='40%'}
+
+```{r, echo=FALSE}
+knitr::include_graphics("media/dry.gif")
+```
+
+:::
+
+::::
+
+. . . 
 
 :::{.callout-note}
 
@@ -65,17 +81,31 @@ Thus, it applies to all programming entities that encode knowledge:
 
 :::
 
-# Benefits of DRY codebase
-
-## {.smaller}
+## Benefits of DRY codebase {.smaller}
 
 - When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.
 
-- Easy to maintain since there is only a single source of knowledge that needs to be updated.
+- Easy to maintain since there is only a single representation of knowledge that needs to be updated if the underlying knowledge changes.
+
+- As a side effect, routines developed to remove duplicated code can become part of general-purpose utilities.
+
+</br>
+
+. . . 
+
+:::{.callout-tip}
+
+## Further Reading 
+
+- Thomas, D., & Hunt, A. (2019). *The Pragmatic Programmer*. Addison-Wesley Professional. (**pp. 30-38**)
+
+- Understand distinction between DRY and [DAMP (Descriptive And Meaningful Phrases)](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests)
+
+:::
 
 # Plan
 
-Following slides show how to apply DRY principle to remove duplication in following parts of R package development:
+Let's see how to apply DRY principle to remove duplication in following aspects of package development:
 
 - Documentation
 - Unit testing

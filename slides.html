@@ -414,10 +414,20 @@
 </section>
 <section id="dont-repeat-yourself-dry-principle" class="slide level2 smaller">
 <h2>Don’t Repeat Yourself (DRY) Principle</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
 <p>The DRY Principles states that:</p>
 <p><em>Every piece of <strong>knowledge</strong> must have a <strong>single</strong> representation in the codebase.</em></p>
 <p>That is, you should not express the same thing in multiple places in multiple ways.</p>
-<p><br></p>
+</div><div class="column" style="width:40%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="media/dry.gif"></p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -437,22 +447,38 @@
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="benefits-of-dry-codebase" class="title-slide slide level1 center">
-<h1>Benefits of DRY codebase</h1>
-
+</div>
 </section>
-<section id="section-1" class="slide level2 smaller">
-<h2></h2>
+<section id="benefits-of-dry-codebase" class="slide level2 smaller">
+<h2>Benefits of DRY codebase</h2>
 <ul>
 <li><p>When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.</p></li>
-<li><p>Easy to maintain since there is only a single source of knowledge that needs to be updated.</p></li>
+<li><p>Easy to maintain since there is only a single representation of knowledge that needs to be updated if the underlying knowledge changes.</p></li>
+<li><p>As a side effect, routines developed to remove duplicated code can become part of general-purpose utilities.</p></li>
 </ul>
+<p><br></p>
+<div class="fragment">
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Further Reading</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>Thomas, D., &amp; Hunt, A. (2019). <em>The Pragmatic Programmer</em>. Addison-Wesley Professional. (<strong>pp.&nbsp;30-38</strong>)</p></li>
+<li><p>Understand distinction between DRY and <a href="https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests">DAMP (Descriptive And Meaningful Phrases)</a></p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section id="plan" class="title-slide slide level1 center">
 <h1>Plan</h1>
-<p>Following slides show how to apply DRY principle to remove duplication in following parts of R package development:</p>
+<p>Let’s see how to apply DRY principle to remove duplication in following aspects of package development:</p>
 <ul>
 <li>Documentation</li>
 <li>Unit testing</li>
