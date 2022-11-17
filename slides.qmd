@@ -79,7 +79,7 @@ Some documentation is important enough to be included in multiple places (e.g. i
 
 </br>
 
-> How can we document something just *once* but include it in *multiple* locations?
+> How can you document something just *once* but include it in *multiple* locations?
 
 :::
 
@@ -260,7 +260,7 @@ For example, some parts of the setup can be same across vignettes.
 
 :::: {.columns}
 
-::: {.column width='25%'}
+::: {.column width='33%'}
 
 ```
 ├── DESCRIPTION
@@ -326,7 +326,7 @@ How can this repetition be avoided?
 
 ::: {.column width='80%'}
 
-To avoid repeating the same setup across vignettes, we can extract the **common** setup out into a script (`vignettes/setup/setup.R`), and source it from vignettes.
+To avoid repeating the same setup across vignettes, you can extract the **common** setup out into a script (`vignettes/setup/setup.R`), and source it from vignettes.
 
 :::
 
@@ -521,7 +521,7 @@ Unit testing involves checking function output with a **range of inputs**, and t
 
 ## Not DRY
 
-But such recycling violates the DRY principle. How can we avoid this?
+But such recycling violates the DRY principle. How can you avoid this?
 
 :::
 
@@ -554,7 +554,7 @@ test_that(
 
 ## Parametrized unit testing {.smaller}
 
-To avoid such repetition, we can run parameterized tests. [`{patrick}`](https://github.com/google/patrick), an extension package of [`{testthat}`](https://testthat.r-lib.org/), provides a way to write parameterized unit tests.
+To avoid such repetition, you can run parameterized tests. [`{patrick}`](https://github.com/google/patrick), an extension package of [`{testthat}`](https://testthat.r-lib.org/), provides a way to write parameterized unit tests.
 
 </br>
 
@@ -609,6 +609,151 @@ patrick::with_parameters_test_that(
 ::::
 
 ## Repeated usage of testing datasets {.smaller}
+
+You have already seen how *user*-facing datasets - useful for illustrating function usage - can be defined and saved once and then used repeatedly.
+
+Similarly, you can define and save *developer*-facing datasets - useful for testing purposes - and use them across multiple tests.
+
+</br>
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='40%'}
+
+Saving datasets in either of these locations is fine.
+
+:::
+
+::: {.column width='30%'}
+
+```
+├── DESCRIPTION
+├── tests
+│   └── data
+│       └── script.R
+│       └── testdat1.rdata
+│       └── testdat2.rdata
+│       └── ...
+```
+
+:::
+
+::: {.column width='30%'}
+
+```
+├── DESCRIPTION
+├── tests
+│   └── testthat
+│       └── data
+│           └── script.R
+│           └── testdat1.rdata
+│           └── testdat2.rdata
+│           └── ...
+```
+
+:::
+::::
+
+:::{.callout-caution}
+
+## Save the script!
+
+Always save the script used to create datasets. This script act as documentation for the datasets and also makes it easy to modify the datasets in the future (if needed).
+
+:::
+
+## Using test datasets {.smaller}
+
+Without stored datasts, you define the same datasets **multiple** times across test files.
+
+:::: {.columns}
+
+::: {.column width='35%'}
+
+In `test-foo1.R`:
+
+```r
+testdat1 <- { ... }
+foo1(testdat1)
+```
+
+:::
+
+::: {.column width='35%'}
+
+In `test-foo2.R`:
+
+```r
+testdat1 <- { ... }
+foo2(testdat1)
+```
+
+:::
+
+::: {.column width='30%'}
+
+&nbsp; &nbsp; &nbsp; &nbsp; `...`
+
+:::
+
+::::
+
+</br>
+
+. . . 
+
+Without saved datasets, you define just **once** and load them from test files.
+
+:::: {.columns}
+
+::: {.column width='35%'}
+
+In `test-foo1.R`:
+
+```r
+testdat1 <- readRDS("testdat1")
+foo1(testdat1)
+```
+
+:::
+
+::: {.column width='35%'}
+
+In `test-foo2.R`:
+
+```r
+testdat1 <- readRDS("testdat1")
+foo2(testdat1)
+```
+
+:::
+
+
+::: {.column width='30%'}
+
+&nbsp; &nbsp; &nbsp; &nbsp; `...`
+
+:::
+
+::::
+
+</br>
+
+:::{.callout-note}
+
+The exact path provided to `readRDS()` will depend on where the datasets are stored inside the `tests/` folder.
+
+:::
+
+## Self-study {.smaller}
+
+Examples of R packages that save datasets required for unit testing.
+
+- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data)
+
+- [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
 # Condition messages
 
