@@ -33,13 +33,13 @@ Indrajeet Patil
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
 <!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 
-# Why So DRY
-
-Why should you not repeat yourself?
-
 # 
 
 *"Copy and paste is a design error."* &nbsp; \- David Parnas
+
+# Why So DRY
+
+Why should you not repeat yourself?
 
 ## Don't Repeat Yourself (DRY) Principle {.smaller}
 
@@ -280,7 +280,7 @@ Some content.
 
 **etc.**
 
-## Self-study {.smaller}
+## Self-study
 
 Example packages that use child documents to repeat documentation.
 
@@ -451,7 +451,7 @@ options(crayon.enabled = TRUE)
 
 Now common setup can be modified with a single change in setup script!
 
-## Self-study {.smaller}
+## Self-study
 
 Packages in the wild that use this trick.
 
@@ -529,7 +529,7 @@ If you include datasets, set `LazyData: true` in the `DESCRIPTION` file.
 
 :::
 
-## Self-study {.smaller}
+## Self-study
 
 Examples of R packages that define datasets and use them repeatedly.
 
@@ -789,7 +789,7 @@ The exact path provided to `readRDS()` will depend on where the datasets are sto
 
 :::
 
-## Self-study {.smaller}
+## Self-study
 
 Examples of R packages that save datasets required for unit testing.
 
@@ -908,7 +908,7 @@ Note that if we now wish to change the condition string, this change needs to be
 :::
 
 
-## Self-study {.smaller}
+## Self-study
 
 Examples of R packages that use a list of condition functions.
 
@@ -972,7 +972,7 @@ NULL
 
 ::::
 
-## Self-study {.smaller}
+## Self-study
 
 Examples of R packages that list the `NAMESPACE` imports in a single file this way.
 
