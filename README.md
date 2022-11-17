@@ -3,14 +3,17 @@
 
 # DRY R Package Development
 
+Link to slides:
+<https://indrajeetpatil.github.io/dry-r-package-development/>
+
 This presentation contains tips on how to develop R packages without
 violating the DRY (Don’t Repeat Yourself) Principle in
 
 - documentation
 - unit testing
-- vignettes
-- datasets
-- etc.
+- vignette setup
+- data
+- conditions
 
 <img src="media/simpsons.png" width="50%" />
 
