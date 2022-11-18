@@ -257,12 +257,12 @@ You can now insert contents of these child documents in the package documentatio
 
 ````{verbatim}
 ---
-output: rmarkdown::html_vignette
+output: html_vignette
 ---
 
 Some content.
 
-```{r, child="../man/rmd-children/doc1.Rmd"}
+```{r, child = "../man/rmd-children/doc1.Rmd"}
 ```
 
 ````
@@ -349,7 +349,7 @@ For example, some parts of the setup can be same across vignettes.
 ````{verbatim}
 ---
 title: "Vignette-1"
-output: rmarkdown::html_vignette
+output: html_vignette
 ---
 
 ```{r}
@@ -369,7 +369,7 @@ knitr::opts_chunk$set(
 ````{verbatim}
 ---
 title: "Vignette-2"
-output: rmarkdown::html_vignette
+output: html_vignette
 ---
 
 ```{r}
@@ -443,7 +443,7 @@ Sourcing common setup
 ````{verbatim}
 ---
 title: "Vignette-1"
-output: rmarkdown::html_vignette
+output: html_vignette
 ---
 
 ```{r setup, include = FALSE}
@@ -461,7 +461,7 @@ Sourcing common setup
 ````{verbatim}
 ---
 title: "Vignette-2"
-output: rmarkdown::html_vignette
+output: html_vignette
 ---
 
 ```{r setup, include = FALSE}
@@ -491,21 +491,76 @@ Packages in the wild that use this trick.
 
 How not to repeat yourself while creating and re-using example datasets.
 
-## Example data
+## Illustrative example datasets {.smaller}
 
-If none of the existing datasets are usable to illustrate your functions, you can create your own example dataset.
+If none of the existing datasets are useful to illustrate your functions, you can create new datasets.
 
-But using it in examples, vignettes, README, etc. will require that you define it multiple times.
+. . . 
 
-How can you avoid this repetition?
+Let's say your example dataset is called `exdat` and function is called `foo()`. Using it in examples, vignettes, README, etc. requires that it be define *multiple* times.
+
+:::: {.columns}
+
+::: {.column width='33%'}
+
+**In examples**
+
+```{.r}
+#' @examples
+#' exdat <- matrix(c(71, 50))
+#' foo(exdat)
+```
+
+:::
+
+::: {.column width='33%'}
+
+**In vignettes**
+
+````{verbatim}
+---
+title: "My Vignette"
+output: html_vignette
+---
+
+```{r}
+exdat <- matrix(c(71, 50))
+foo(exdat)
+```
+````
+
+:::
+
+::: {.column width='33%'}
+
+**In README**
+
+````{verbatim}
+---
+output: github_document
+---
+
+```{r}
+exdat <- matrix(c(71, 50))
+foo(exdat)
+```
+````
+
+:::
+
+::::
+
+</br>
+
+. . . 
+
+How can this repetition be avoided?
 
 ## Shipping data in a package {.smaller}
 
-Let's say your example dataset `exdat` is defined as:
+You can avoid this repetition by defining the data just *once*, saving and shipping it with the package.
 
-```{r}
-exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
-```
+The datasets are stored in `data/`, and documented in `R/data.R`.
 
 . . . 
 
@@ -515,16 +570,11 @@ exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
 
 **Saving data**
 
-For future reference, save script to create the dataset.
-
 ```{r, eval=FALSE}
-exdat <- matrix(c(71, 50, 30, 100), nrow = 2)
+# In `exdat.R`
+exdat <- matrix(c(71, 50))
 save(exdat, file = "data/exdat.rdata")
 ```
-
-This stores dataset in `data/exdat.rdata`.
-
-You can document it in `R/data.R`.
 
 :::
 
@@ -549,13 +599,75 @@ You can document it in `R/data.R`.
 
 . . . 
 
-`exdat` can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.
-
 :::{.callout-caution}
 
 ## Don't forget!
 
-If you include datasets, set `LazyData: true` in the `DESCRIPTION` file.
+- For future reference, save script (in `data-raw/` folder) to (re)create or update the dataset.
+- If you include datasets, set `LazyData: true` in the `DESCRIPTION` file.
+
+:::
+
+## Reusable dataset {.smaller}
+
+`exdat` can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.
+
+:::: {.columns}
+
+::: {.column width='33%'}
+
+**In examples**
+
+```{.r}
+#' @examples
+#' foo(exdat)
+```
+
+:::
+
+::: {.column width='33%'}
+
+**In vignettes**
+
+````{verbatim}
+---
+title: "My Vignette"
+output: html_vignette
+---
+
+```{r}
+foo(exdat)
+```
+````
+
+:::
+
+::: {.column width='33%'}
+
+**In README**
+
+````{verbatim}
+---
+output: github_document
+---
+
+```{r}
+foo(exdat)
+```
+````
+
+:::
+
+::::
+
+</br>
+
+
+:::{.callout-tip}
+
+## No parallel modification
+
+Note that if you now wish to update the dataset, you need to change its definition only in *one* place!
 
 :::
 
@@ -833,19 +945,19 @@ How not to repeat yourself while signalling conditions.
 
 ## Sending signals {.smaller}
 
-Conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. And, often, similar conditions need to be signalled across functions.
-
-</br>
+Conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened.
 
 . . . 
 
-For example, a class of functions might not accept negative values, and will have the same condition repeated during input validation.
+Often, similar conditions need to be signalled across functions. E.g., for functions that don't accept negative values:
+
+**input validation**
 
 :::: {.columns}
 
 ::: {.column width='50%'}
 
-```r
+```{.r}
 foo1 <- function(x) {
   if (x < 0) {
     stop("Argument `x` should be positive.")
@@ -859,7 +971,7 @@ foo1 <- function(x) {
 
 ::: {.column width='50%'}
 
-```r
+```{.r}
 foo2 <- function(y) {
   if (y < 0) {
     stop("Argument `y` should be positive.")
@@ -873,9 +985,34 @@ foo2 <- function(y) {
 
 ::::
 
-. . . 
+**unit testing**
 
-</br>
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{.r}
+expect_error(
+  foo1(-1), 
+  "Argument `x` should be positive."
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{.r}
+expect_error(
+  foo2(-1), 
+  "Argument `y` should be positive."
+)
+```
+
+:::
+
+::::
+. . . 
 
 How can this repetition be avoided?
 
@@ -933,7 +1070,7 @@ foo2 <- function(y) {
 
 ## No parallel modification
 
-Note that if we now wish to change the condition string, this change needs to be made only in *one* place.
+Note that if you now wish to change the condition string, this change needs to be made only in *one* place!
 
 :::
 
