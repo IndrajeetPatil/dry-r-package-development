@@ -5,7 +5,7 @@ format:
     theme: solarized
     slide-number: true
     preview-links: auto
-    footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/)."
+    footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/){target='_blank'}."
 #author: "Indrajeet Patil"
 #affiliation: 
 execute:
@@ -99,7 +99,7 @@ Thus, it applies to all programming entities that encode knowledge:
 
 - Thomas, D., & Hunt, A. (2019). *The Pragmatic Programmer*. Addison-Wesley Professional. (**pp. 30-38**)
 
-- Understand distinction between DRY and [DAMP (Descriptive And Meaningful Phrases)](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests)
+- Understand distinction between DRY and [DAMP (Descriptive And Meaningful Phrases)](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests){target="_blank"}
 
 :::
 
@@ -167,7 +167,7 @@ knitr::include_graphics("media/spiderman.jpeg")
 
 ## Child documents
 
-You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
+You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html){target="_blank"}.
 
 &nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa soliud equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
 
@@ -224,6 +224,7 @@ This is some crucial information to be repeated across documentation.
 - The child document is just like any `.Rmd` file and can include everything that any other `.Rmd` file can include.
 - You can choose a different name for the folder containing child documents (e.g. `rmd-fragments`).
 - Make sure to include `Roxygen: list(markdown = TRUE)` field in the `DESCRIPTION` file.
+- The child documents will not pose a problem either for `R CMD check` or for `{pkgdown}` website.
 
 :::
 
@@ -314,9 +315,9 @@ Some content.
 
 Example packages that use child documents to repeat documentation.
 
-- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments)
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments){target="_blank"}
 
-- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments)
+- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments){target="_blank"}
 
 # Vignette Setup
 
@@ -489,7 +490,7 @@ Now common setup can be modified with a change in only *one* place!
 
 Packages in the wild that use this trick.
 
-- [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R)
+- [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R){target="_blank"}
 
 # Data
 
@@ -679,9 +680,9 @@ Note that if you now wish to update the dataset, you need to change its definiti
 
 Examples of R packages that define datasets and use them repeatedly.
 
-- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot)
+- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot){target="_blank"}
 
-- [`{effectsize}`](https://github.com/easystats/effectsize)
+- [`{effectsize}`](https://github.com/easystats/effectsize){target="_blank"}
 
 # Unit testing
 
@@ -742,15 +743,13 @@ test_that(
 
 ## Parametrized unit testing {.smaller}
 
-To avoid such repetition, you can run parameterized tests. [`{patrick}`](https://github.com/google/patrick), an extension package of [`{testthat}`](https://testthat.r-lib.org/), provides a way to write parameterized unit tests.
-
-</br>
+To avoid such repetition, you can write parameterized unit tests using  [`{patrick}`](https://github.com/google/patrick){target="_blank"}.
 
 . . . 
 
 :::: {.columns}
 
-::: {.column width='52%'}
+::: {.column width='51%'}
 
 **Repeated test pattern**
 
@@ -771,9 +770,9 @@ test_that(
 
 :::
 
-::: {.column width='48%'}
+::: {.column width='49%'}
 
-**DRY testing**
+**Parametrized test pattern**
 
 `expect_identical()` used once.
 
@@ -795,6 +794,14 @@ patrick::with_parameters_test_that(
 :::
 
 ::::
+
+:::{.callout-tip}
+
+## Combinatorial explosion
+
+Although the parametrized version may not seem impressive for this simple example, it becomes exceedingly useful when there is a combinatorial explosion of possibilities that need to be tested. Doing so manually will be cumbersome and error-prone.
+
+:::
 
 ## Repeated usage of testing datasets {.smaller}
 
@@ -939,9 +946,9 @@ The exact path provided to `readRDS()` will depend on where the datasets are sto
 
 Examples of R packages that save datasets required for unit testing.
 
-- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data)
+- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data){target="_blank"}
 
-- [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
+- [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm){target="_blank"}
 
 # Conditions
 
@@ -1023,7 +1030,7 @@ How can this repetition be avoided?
 
 ## List of condition functions {.smaller}
 
-We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing all such functions in a list.
+We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing them in a list.
 
 ```r
 conditions <- list(
@@ -1034,6 +1041,14 @@ conditions <- list(
   ... # you can store as many functions as you want
 )
 ```
+
+:::{.callout-note}
+
+## Including the entire validation
+
+The entire `if()` block isn't moved to `only_positives_allowed()` to address the most general case where the condition string can be used outside of an `if()` block as a warning, error, or message.
+
+:::
 
 :::{.callout-tip}
 
@@ -1126,7 +1141,7 @@ Note that if you now wish to change the condition string, this change needs to b
 
 Examples of R packages that use a list of condition functions.
 
-- [`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R)
+- [`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R){target="_blank"}
 
 # Import specification
 
@@ -1190,9 +1205,9 @@ NULL
 
 Examples of R packages that list the `NAMESPACE` imports in a single file this way.
 
-- [`{usethis}`](https://github.com/r-lib/usethis/blob/main/R/usethis-package.R)
+- [`{usethis}`](https://github.com/r-lib/usethis/blob/main/R/usethis-package.R){target="_blank"}
 
-- [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R)
+- [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R){target="_blank"}
 
 # Conclusion
 
@@ -1200,15 +1215,15 @@ You can use these techniques to avoid repetition while developing R packages, wh
 
 # Find me at...
 
-{{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets)
+{{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets){target="_blank"}
 
-{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/)
+{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/){target="_blank"}
 
-{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
+{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil){target="_blank"}
 
-{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
+{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/){target="_blank"}
 
-{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
+{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com){target="_blank"}
 
 # Thank You 
 

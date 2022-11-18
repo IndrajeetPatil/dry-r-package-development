@@ -469,7 +469,7 @@
 <div class="callout-content">
 <ul>
 <li><p>Thomas, D., &amp; Hunt, A. (2019). <em>The Pragmatic Programmer</em>. Addison-Wesley Professional. (<strong>pp.&nbsp;30-38</strong>)</p></li>
-<li><p>Understand distinction between DRY and <a href="https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests">DAMP (Descriptive And Meaningful Phrases)</a></p></li>
+<li><p>Understand distinction between DRY and <a href="https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests" target="_blank">DAMP (Descriptive And Meaningful Phrases)</a></p></li>
 </ul>
 </div>
 </div>
@@ -529,7 +529,7 @@
 </section>
 <section id="child-documents" class="slide level2">
 <h2>Child documents</h2>
-<p>You can stitch an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
+<p>You can stitch an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html" target="_blank">child documents</a>.</p>
 <p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-5x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp;&nbsp; <i class="fa-soliud fa-equals fa-5x" aria-label="equals"></i> &nbsp;&nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
 <p>(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
 <div class="fragment">
@@ -571,6 +571,7 @@
 <li>The child document is just like any <code>.Rmd</code> file and can include everything that any other <code>.Rmd</code> file can include.</li>
 <li>You can choose a different name for the folder containing child documents (e.g.&nbsp;<code>rmd-fragments</code>).</li>
 <li>Make sure to include <code>Roxygen: list(markdown = TRUE)</code> field in the <code>DESCRIPTION</code> file.</li>
+<li>The child documents will not pose a problem either for <code>R CMD check</code> or for <code>{pkgdown}</code> website.</li>
 </ul>
 </div>
 </div>
@@ -630,8 +631,8 @@
 <h2>Self-study</h2>
 <p>Example packages that use child documents to repeat documentation.</p>
 <ul>
-<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments"><code>{pkgdown}</code></a></p></li>
-<li><p><a href="https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments"><code>{statsExpressions}</code></a></p></li>
+<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments" target="_blank"><code>{pkgdown}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments" target="_blank"><code>{statsExpressions}</code></a></p></li>
 </ul>
 </section></section>
 <section>
@@ -751,7 +752,7 @@
 <h2>Self-study</h2>
 <p>Packages in the wild that use this trick.</p>
 <ul>
-<li><a href="https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R"><code>{dm}</code></a></li>
+<li><a href="https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R" target="_blank"><code>{dm}</code></a></li>
 </ul>
 </section></section>
 <section>
@@ -892,8 +893,8 @@
 <h2>Self-study</h2>
 <p>Examples of R packages that define datasets and use them repeatedly.</p>
 <ul>
-<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot"><code>{ggstatsplot}</code></a></p></li>
-<li><p><a href="https://github.com/easystats/effectsize"><code>{effectsize}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot" target="_blank"><code>{ggstatsplot}</code></a></p></li>
+<li><p><a href="https://github.com/easystats/effectsize" target="_blank"><code>{effectsize}</code></a></p></li>
 </ul>
 </section></section>
 <section>
@@ -947,11 +948,10 @@
 </section>
 <section id="parametrized-unit-testing" class="slide level2 smaller">
 <h2>Parametrized unit testing</h2>
-<p>To avoid such repetition, you can run parameterized tests. <a href="https://github.com/google/patrick"><code>{patrick}</code></a>, an extension package of <a href="https://testthat.r-lib.org/"><code>{testthat}</code></a>, provides a way to write parameterized unit tests.</p>
-<p><br></p>
+<p>To avoid such repetition, you can write parameterized unit tests using <a href="https://github.com/google/patrick" target="_blank"><code>{patrick}</code></a>.</p>
 <div class="fragment">
 <div class="columns">
-<div class="column" style="width:52%;">
+<div class="column" style="width:51%;">
 <p><strong>Repeated test pattern</strong></p>
 <p><code>expect_identical()</code> used repeatedly.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">test_that</span>(</span>
@@ -964,8 +964,8 @@
 <span id="cb23-8"><a href="#cb23-8"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
 <span id="cb23-9"><a href="#cb23-9"></a>  }</span>
 <span id="cb23-10"><a href="#cb23-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:48%;">
-<p><strong>DRY testing</strong></p>
+</div><div class="column" style="width:49%;">
+<p><strong>Parametrized test pattern</strong></p>
 <p><code>expect_identical()</code> used once.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
@@ -979,6 +979,19 @@
 <span id="cb24-10"><a href="#cb24-10"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
 <span id="cb24-11"><a href="#cb24-11"></a>  )</span>
 <span id="cb24-12"><a href="#cb24-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Combinatorial explosion</strong></p>
+</div>
+<div class="callout-content">
+<p>Although the parametrized version may not seem impressive for this simple example, it becomes exceedingly useful when there is a combinatorial explosion of possibilities that need to be tested. Doing so manually will be cumbersome and error-prone.</p>
+</div>
 </div>
 </div>
 </div>
@@ -1078,8 +1091,8 @@
 <h2>Self-study</h2>
 <p>Examples of R packages that save datasets required for unit testing.</p>
 <ul>
-<li><p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data"><code>{ospsuite}</code></a></p></li>
-<li><p><a href="https://github.com/cynkra/dm/tree/main/tests/testthat/dm"><code>{dm}</code></a></p></li>
+<li><p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data" target="_blank"><code>{ospsuite}</code></a></p></li>
+<li><p><a href="https://github.com/cynkra/dm/tree/main/tests/testthat/dm" target="_blank"><code>{dm}</code></a></p></li>
 </ul>
 </section></section>
 <section>
@@ -1133,7 +1146,7 @@
 </section>
 <section id="list-of-condition-functions" class="slide level2 smaller">
 <h2>List of condition functions</h2>
-<p>We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing all such functions in a list.</p>
+<p>We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing them in a list.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>conditions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb35-2"><a href="#cb35-2"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
 <span id="cb35-3"><a href="#cb35-3"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
@@ -1141,6 +1154,19 @@
 <span id="cb35-5"><a href="#cb35-5"></a>  </span>
 <span id="cb35-6"><a href="#cb35-6"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
 <span id="cb35-7"><a href="#cb35-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Including the entire validation</strong></p>
+</div>
+<div class="callout-content">
+<p>The entire <code>if()</code> block isn’t moved to <code>only_positives_allowed()</code> to address the most general case where the condition string can be used outside of an <code>if()</code> block as a warning, error, or message.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1212,7 +1238,7 @@
 <h2>Self-study</h2>
 <p>Examples of R packages that use a list of condition functions.</p>
 <ul>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R"><code>{ospsuite.utils}</code></a></li>
+<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R" target="_blank"><code>{ospsuite.utils}</code></a></li>
 </ul>
 </section></section>
 <section>
@@ -1262,8 +1288,8 @@
 <h2>Self-study</h2>
 <p>Examples of R packages that list the <code>NAMESPACE</code> imports in a single file this way.</p>
 <ul>
-<li><p><a href="https://github.com/r-lib/usethis/blob/main/R/usethis-package.R"><code>{usethis}</code></a></p></li>
-<li><p><a href="https://github.com/r-lib/lintr/blob/main/R/lintr-package.R"><code>{lintr}</code></a></p></li>
+<li><p><a href="https://github.com/r-lib/usethis/blob/main/R/usethis-package.R" target="_blank"><code>{usethis}</code></a></p></li>
+<li><p><a href="https://github.com/r-lib/lintr/blob/main/R/lintr-package.R" target="_blank"><code>{lintr}</code></a></p></li>
 </ul>
 </section></section>
 <section id="conclusion" class="title-slide slide level1 center">
@@ -1273,11 +1299,11 @@
 
 <section id="find-me-at" class="title-slide slide level1 center">
 <h1>Find me at…</h1>
-<p><i class="fa-brands fa-twitter" aria-label="twitter"></i> <a href="http://twitter.com/patilindrajeets">Twitter</a></p>
-<p><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/">LikedIn</a></p>
-<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="http://github.com/IndrajeetPatil">GitHub</a></p>
-<p><i class="fa-solid fa-link" aria-label="link"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
-<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> <a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
+<p><i class="fa-brands fa-twitter" aria-label="twitter"></i> <a href="http://twitter.com/patilindrajeets" target="_blank">Twitter</a></p>
+<p><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-397865174/" target="_blank">LikedIn</a></p>
+<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="http://github.com/IndrajeetPatil" target="_blank">GitHub</a></p>
+<p><i class="fa-solid fa-link" aria-label="link"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/" target="_blank">Website</a></p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> <a href="mailto:patilindrajeet.science@gmail.com" target="_blank">E-mail</a></p>
 </section>
 
 <section>
@@ -1339,7 +1365,7 @@
 </div>
 </div>
 <div class="footer footer-default">
-<p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/dry-r-package-development/">here</a>.</p>
+<p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/dry-r-package-development/" target="_blank">here</a>.</p>
 </div>
 </section></section>
     </div>
