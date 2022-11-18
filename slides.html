@@ -1130,8 +1130,25 @@
 <span id="cb35-5"><a href="#cb35-5"></a>  </span>
 <span id="cb35-6"><a href="#cb35-6"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
 <span id="cb35-7"><a href="#cb35-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="fragment">
+<div class="callout callout-tip callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Exportable</strong></p>
+</div>
+<div class="callout-content">
+<p>Most often the condition messages will be useful only for internal use. But, if the conditions are generic enough, you can even export them!</p>
+<p>This will make them reusable not only in the current package, but also in other packages.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reusable-conditions" class="slide level2 smaller">
+<h2>Reusable conditions</h2>
 <p>We can then use these functions to signal conditions.</p>
+<p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="sourceCode" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
@@ -1151,6 +1168,21 @@
 <span id="cb37-7"><a href="#cb37-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<p><strong>Unit testing</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb38-3"><a href="#cb38-3"></a>  conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb39-3"><a href="#cb39-3"></a>  conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
+<span id="cb39-4"><a href="#cb39-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br></p>
 <div class="callout callout-tip callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1161,7 +1193,6 @@
 </div>
 <div class="callout-content">
 <p>Note that if you now wish to change the condition string, this change needs to be made only in <em>one</em> place!</p>
-</div>
 </div>
 </div>
 </div>
@@ -1186,32 +1217,32 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># file-1</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a>...</span>
-<span id="cb38-4"><a href="#cb38-4"></a></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="co"># file-2</span></span>
-<span id="cb38-6"><a href="#cb38-6"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb38-7"><a href="#cb38-7"></a>...</span>
-<span id="cb38-8"><a href="#cb38-8"></a></span>
-<span id="cb38-9"><a href="#cb38-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb38-10"><a href="#cb38-10"></a>...</span>
-<span id="cb38-11"><a href="#cb38-11"></a></span>
-<span id="cb38-12"><a href="#cb38-12"></a><span class="co"># file-3</span></span>
-<span id="cb38-13"><a href="#cb38-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb38-14"><a href="#cb38-14"></a>...</span>
-<span id="cb38-15"><a href="#cb38-15"></a></span>
-<span id="cb38-16"><a href="#cb38-16"></a><span class="co"># file-4, file-5, etc.</span></span>
-<span id="cb38-17"><a href="#cb38-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># file-1</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>...</span>
+<span id="cb40-4"><a href="#cb40-4"></a></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="co"># file-2</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb40-7"><a href="#cb40-7"></a>...</span>
+<span id="cb40-8"><a href="#cb40-8"></a></span>
+<span id="cb40-9"><a href="#cb40-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb40-10"><a href="#cb40-10"></a>...</span>
+<span id="cb40-11"><a href="#cb40-11"></a></span>
+<span id="cb40-12"><a href="#cb40-12"></a><span class="co"># file-3</span></span>
+<span id="cb40-13"><a href="#cb40-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb40-14"><a href="#cb40-14"></a>...</span>
+<span id="cb40-15"><a href="#cb40-15"></a></span>
+<span id="cb40-16"><a href="#cb40-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb40-17"><a href="#cb40-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="do">## {pkgname} namespace: start</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="co">#'</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="co">#'</span></span>
-<span id="cb39-6"><a href="#cb39-6"></a><span class="do">## {pkgname} namespace: end</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="co">#'</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a><span class="co">#'</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1246,7 +1277,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value

@@ -1012,6 +1012,7 @@ expect_error(
 :::
 
 ::::
+
 . . . 
 
 How can this repetition be avoided?
@@ -1030,9 +1031,21 @@ conditions <- list(
 )
 ```
 
-. . . 
+:::{.callout-tip}
 
-We can then use these functions to signal conditions. 
+## Exportable
+
+Most often the condition messages will be useful only for internal use. But, if the conditions are generic enough, you can even export them!
+
+This will make them reusable not only in the current package, but also in other packages.
+
+:::
+
+## Reusable conditions {.smaller}
+
+We can then use these functions to signal conditions.
+
+**Input validation**
 
 :::: {.columns}
 
@@ -1065,6 +1078,37 @@ foo2 <- function(y) {
 :::
 
 ::::
+
+
+**Unit testing**
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{.r}
+expect_error(
+  foo1(-1), 
+  conditions$only_positives_allowed("x")
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{.r}
+expect_error(
+  foo2(-1), 
+  conditions$only_positives_allowed("y")
+)
+```
+
+:::
+
+::::
+
+</br>
 
 :::{.callout-tip}
 
