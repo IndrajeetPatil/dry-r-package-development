@@ -477,9 +477,13 @@ options(crayon.enabled = TRUE)
 
 . . . 
 
-</br>
+:::{.callout-tip}
 
-Now common setup can be modified with a single change in setup script!
+## No parallel modification
+
+Now common setup can be modified with a change in only *one* place!
+
+:::
 
 ## Self-study
 
@@ -1117,7 +1121,6 @@ expect_error(
 Note that if you now wish to change the condition string, this change needs to be made only in *one* place!
 
 :::
-
 
 ## Self-study
 
