@@ -492,6 +492,8 @@ Packages in the wild that use this trick.
 
 - [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R){target="_blank"}
 
+- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/blob/main/vignettes/setup.R){target="_blank"}
+
 # Data
 
 How not to repeat yourself while creating and re-using example datasets.
