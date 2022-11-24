@@ -861,7 +861,7 @@ Always save the script used to create datasets. This script act as documentation
 
 ## Using test datasets {.smaller}
 
-Without stored datasts, you define the same datasets **multiple** times across test files.
+Without stored datasets, you define the same datasets **multiple** times across test files.
 
 :::: {.columns}
 
@@ -899,7 +899,7 @@ foo2(testdat1)
 
 . . . 
 
-Without saved datasets, you define just **once** and load them from test files.
+With saved datasets, you define just **once** and load them from test files.
 
 :::: {.columns}
 
