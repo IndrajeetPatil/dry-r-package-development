@@ -1215,6 +1215,10 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 
 You can use these techniques to avoid repetition while developing R packages, which should make the development workflow faster, more maintainable, and less error-prone.
 
+# For more
+
+If you are interested in reading more of my slide decks on related topics, visit [this](https://sites.google.com/site/indrajeetspatilmorality/presentations){target="_blank"} page.
+
 # Find me at...
 
 {{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets){target="_blank"}
