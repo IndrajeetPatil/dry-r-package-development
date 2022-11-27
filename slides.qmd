@@ -13,9 +13,9 @@ execute:
 keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
 ---
 
-<!-- Don't render this file manually. Run `renderer.R` script instead. -->
-
 ## DRY Package Development in R {style="text-align: center;"}
+
+<!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
 ::: {style="text-align: center;"}
 
