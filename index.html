@@ -9,7 +9,7 @@
 <link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.3.30">
+  <meta name="generator" content="quarto-1.3.26">
 
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>slides</title>
@@ -486,7 +486,7 @@
 <li>Unit testing</li>
 <li>Vignette setup</li>
 <li>Importing external functions</li>
-<li>Conditions</li>
+<li>Exceptions</li>
 </ul>
 </section>
 
@@ -497,14 +497,14 @@
 </section>
 <section id="what-do-users-read" class="slide level2 smaller">
 <h2>What do users read?</h2>
-<p>What users consult to find needed information maybe context-dependent.</p>
+<p>What users consult to find needed information may be context-dependent.</p>
 <p><br></p>
 <div class="fragment">
 <p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: While exploring the package repository.</p>
 <p><br></p>
-<p><i class="fa-solid fa-file-pdf fa-2xl" aria-label="file-pdf"></i> <strong>Manual</strong>: While reading PDF manual or help pages in the IDE.</p>
+<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>: When first learning how to use a package.</p>
 <p><br></p>
-<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>: While reading documentation on CRAN.</p>
+<p><i class="fa-solid fa-file-invoice fa-2xl" aria-label="file-invoice"></i> <strong>Manual</strong>: When checking details about a specific function.</p>
 <p><br></p>
 </div>
 <div class="fragment">
@@ -547,10 +547,10 @@
 <pre><code>├── DESCRIPTION
 ├── man
 │   └── rmd-children
-│       └── doc1.Rmd
+│       └── info1.Rmd
 │       └── ...</code></pre>
 </div><div class="column" style="width:70%;">
-<p><code>man/rmd-children/doc1.Rmd</code> example.</p>
+<p><code>man/rmd-children/info1.Rmd</code> example.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1"></a>This is some crucial information to be repeated across documentation.</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a>```{r}</span>
@@ -601,7 +601,7 @@
 <span id="cb4-4"><a href="#cb4-4"></a></span>
 <span id="cb4-5"><a href="#cb4-5"></a>Some content.</span>
 <span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a>```{r, child = "../man/rmd-children/doc1.Rmd"}</span>
+<span id="cb4-7"><a href="#cb4-7"></a>```{r, child = "../man/rmd-children/info1.Rmd"}</span>
 <span id="cb4-8"><a href="#cb4-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -620,7 +620,7 @@
 <span id="cb6-4"><a href="#cb6-4"></a></span>
 <span id="cb6-5"><a href="#cb6-5"></a>Some content.</span>
 <span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a>```{r, child = "man/rmd-children/doc1.Rmd"}</span>
+<span id="cb6-7"><a href="#cb6-7"></a>```{r, child = "man/rmd-children/info1.Rmd"}</span>
 <span id="cb6-8"><a href="#cb6-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -1001,7 +1001,7 @@
 </section>
 <section id="repeated-usage-of-testing-datasets" class="slide level2 smaller">
 <h2>Repeated usage of testing datasets</h2>
-<p>You have already seen how <em>user</em>-facing datasets - useful for illustrating function usage - can be defined and saved once and then used repeatedly.</p>
+<p>You have already seen how <em>user</em>-facing datasets — useful for illustrating function usage — can be defined and saved once and then used repeatedly.</p>
 <p>Similarly, you can define and save <em>developer</em>-facing datasets - useful for testing purposes - and use them across multiple tests.</p>
 <p><br></p>
 <div class="fragment">
@@ -1099,15 +1099,15 @@
 </ul>
 </section></section>
 <section>
-<section id="conditions" class="title-slide slide level1 center">
-<h1>Conditions</h1>
-<p>How not to repeat yourself while signalling conditions.</p>
+<section id="exceptions" class="title-slide slide level1 center">
+<h1>Exceptions</h1>
+<p>How not to repeat yourself while signalling exceptions</p>
 </section>
 <section id="sending-signals" class="slide level2 smaller">
 <h2>Sending signals</h2>
-<p>Conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened.</p>
+<p>Exceptions/conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. Often, similar exceptions need to be signalled across functions.</p>
 <div class="fragment">
-<p>Often, similar conditions need to be signalled across functions. E.g., for functions that don’t accept negative values:</p>
+<p>E.g., for functions that don’t accept negative values:</p>
 <p><strong>input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1147,10 +1147,10 @@
 <p>How can this repetition be avoided?</p>
 </div>
 </section>
-<section id="list-of-condition-functions" class="slide level2 smaller">
-<h2>List of condition functions</h2>
-<p>We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing them in a list.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>conditions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<section id="list-of-exception-functions" class="slide level2 smaller">
+<h2>List of exception functions</h2>
+<p>We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb35-2"><a href="#cb35-2"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
 <span id="cb35-3"><a href="#cb35-3"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
 <span id="cb35-4"><a href="#cb35-4"></a>  },</span>
@@ -1163,37 +1163,28 @@
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Including the entire validation</strong></p>
+<p><strong>Why not include the entire validation?</strong></p>
 </div>
 <div class="callout-content">
-<p>The entire <code>if()</code> block isn’t moved to <code>only_positives_allowed()</code> to address the most general case where the condition string can be used outside of an <code>if()</code> block as a warning, error, or message.</p>
-</div>
-</div>
-</div>
-<div class="callout callout-tip callout-captioned callout-style-default">
-<div class="callout-body">
-<div class="callout-caption">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Exportable</strong></p>
-</div>
-<div class="callout-content">
-<p>Most often the condition messages will be useful only for internal use. But, if the conditions are generic enough, you can even export them!</p>
-<p>This will make them reusable not only in the current package, but also in other packages.</p>
+<p>You can move the entire <code>if()</code> block to <code>only_positives_allowed()</code> and create a new validation function.</p>
+<p>But this is not done here to address the most general case where:</p>
+<ul>
+<li>the exception message string can be used outside of an <code>if()</code> block</li>
+<li>it can be used not only as a message, but may be as a warning or an error</li>
+</ul>
 </div>
 </div>
 </div>
 </section>
-<section id="reusable-conditions" class="slide level2 smaller">
-<h2>Reusable conditions</h2>
-<p>We can then use these functions to signal conditions.</p>
+<section id="reusable-exceptions-part-1" class="slide level2 smaller">
+<h2>Reusable exceptions: Part-1</h2>
+<p>We can then use these functions to signal exceptions.</p>
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="sourceCode" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb36-2"><a href="#cb36-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">stop</span>(conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
+<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
 <span id="cb36-4"><a href="#cb36-4"></a>  }</span>
 <span id="cb36-5"><a href="#cb36-5"></a>  </span>
 <span id="cb36-6"><a href="#cb36-6"></a>  ...</span>
@@ -1201,7 +1192,7 @@
 </div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
 <span id="cb37-2"><a href="#cb37-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">stop</span>(conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
+<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
 <span id="cb37-4"><a href="#cb37-4"></a>  }</span>
 <span id="cb37-5"><a href="#cb37-5"></a>  </span>
 <span id="cb37-6"><a href="#cb37-6"></a>  ...</span>
@@ -1213,12 +1204,12 @@
 <div class="column" style="width:50%;">
 <div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">expect_error</span>(</span>
 <span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
-<span id="cb38-3"><a href="#cb38-3"></a>  conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
 <span id="cb38-4"><a href="#cb38-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">expect_error</span>(</span>
 <span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
-<span id="cb39-3"><a href="#cb39-3"></a>  conditions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
 <span id="cb39-4"><a href="#cb39-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -1237,12 +1228,76 @@
 </div>
 </div>
 </section>
+<section id="reusable-exceptions-part-2" class="slide level2 smaller">
+<h2>Reusable exceptions: Part-2</h2>
+<p>As noted before, you can also move the entire validation to a new function. E.g.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="at">check_only_positive =</span> <span class="cf">function</span>(arg) {</span>
+<span id="cb40-3"><a href="#cb40-3"></a>    arg_name <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(arg))</span>
+<span id="cb40-4"><a href="#cb40-4"></a>    <span class="cf">if</span> (arg <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb40-5"><a href="#cb40-5"></a>      <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>))</span>
+<span id="cb40-6"><a href="#cb40-6"></a>    }</span>
+<span id="cb40-7"><a href="#cb40-7"></a>  },</span>
+<span id="cb40-8"><a href="#cb40-8"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
+<span id="cb40-9"><a href="#cb40-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Input validation</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">check_only_positive</span>(x)</span>
+<span id="cb41-3"><a href="#cb41-3"></a>  </span>
+<span id="cb41-4"><a href="#cb41-4"></a>  ...</span>
+<span id="cb41-5"><a href="#cb41-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">check_only_positive</span>(y)</span>
+<span id="cb42-3"><a href="#cb42-3"></a>  </span>
+<span id="cb42-4"><a href="#cb42-4"></a>  ...</span>
+<span id="cb42-5"><a href="#cb42-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><strong>Unit testing</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">expect_error</span>(</span>
+<span id="cb43-3"><a href="#cb43-3"></a>  exceptions<span class="sc">$</span><span class="fu">check_only_positive</span>(x), </span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="st">"Argument `x` should be positive."</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<p>Since the validation has moved to a new function, you only need to test it once.</p>
+</div>
+</div>
+</section>
+<section id="dry-once-dry-multiple-times" class="slide level2 smaller">
+<h2>DRY once, DRY multiple times</h2>
+<p>Most often the exceptions will be useful only for the package in which they are defined in. But, if the exceptions are generic enough, you can even export them. This will make them reusable not only in the current package, but also in other packages.</p>
+<p>That is, DRYing up exceptions in one package does the same for many!</p>
+<div class="callout callout-note callout-captioned callout-style-default">
+<div class="callout-body">
+<div class="callout-caption">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why a list?</strong></p>
+</div>
+<div class="callout-content">
+<p>It is not <em>necessary</em> that you store exceptions in a list; you can create individual functions outside of a list and export them.</p>
+<p>But storing them in a list has the following advantages:</p>
+<ul>
+<li><p><strong>Simpler <code>NAMESPACE</code></strong>: There is a <em>single</em> export for all exceptions (e.g.&nbsp;<code>exceptions</code>), instead of dozens (e.g., <code>only_positives_allowed()</code>, <code>only_negatives_allowed</code>, <code>only_scalar_allowed()</code>, etc.), which can overpower the rest of the package API.</p></li>
+<li><p><strong>Extendability</strong>: You can easily append a list of imported exceptions by adding more exceptions which are relevant only for the current package. E.g. <code>exceptions$my_new_exception_function &lt;- function() {...}</code></p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
 <section id="self-study-4" class="slide level2">
 <h2>Self-study</h2>
-<p>Examples of R packages that use a list of condition functions.</p>
-<ul>
-<li><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R" target="_blank"><code>{ospsuite.utils}</code></a></li>
-</ul>
+<p>Example of R package that create a list of exception functions and exports it:</p>
+<p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R" target="_blank"><code>{ospsuite.utils}</code></a></p>
+<p>Example of R package that imports this list and appends it:</p>
+<p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R" target="_blank"><code>{ospsuite}</code></a></p>
 </section></section>
 <section>
 <section id="import-specification" class="title-slide slide level1 center">
@@ -1257,32 +1312,32 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># file-1</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>...</span>
-<span id="cb40-4"><a href="#cb40-4"></a></span>
-<span id="cb40-5"><a href="#cb40-5"></a><span class="co"># file-2</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb40-7"><a href="#cb40-7"></a>...</span>
-<span id="cb40-8"><a href="#cb40-8"></a></span>
-<span id="cb40-9"><a href="#cb40-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb40-10"><a href="#cb40-10"></a>...</span>
-<span id="cb40-11"><a href="#cb40-11"></a></span>
-<span id="cb40-12"><a href="#cb40-12"></a><span class="co"># file-3</span></span>
-<span id="cb40-13"><a href="#cb40-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb40-14"><a href="#cb40-14"></a>...</span>
-<span id="cb40-15"><a href="#cb40-15"></a></span>
-<span id="cb40-16"><a href="#cb40-16"></a><span class="co"># file-4, file-5, etc.</span></span>
-<span id="cb40-17"><a href="#cb40-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># file-1</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a>...</span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="co"># file-2</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb44-7"><a href="#cb44-7"></a>...</span>
+<span id="cb44-8"><a href="#cb44-8"></a></span>
+<span id="cb44-9"><a href="#cb44-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb44-10"><a href="#cb44-10"></a>...</span>
+<span id="cb44-11"><a href="#cb44-11"></a></span>
+<span id="cb44-12"><a href="#cb44-12"></a><span class="co"># file-3</span></span>
+<span id="cb44-13"><a href="#cb44-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a>...</span>
+<span id="cb44-15"><a href="#cb44-15"></a></span>
+<span id="cb44-16"><a href="#cb44-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb44-17"><a href="#cb44-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="do">## {pkgname} namespace: start</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="co">#'</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb41-4"><a href="#cb41-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb41-5"><a href="#cb41-5"></a><span class="co">#'</span></span>
-<span id="cb41-6"><a href="#cb41-6"></a><span class="do">## {pkgname} namespace: end</span></span>
-<span id="cb41-7"><a href="#cb41-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#'</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="co">#'</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1322,51 +1377,52 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
  version  R version 4.2.2 (2022-10-31)
- os       Ubuntu 20.04.5 LTS
- system   x86_64, linux-gnu
+ os       macOS Ventura 13.0
+ system   aarch64, darwin20
  ui       X11
  language (EN)
- collate  C.UTF-8
- ctype    C.UTF-8
- tz       UTC
- date     2022-11-27
- pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       Europe/Berlin
+ date     2022-11-28
+ pandoc   2.19.2 @ /Applications/RStudio.app/Contents/MacOS/quarto/bin/tools/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package     * version date (UTC) lib source
- base        * 4.2.2   2022-10-31 [3] local
- cli           3.4.1   2022-09-23 [1] RSPM
- compiler      4.2.2   2022-10-31 [3] local
- datasets    * 4.2.2   2022-10-31 [3] local
- digest        0.6.30  2022-10-18 [1] RSPM
- evaluate      0.18    2022-11-07 [1] RSPM
- fastmap       1.1.0   2021-01-25 [1] RSPM
- graphics    * 4.2.2   2022-10-31 [3] local
- grDevices   * 4.2.2   2022-10-31 [3] local
- htmltools     0.5.3   2022-07-18 [1] RSPM
- jsonlite      1.8.3   2022-10-21 [1] RSPM
- knitr         1.41    2022-11-18 [1] RSPM
- magrittr      2.0.3   2022-03-30 [1] RSPM
- methods     * 4.2.2   2022-10-31 [3] local
- rlang         1.0.6   2022-09-24 [1] RSPM
- rmarkdown     2.18    2022-11-09 [1] RSPM
- sessioninfo   1.2.2   2021-12-06 [1] any (@1.2.2)
- stats       * 4.2.2   2022-10-31 [3] local
- stringi       1.7.8   2022-07-11 [1] RSPM
- stringr       1.4.1   2022-08-20 [1] RSPM
- tools         4.2.2   2022-10-31 [3] local
- utils       * 4.2.2   2022-10-31 [3] local
- xfun          0.35    2022-11-16 [1] RSPM
- yaml          2.3.6   2022-10-18 [1] RSPM
+ ! package     * version date (UTC) lib source
+   base        * 4.2.2   2022-10-31 [?] local
+   cli           3.4.1   2022-09-23 [1] CRAN (R 4.2.0)
+ P compiler      4.2.2   2022-10-31 [1] local
+ P datasets    * 4.2.2   2022-10-31 [1] local
+   digest        0.6.30  2022-10-18 [1] CRAN (R 4.2.1)
+   evaluate      0.18    2022-11-07 [1] CRAN (R 4.2.2)
+   fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.2.0)
+ P graphics    * 4.2.2   2022-10-31 [1] local
+ P grDevices   * 4.2.2   2022-10-31 [1] local
+   htmltools     0.5.3   2022-07-18 [1] CRAN (R 4.2.1)
+   jsonlite      1.8.3   2022-10-21 [1] CRAN (R 4.2.1)
+   knitr         1.41    2022-11-18 [1] CRAN (R 4.2.2)
+   magrittr      2.0.3   2022-03-30 [1] CRAN (R 4.2.0)
+ P methods     * 4.2.2   2022-10-31 [1] local
+   rlang         1.0.6   2022-09-24 [1] CRAN (R 4.2.1)
+   rmarkdown     2.18    2022-11-09 [1] CRAN (R 4.2.2)
+   rstudioapi    0.14    2022-08-22 [1] CRAN (R 4.2.1)
+   sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.2.0)
+ P stats       * 4.2.2   2022-10-31 [1] local
+   stringi       1.7.8   2022-07-11 [1] CRAN (R 4.2.1)
+   stringr       1.4.1   2022-08-20 [1] CRAN (R 4.2.1)
+ P tools         4.2.2   2022-10-31 [1] local
+ P utils       * 4.2.2   2022-10-31 [1] local
+   xfun          0.35    2022-11-16 [1] CRAN (R 4.2.2)
+   yaml          2.3.6   2022-10-18 [1] CRAN (R 4.2.1)
 
- [1] /home/runner/work/_temp/Library
- [2] /opt/R/4.2.2/lib/R/site-library
- [3] /opt/R/4.2.2/lib/R/library
+ [1] /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/library
+
+ P ── Loaded and on-disk path mismatch.
 
 ──────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>

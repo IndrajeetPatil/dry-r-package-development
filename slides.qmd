@@ -114,7 +114,7 @@ Let's see how to apply DRY principle to remove duplication in following aspects 
 - Unit testing
 - Vignette setup
 - Importing external functions
-- Conditions
+- Exceptions
 
 # Documentation
 
@@ -122,7 +122,7 @@ How not to repeat yourself while writing documentation.
 
 ## What do users read? {.smaller}
 
-What users consult to find needed information maybe context-dependent.
+What users consult to find needed information may be context-dependent.
 
 </br>
 
@@ -132,11 +132,11 @@ What users consult to find needed information maybe context-dependent.
 
 </br>
 
-{{< fa file-pdf size=2xl >}} **Manual**: While reading PDF manual or help pages in the IDE.
+{{< fa file size=2xl >}} **Vignettes**: When first learning how to use a package.
 
 </br>
 
-{{< fa file size=2xl >}} **Vignettes**: While reading documentation on CRAN.
+{{< fa solid file-invoice size=2xl >}} **Manual**: When checking details about a specific function.
 
 </br>
 
@@ -194,7 +194,7 @@ Stratagem: You can store child documents in the manual directory and reuse them.
 ├── DESCRIPTION
 ├── man
 │   └── rmd-children
-│       └── doc1.Rmd
+│       └── info1.Rmd
 │       └── ...
 ```
 
@@ -202,7 +202,7 @@ Stratagem: You can store child documents in the manual directory and reuse them.
 
 ::: {.column width='70%'}
 
-`man/rmd-children/doc1.Rmd` example.
+`man/rmd-children/info1.Rmd` example.
 
 ````{verbatim}
 This is some crucial information to be repeated across documentation.
@@ -266,7 +266,7 @@ output: html_vignette
 
 Some content.
 
-```{r, child = "../man/rmd-children/doc1.Rmd"}
+```{r, child = "../man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -301,7 +301,7 @@ output: github_document
 
 Some content.
 
-```{r, child = "man/rmd-children/doc1.Rmd"}
+```{r, child = "man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -810,7 +810,7 @@ Although the parametrized version may not seem impressive for this simple exampl
 
 ## Repeated usage of testing datasets {.smaller}
 
-You have already seen how *user*-facing datasets - useful for illustrating function usage - can be defined and saved once and then used repeatedly.
+You have already seen how *user*-facing datasets — useful for illustrating function usage — can be defined and saved once and then used repeatedly.
 
 Similarly, you can define and save *developer*-facing datasets - useful for testing purposes - and use them across multiple tests.
 
@@ -955,17 +955,17 @@ Examples of R packages that save datasets required for unit testing.
 
 - [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm){target="_blank"}
 
-# Conditions
+# Exceptions
 
-How not to repeat yourself while signalling conditions.
+How not to repeat yourself while signalling exceptions
 
 ## Sending signals {.smaller}
 
-Conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened.
+Exceptions/conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. Often, similar exceptions need to be signalled across functions.
 
 . . . 
 
-Often, similar conditions need to be signalled across functions. E.g., for functions that don't accept negative values:
+E.g., for functions that don't accept negative values:
 
 **input validation**
 
@@ -1033,12 +1033,12 @@ expect_error(
 
 How can this repetition be avoided?
 
-## List of condition functions {.smaller}
+## List of exception functions {.smaller}
 
-We can avoid this repetition by extracting condition strings in a separate function with an informative name. And then storing them in a list.
+We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.
 
 ```r
-conditions <- list(
+exceptions <- list(
   only_positives_allowed = function(arg_name) {
     paste0("Argument `", arg_name, "` should be positive.")
   },
@@ -1049,25 +1049,20 @@ conditions <- list(
 
 :::{.callout-note}
 
-## Including the entire validation
+## Why not include the entire validation?
 
-The entire `if()` block isn't moved to `only_positives_allowed()` to address the most general case where the condition string can be used outside of an `if()` block as a warning, error, or message.
+You can move the entire `if()` block to `only_positives_allowed()` and create a new validation function.
 
-:::
+But this is not done here to address the most general case where:
 
-:::{.callout-tip}
-
-## Exportable
-
-Most often the condition messages will be useful only for internal use. But, if the conditions are generic enough, you can even export them!
-
-This will make them reusable not only in the current package, but also in other packages.
+- the exception message string can be used outside of an `if()` block
+- it can be used not only as a message, but may be as a warning or an error
 
 :::
 
-## Reusable conditions {.smaller}
+## Reusable exceptions: Part-1 {.smaller}
 
-We can then use these functions to signal conditions.
+We can then use these functions to signal exceptions.
 
 **Input validation**
 
@@ -1078,7 +1073,7 @@ We can then use these functions to signal conditions.
 ```r
 foo1 <- function(x) {
   if (x < 0) {
-    stop(conditions$only_positives_allowed("x"))
+    stop(exceptions$only_positives_allowed("x"))
   }
   
   ...
@@ -1092,7 +1087,7 @@ foo1 <- function(x) {
 ```r
 foo2 <- function(y) {
   if (y < 0) {
-    stop(conditions$only_positives_allowed("y"))
+    stop(exceptions$only_positives_allowed("y"))
   }
   
   ...
@@ -1113,7 +1108,7 @@ foo2 <- function(y) {
 ```{.r}
 expect_error(
   foo1(-1), 
-  conditions$only_positives_allowed("x")
+  exceptions$only_positives_allowed("x")
 )
 ```
 
@@ -1124,7 +1119,7 @@ expect_error(
 ```{.r}
 expect_error(
   foo2(-1), 
-  conditions$only_positives_allowed("y")
+  exceptions$only_positives_allowed("y")
 )
 ```
 
@@ -1142,11 +1137,106 @@ Note that if you now wish to change the condition string, this change needs to b
 
 :::
 
+## Reusable exceptions: Part-2 {.smaller}
+
+As noted before, you can also move the entire validation to a new function. E.g.
+
+```{.r}
+exceptions <- list(
+  check_only_positive = function(arg) {
+    arg_name <- deparse(substitute(arg))
+    if (arg < 0) {
+      stop(paste0("Argument `", arg_name, "` should be positive."))
+    }
+  },
+  ... # you can store as many functions as you want
+)
+```
+
+**Input validation**
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{.r}
+foo1 <- function(x) {
+  check_only_positive(x)
+  
+  ...
+}
+```
+
+:::
+
+::: {.column width='50%'}
+
+```{.r}
+foo2 <- function(y) {
+  check_only_positive(y)
+  
+  ...
+}
+```
+
+:::
+
+::::
+
+
+**Unit testing**
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+```{.r}
+x <- -1
+expect_error(
+  exceptions$check_only_positive(x), 
+  "Argument `x` should be positive."
+)
+```
+
+:::
+
+::: {.column width='50%'}
+
+Since the validation has moved to a new function, you only need to test it once.
+
+:::
+
+::::
+
+## DRY once, DRY multiple times {.smaller}
+
+Most often the exceptions will be useful only for the package in which they are defined in. But, if the exceptions are generic enough, you can even export them. This will make them reusable not only in the current package, but also in other packages. 
+
+That is, DRYing up exceptions in one package does the same for many!
+
+:::{.callout-note}
+
+## Why a list?
+
+It is not *necessary* that you store exceptions in a list; you can create individual functions outside of a list and export them. 
+
+But storing them in a list has the following advantages:
+
+- **Simpler `NAMESPACE`**: There is a *single* export for all exceptions (e.g. `exceptions`), instead of dozens (e.g., `only_positives_allowed()`, `only_negatives_allowed`, `only_scalar_allowed()`, etc.), which can overpower the rest of the package API.
+
+- **Extendability**: You can easily append a list of imported exceptions by adding more exceptions which are relevant only for the current package. E.g. `exceptions$my_new_exception_function <- function() {...}`
+
+:::
+
 ## Self-study
 
-Examples of R packages that use a list of condition functions.
+Example of R package that create a list of exception functions and exports it:
 
-- [`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R){target="_blank"}
+[`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R){target="_blank"}
+
+Example of R package that imports this list and appends it:
+
+[`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R){target="_blank"}
 
 # Import specification
 
