@@ -18,7 +18,8 @@ URL: https://github.com/IndrajeetPatil/dry-r-package-development/,
     https://indrajeetpatil.github.io/dry-r-package-development/
 BugReports: https://github.com/IndrajeetPatil/dry-r-package-development/issues
 Depends:
-    knitr,
+    downlit,
     fs,
+    knitr,
     quarto,
     reticulate

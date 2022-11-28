@@ -3,6 +3,7 @@
 format:
   revealjs: 
     theme: solarized
+    code-link: true
     slide-number: true
     preview-links: auto
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/){target='_blank'}."
