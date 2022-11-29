@@ -320,6 +320,8 @@ Example packages that use child documents to repeat documentation.
 
 - [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments){target="_blank"}
 
+- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man){target="_blank"}
+
 - [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments){target="_blank"}
 
 # Vignette Setup
