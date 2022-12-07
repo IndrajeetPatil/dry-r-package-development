@@ -92,7 +92,7 @@ Thus, it applies to all programming entities that encode knowledge:
 
 - As a side effect, routines developed to remove duplicated code can become part of general-purpose utilities.
 
-</br>
+<br>
 
 . . . 
 
@@ -124,21 +124,21 @@ How not to repeat yourself while writing documentation.
 
 What users consult to find needed information may be context-dependent.
 
-</br>
+<br>
 
 . . .
 
 {{< fa brands readme size=2xl >}} **README**: While exploring the package repository.
 
-</br>
+<br>
 
 {{< fa file size=2xl >}} **Vignettes**: When first learning how to use a package.
 
-</br>
+<br>
 
 {{< fa solid file-invoice size=2xl >}} **Manual**: When checking details about a specific function.
 
-</br>
+<br>
 
 . . .
 
@@ -152,7 +152,7 @@ Thus, including crucial information **only in one place** makes it likely that t
 
 Some documentation is important enough to be included in multiple places (e.g. in the function documentation and in a vignette).
 
-</br>
+<br>
 
 > How can you document something just *once* but include it in *multiple* locations?
 
@@ -217,7 +217,7 @@ This is some crucial information to be repeated across documentation.
 
 ::::
 
-</br>
+<br>
 
 :::{.callout-tip}
 
@@ -334,7 +334,7 @@ Another duplication that occurs is in setup chunks for vignettes.
 
 For example, some parts of the setup can be same across vignettes.
 
-</br>
+<br>
 
 :::: {.columns}
 
@@ -394,7 +394,7 @@ options(crayon.enabled = TRUE)
 
 ::::
 
-</br>
+<br>
 
 How can this repetition be avoided?
 
@@ -422,7 +422,7 @@ To avoid repeating the same setup across vignettes, you can extract the **common
 
 ::::
 
-</br>
+<br>
 
 . . . 
 
@@ -562,7 +562,7 @@ foo(exdat)
 
 ::::
 
-</br>
+<br>
 
 . . . 
 
@@ -672,7 +672,7 @@ foo(exdat)
 
 ::::
 
-</br>
+<br>
 
 
 :::{.callout-tip}
@@ -699,11 +699,11 @@ How not to repeat yourself while writing unit tests.
 
 A **unit test** records the code to describe expected output.
 
-</br>
+<br>
 
 (actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
 
-</br>
+<br>
 
 . . .
 
@@ -816,7 +816,7 @@ You have already seen how *user*-facing datasets — useful for illustrating fun
 
 Similarly, you can define and save *developer*-facing datasets - useful for testing purposes - and use them across multiple tests.
 
-</br>
+<br>
 
 . . . 
 
@@ -902,7 +902,7 @@ foo2(testdat1)
 
 ::::
 
-</br>
+<br>
 
 . . . 
 
@@ -941,7 +941,7 @@ foo2(testdat1)
 
 ::::
 
-</br>
+<br>
 
 :::{.callout-note}
 
@@ -1129,7 +1129,7 @@ expect_error(
 
 ::::
 
-</br>
+<br>
 
 :::{.callout-tip}
 
