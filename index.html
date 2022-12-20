@@ -691,47 +691,51 @@
 <section id="sourcing-setup-chunks-in-vignettes" class="slide level2 smaller">
 <h2>Sourcing setup chunks in vignettes</h2>
 <div class="columns">
-<div class="column" style="width:80%;">
-<p>To avoid repeating the same setup across vignettes, you can extract the <strong>common</strong> setup out into a script (<code>vignettes/setup/setup.R</code>), and source it from vignettes.</p>
+<div class="column" style="width:60%;">
+<p>This repetition can be avoided by moving the <strong>common</strong> setup to a script, and sourcing it from vignettes. Storing this script in a folder (<code>/setup</code>) is advisable if there are many reusable artifacts.</p>
 </div><div class="column" style="width:20%;">
-<pre><code>
-├── DESCRIPTION
+<p><strong>Option 1</strong></p>
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── setup.R</code></pre>
+</div><div class="column" style="width:20%;">
+<p><strong>Option 2</strong></p>
+<pre><code>├── DESCRIPTION
 ├── vignettes
 │   └── setup
 │       └── setup.R</code></pre>
 </div>
 </div>
-<p><br></p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:26%;">
 <p><code>setup.R</code> contents</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:37%;">
-<p>Sourcing common setup</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb12-1"><a href="#cb12-1"></a>---</span>
-<span id="cb12-2"><a href="#cb12-2"></a>title: "Vignette-1"</span>
-<span id="cb12-3"><a href="#cb12-3"></a>output: html_vignette</span>
-<span id="cb12-4"><a href="#cb12-4"></a>---</span>
-<span id="cb12-5"><a href="#cb12-5"></a></span>
-<span id="cb12-6"><a href="#cb12-6"></a>```{r setup, include = FALSE}</span>
-<span id="cb12-7"><a href="#cb12-7"></a>source("setup/setup.R")</span>
-<span id="cb12-8"><a href="#cb12-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:37%;">
 <p>Sourcing common setup</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1"></a>---</span>
-<span id="cb13-2"><a href="#cb13-2"></a>title: "Vignette-2"</span>
+<span id="cb13-2"><a href="#cb13-2"></a>title: "Vignette-1"</span>
 <span id="cb13-3"><a href="#cb13-3"></a>output: html_vignette</span>
 <span id="cb13-4"><a href="#cb13-4"></a>---</span>
 <span id="cb13-5"><a href="#cb13-5"></a></span>
 <span id="cb13-6"><a href="#cb13-6"></a>```{r setup, include = FALSE}</span>
 <span id="cb13-7"><a href="#cb13-7"></a>source("setup/setup.R")</span>
-<span id="cb13-8"><a href="#cb13-8"></a>options(crayon.enabled = TRUE)</span>
-<span id="cb13-9"><a href="#cb13-9"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-8"><a href="#cb13-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:37%;">
+<p>Sourcing common setup</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1"></a>---</span>
+<span id="cb14-2"><a href="#cb14-2"></a>title: "Vignette-2"</span>
+<span id="cb14-3"><a href="#cb14-3"></a>output: html_vignette</span>
+<span id="cb14-4"><a href="#cb14-4"></a>---</span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a>```{r setup, include = FALSE}</span>
+<span id="cb14-7"><a href="#cb14-7"></a>source("setup/setup.R")</span>
+<span id="cb14-8"><a href="#cb14-8"></a>options(crayon.enabled = TRUE)</span>
+<span id="cb14-9"><a href="#cb14-9"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -772,30 +776,30 @@
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>In examples</strong></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#' @examples</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co">#' exdat &lt;- matrix(c(71, 50))</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="co">#' foo(exdat)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#' @examples</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">#' exdat &lt;- matrix(c(71, 50))</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#' foo(exdat)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:33%;">
 <p><strong>In vignettes</strong></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1"></a>---</span>
-<span id="cb15-2"><a href="#cb15-2"></a>title: "My Vignette"</span>
-<span id="cb15-3"><a href="#cb15-3"></a>output: html_vignette</span>
-<span id="cb15-4"><a href="#cb15-4"></a>---</span>
-<span id="cb15-5"><a href="#cb15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6"></a>```{r}</span>
-<span id="cb15-7"><a href="#cb15-7"></a>exdat &lt;- matrix(c(71, 50))</span>
-<span id="cb15-8"><a href="#cb15-8"></a>foo(exdat)</span>
-<span id="cb15-9"><a href="#cb15-9"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1"></a>---</span>
+<span id="cb16-2"><a href="#cb16-2"></a>title: "My Vignette"</span>
+<span id="cb16-3"><a href="#cb16-3"></a>output: html_vignette</span>
+<span id="cb16-4"><a href="#cb16-4"></a>---</span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a>```{r}</span>
+<span id="cb16-7"><a href="#cb16-7"></a>exdat &lt;- matrix(c(71, 50))</span>
+<span id="cb16-8"><a href="#cb16-8"></a>foo(exdat)</span>
+<span id="cb16-9"><a href="#cb16-9"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:33%;">
 <p><strong>In README</strong></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb16-1"><a href="#cb16-1"></a>---</span>
-<span id="cb16-2"><a href="#cb16-2"></a>output: github_document</span>
-<span id="cb16-3"><a href="#cb16-3"></a>---</span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a>```{r}</span>
-<span id="cb16-6"><a href="#cb16-6"></a>exdat &lt;- matrix(c(71, 50))</span>
-<span id="cb16-7"><a href="#cb16-7"></a>foo(exdat)</span>
-<span id="cb16-8"><a href="#cb16-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb17-1"><a href="#cb17-1"></a>---</span>
+<span id="cb17-2"><a href="#cb17-2"></a>output: github_document</span>
+<span id="cb17-3"><a href="#cb17-3"></a>---</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a>```{r}</span>
+<span id="cb17-6"><a href="#cb17-6"></a>exdat &lt;- matrix(c(71, 50))</span>
+<span id="cb17-7"><a href="#cb17-7"></a>foo(exdat)</span>
+<span id="cb17-8"><a href="#cb17-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><br></p>
@@ -813,9 +817,9 @@
 <div class="column" style="width:70%;">
 <p><strong>Saving data</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># In `exdat.R`</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
-<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">save</span>(exdat, <span class="at">file =</span> <span class="st">"data/exdat.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># In `exdat.R`</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">save</span>(exdat, <span class="at">file =</span> <span class="st">"data/exdat.rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:30%;">
 <p><strong>Directory structure</strong></p>
@@ -855,27 +859,27 @@
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>In examples</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#' @examples</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#' foo(exdat)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">#' @examples</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#' foo(exdat)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:33%;">
 <p><strong>In vignettes</strong></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="#cb20-1"></a>---</span>
-<span id="cb20-2"><a href="#cb20-2"></a>title: "My Vignette"</span>
-<span id="cb20-3"><a href="#cb20-3"></a>output: html_vignette</span>
-<span id="cb20-4"><a href="#cb20-4"></a>---</span>
-<span id="cb20-5"><a href="#cb20-5"></a></span>
-<span id="cb20-6"><a href="#cb20-6"></a>```{r}</span>
-<span id="cb20-7"><a href="#cb20-7"></a>foo(exdat)</span>
-<span id="cb20-8"><a href="#cb20-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1"></a>---</span>
+<span id="cb21-2"><a href="#cb21-2"></a>title: "My Vignette"</span>
+<span id="cb21-3"><a href="#cb21-3"></a>output: html_vignette</span>
+<span id="cb21-4"><a href="#cb21-4"></a>---</span>
+<span id="cb21-5"><a href="#cb21-5"></a></span>
+<span id="cb21-6"><a href="#cb21-6"></a>```{r}</span>
+<span id="cb21-7"><a href="#cb21-7"></a>foo(exdat)</span>
+<span id="cb21-8"><a href="#cb21-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:33%;">
 <p><strong>In README</strong></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb21-1"><a href="#cb21-1"></a>---</span>
-<span id="cb21-2"><a href="#cb21-2"></a>output: github_document</span>
-<span id="cb21-3"><a href="#cb21-3"></a>---</span>
-<span id="cb21-4"><a href="#cb21-4"></a></span>
-<span id="cb21-5"><a href="#cb21-5"></a>```{r}</span>
-<span id="cb21-6"><a href="#cb21-6"></a>foo(exdat)</span>
-<span id="cb21-7"><a href="#cb21-7"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb22-1"><a href="#cb22-1"></a>---</span>
+<span id="cb22-2"><a href="#cb22-2"></a>output: github_document</span>
+<span id="cb22-3"><a href="#cb22-3"></a>---</span>
+<span id="cb22-4"><a href="#cb22-4"></a></span>
+<span id="cb22-5"><a href="#cb22-5"></a>```{r}</span>
+<span id="cb22-6"><a href="#cb22-6"></a>foo(exdat)</span>
+<span id="cb22-7"><a href="#cb22-7"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><br></p>
@@ -930,22 +934,22 @@
 </div>
 </div>
 </div><div class="column" style="width:60%;">
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Function to test</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb22-3"><a href="#cb22-3"></a>  x <span class="sc">*</span> y</span>
-<span id="cb22-4"><a href="#cb22-4"></a>}</span>
-<span id="cb22-5"><a href="#cb22-5"></a></span>
-<span id="cb22-6"><a href="#cb22-6"></a><span class="co"># Tests</span></span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="fu">test_that</span>(</span>
-<span id="cb22-8"><a href="#cb22-8"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
-<span id="cb22-9"><a href="#cb22-9"></a>  <span class="at">code =</span> {</span>
-<span id="cb22-10"><a href="#cb22-10"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
-<span id="cb22-11"><a href="#cb22-11"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
-<span id="cb22-12"><a href="#cb22-12"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
-<span id="cb22-13"><a href="#cb22-13"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
-<span id="cb22-14"><a href="#cb22-14"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
-<span id="cb22-15"><a href="#cb22-15"></a>  }</span>
-<span id="cb22-16"><a href="#cb22-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Function to test</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  x <span class="sc">*</span> y</span>
+<span id="cb23-4"><a href="#cb23-4"></a>}</span>
+<span id="cb23-5"><a href="#cb23-5"></a></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="co"># Tests</span></span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="fu">test_that</span>(</span>
+<span id="cb23-8"><a href="#cb23-8"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9"></a>  <span class="at">code =</span> {</span>
+<span id="cb23-10"><a href="#cb23-10"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb23-11"><a href="#cb23-11"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb23-12"><a href="#cb23-12"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb23-13"><a href="#cb23-13"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb23-14"><a href="#cb23-14"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb23-15"><a href="#cb23-15"></a>  }</span>
+<span id="cb23-16"><a href="#cb23-16"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -958,31 +962,31 @@
 <div class="column" style="width:51%;">
 <p><strong>Repeated test pattern</strong></p>
 <p><code>expect_identical()</code> used repeatedly.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">test_that</span>(</span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="at">code =</span> {</span>
-<span id="cb23-4"><a href="#cb23-4"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
-<span id="cb23-5"><a href="#cb23-5"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
-<span id="cb23-6"><a href="#cb23-6"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
-<span id="cb23-7"><a href="#cb23-7"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
-<span id="cb23-8"><a href="#cb23-8"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
-<span id="cb23-9"><a href="#cb23-9"></a>  }</span>
-<span id="cb23-10"><a href="#cb23-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">test_that</span>(</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="at">code =</span> {</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb24-7"><a href="#cb24-7"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb24-8"><a href="#cb24-8"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb24-9"><a href="#cb24-9"></a>  }</span>
+<span id="cb24-10"><a href="#cb24-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:49%;">
 <p><strong>Parametrized test pattern</strong></p>
 <p><code>expect_identical()</code> used once.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
-<span id="cb24-5"><a href="#cb24-5"></a>    <span class="sc">~</span>x,  <span class="sc">~</span>y,  <span class="sc">~</span>res,</span>
-<span id="cb24-6"><a href="#cb24-6"></a>    <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">3</span>,   <span class="sc">-</span><span class="dv">3</span>,</span>
-<span id="cb24-7"><a href="#cb24-7"></a>    <span class="dv">0</span>,   <span class="fl">3.4</span>,  <span class="dv">0</span>,</span>
-<span id="cb24-8"><a href="#cb24-8"></a>    <span class="cn">NA</span>,  <span class="dv">4</span>,    <span class="cn">NA_real_</span>,</span>
-<span id="cb24-9"><a href="#cb24-9"></a>    <span class="sc">-</span><span class="dv">2</span>,  <span class="sc">-</span><span class="dv">2</span>,   <span class="dv">4</span>,</span>
-<span id="cb24-10"><a href="#cb24-10"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a>  )</span>
-<span id="cb24-12"><a href="#cb24-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb25-5"><a href="#cb25-5"></a>    <span class="sc">~</span>x,  <span class="sc">~</span>y,  <span class="sc">~</span>res,</span>
+<span id="cb25-6"><a href="#cb25-6"></a>    <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">3</span>,   <span class="sc">-</span><span class="dv">3</span>,</span>
+<span id="cb25-7"><a href="#cb25-7"></a>    <span class="dv">0</span>,   <span class="fl">3.4</span>,  <span class="dv">0</span>,</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    <span class="cn">NA</span>,  <span class="dv">4</span>,    <span class="cn">NA_real_</span>,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="sc">-</span><span class="dv">2</span>,  <span class="sc">-</span><span class="dv">2</span>,   <span class="dv">4</span>,</span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a>  )</span>
+<span id="cb25-12"><a href="#cb25-12"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-tip callout-captioned callout-style-default">
@@ -1049,12 +1053,12 @@
 <div class="columns">
 <div class="column" style="width:35%;">
 <p>In <code>test-foo1.R</code>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">foo1</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">foo1</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:35%;">
 <p>In <code>test-foo2.R</code>:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
 </div>
@@ -1065,12 +1069,12 @@
 <div class="columns">
 <div class="column" style="width:35%;">
 <p>In <code>test-foo1.R</code>:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">foo1</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">foo1</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:35%;">
 <p>In <code>test-foo2.R</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
 </div>
@@ -1112,35 +1116,35 @@
 <p><strong>input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb31-3"><a href="#cb31-3"></a>    <span class="fu">stop</span>(<span class="st">"Argument `x` should be positive."</span>)</span>
-<span id="cb31-4"><a href="#cb31-4"></a>  }</span>
-<span id="cb31-5"><a href="#cb31-5"></a>  </span>
-<span id="cb31-6"><a href="#cb31-6"></a>  ...</span>
-<span id="cb31-7"><a href="#cb31-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
-<span id="cb32-2"><a href="#cb32-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb32-3"><a href="#cb32-3"></a>    <span class="fu">stop</span>(<span class="st">"Argument `y` should be positive."</span>)</span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb32-3"><a href="#cb32-3"></a>    <span class="fu">stop</span>(<span class="st">"Argument `x` should be positive."</span>)</span>
 <span id="cb32-4"><a href="#cb32-4"></a>  }</span>
 <span id="cb32-5"><a href="#cb32-5"></a>  </span>
 <span id="cb32-6"><a href="#cb32-6"></a>  ...</span>
 <span id="cb32-7"><a href="#cb32-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="fu">stop</span>(<span class="st">"Argument `y` should be positive."</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>  }</span>
+<span id="cb33-5"><a href="#cb33-5"></a>  </span>
+<span id="cb33-6"><a href="#cb33-6"></a>  ...</span>
+<span id="cb33-7"><a href="#cb33-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><strong>unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
-<span id="cb33-3"><a href="#cb33-3"></a>  <span class="st">"Argument `x` should be positive."</span></span>
-<span id="cb33-4"><a href="#cb33-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="st">"Argument `y` should be positive."</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="st">"Argument `x` should be positive."</span></span>
 <span id="cb34-4"><a href="#cb34-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="st">"Argument `y` should be positive."</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1151,13 +1155,13 @@
 <section id="list-of-exception-functions" class="slide level2 smaller">
 <h2>List of exception functions</h2>
 <p>We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
-<span id="cb35-3"><a href="#cb35-3"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
-<span id="cb35-4"><a href="#cb35-4"></a>  },</span>
-<span id="cb35-5"><a href="#cb35-5"></a>  </span>
-<span id="cb35-6"><a href="#cb35-6"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
-<span id="cb35-7"><a href="#cb35-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
+<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  },</span>
+<span id="cb36-5"><a href="#cb36-5"></a>  </span>
+<span id="cb36-6"><a href="#cb36-6"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-note callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -1183,35 +1187,35 @@
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
-<span id="cb36-4"><a href="#cb36-4"></a>  }</span>
-<span id="cb36-5"><a href="#cb36-5"></a>  </span>
-<span id="cb36-6"><a href="#cb36-6"></a>  ...</span>
-<span id="cb36-7"><a href="#cb36-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
+<div class="sourceCode" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
 <span id="cb37-4"><a href="#cb37-4"></a>  }</span>
 <span id="cb37-5"><a href="#cb37-5"></a>  </span>
 <span id="cb37-6"><a href="#cb37-6"></a>  ...</span>
 <span id="cb37-7"><a href="#cb37-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb38-3"><a href="#cb38-3"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
+<span id="cb38-4"><a href="#cb38-4"></a>  }</span>
+<span id="cb38-5"><a href="#cb38-5"></a>  </span>
+<span id="cb38-6"><a href="#cb38-6"></a>  ...</span>
+<span id="cb38-7"><a href="#cb38-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><strong>Unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
-<span id="cb38-3"><a href="#cb38-3"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
-<span id="cb38-4"><a href="#cb38-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:50%;">
 <div class="sourceCode" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
-<span id="cb39-3"><a href="#cb39-3"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb39-3"><a href="#cb39-3"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
 <span id="cb39-4"><a href="#cb39-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb40-3"><a href="#cb40-3"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
+<span id="cb40-4"><a href="#cb40-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><br></p>
@@ -1232,39 +1236,39 @@
 <section id="reusable-exceptions-part-2" class="slide level2 smaller">
 <h2>Reusable exceptions: Part-2</h2>
 <p>As noted before, you can also move the entire validation to a new function. E.g.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb40-2"><a href="#cb40-2"></a>  <span class="at">check_only_positive =</span> <span class="cf">function</span>(arg) {</span>
-<span id="cb40-3"><a href="#cb40-3"></a>    arg_name <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(arg))</span>
-<span id="cb40-4"><a href="#cb40-4"></a>    <span class="cf">if</span> (arg <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
-<span id="cb40-5"><a href="#cb40-5"></a>      <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>))</span>
-<span id="cb40-6"><a href="#cb40-6"></a>    }</span>
-<span id="cb40-7"><a href="#cb40-7"></a>  },</span>
-<span id="cb40-8"><a href="#cb40-8"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
-<span id="cb40-9"><a href="#cb40-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="at">check_only_positive =</span> <span class="cf">function</span>(arg) {</span>
+<span id="cb41-3"><a href="#cb41-3"></a>    arg_name <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(arg))</span>
+<span id="cb41-4"><a href="#cb41-4"></a>    <span class="cf">if</span> (arg <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb41-5"><a href="#cb41-5"></a>      <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>))</span>
+<span id="cb41-6"><a href="#cb41-6"></a>    }</span>
+<span id="cb41-7"><a href="#cb41-7"></a>  },</span>
+<span id="cb41-8"><a href="#cb41-8"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
+<span id="cb41-9"><a href="#cb41-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">check_only_positive</span>(x)</span>
-<span id="cb41-3"><a href="#cb41-3"></a>  </span>
-<span id="cb41-4"><a href="#cb41-4"></a>  ...</span>
-<span id="cb41-5"><a href="#cb41-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div><div class="column" style="width:50%;">
-<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
-<span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">check_only_positive</span>(y)</span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">check_only_positive</span>(x)</span>
 <span id="cb42-3"><a href="#cb42-3"></a>  </span>
 <span id="cb42-4"><a href="#cb42-4"></a>  ...</span>
 <span id="cb42-5"><a href="#cb42-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
+<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">check_only_positive</span>(y)</span>
+<span id="cb43-3"><a href="#cb43-3"></a>  </span>
+<span id="cb43-4"><a href="#cb43-4"></a>  ...</span>
+<span id="cb43-5"><a href="#cb43-5"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><strong>Unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="sourceCode" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">expect_error</span>(</span>
-<span id="cb43-3"><a href="#cb43-3"></a>  exceptions<span class="sc">$</span><span class="fu">check_only_positive</span>(x), </span>
-<span id="cb43-4"><a href="#cb43-4"></a>  <span class="st">"Argument `x` should be positive."</span></span>
-<span id="cb43-5"><a href="#cb43-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">expect_error</span>(</span>
+<span id="cb44-3"><a href="#cb44-3"></a>  exceptions<span class="sc">$</span><span class="fu">check_only_positive</span>(x), </span>
+<span id="cb44-4"><a href="#cb44-4"></a>  <span class="st">"Argument `x` should be positive."</span></span>
+<span id="cb44-5"><a href="#cb44-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>Since the validation has moved to a new function, you only need to test it once.</p>
 </div>
@@ -1313,32 +1317,32 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># file-1</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>...</span>
-<span id="cb44-4"><a href="#cb44-4"></a></span>
-<span id="cb44-5"><a href="#cb44-5"></a><span class="co"># file-2</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a><span class="co">#' @importFrom rlang warn</span></span>
-<span id="cb44-7"><a href="#cb44-7"></a>...</span>
-<span id="cb44-8"><a href="#cb44-8"></a></span>
-<span id="cb44-9"><a href="#cb44-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb44-10"><a href="#cb44-10"></a>...</span>
-<span id="cb44-11"><a href="#cb44-11"></a></span>
-<span id="cb44-12"><a href="#cb44-12"></a><span class="co"># file-3</span></span>
-<span id="cb44-13"><a href="#cb44-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb44-14"><a href="#cb44-14"></a>...</span>
-<span id="cb44-15"><a href="#cb44-15"></a></span>
-<span id="cb44-16"><a href="#cb44-16"></a><span class="co"># file-4, file-5, etc.</span></span>
-<span id="cb44-17"><a href="#cb44-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># file-1</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>...</span>
+<span id="cb45-4"><a href="#cb45-4"></a></span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="co"># file-2</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a>...</span>
+<span id="cb45-8"><a href="#cb45-8"></a></span>
+<span id="cb45-9"><a href="#cb45-9"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb45-10"><a href="#cb45-10"></a>...</span>
+<span id="cb45-11"><a href="#cb45-11"></a></span>
+<span id="cb45-12"><a href="#cb45-12"></a><span class="co"># file-3</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb45-14"><a href="#cb45-14"></a>...</span>
+<span id="cb45-15"><a href="#cb45-15"></a></span>
+<span id="cb45-16"><a href="#cb45-16"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb45-17"><a href="#cb45-17"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="do">## {pkgname} namespace: start</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#'</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
-<span id="cb45-4"><a href="#cb45-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
-<span id="cb45-5"><a href="#cb45-5"></a><span class="co">#'</span></span>
-<span id="cb45-6"><a href="#cb45-6"></a><span class="do">## {pkgname} namespace: end</span></span>
-<span id="cb45-7"><a href="#cb45-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="co">#'</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="co">#'</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb46-7"><a href="#cb46-7"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1378,7 +1382,7 @@
 <section id="session-information" class="slide level2 smaller">
 <h2>Session information</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
  setting  value
@@ -1390,7 +1394,7 @@
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2022-12-18
+ date     2022-12-20
  pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────
