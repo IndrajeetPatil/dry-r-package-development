@@ -258,6 +258,27 @@ Include contents of child documents in the documentation in multiple locations.
 │       └── ...
 ```
 
+:::
+
+::: {.column width='50%'}
+
+**README**
+
+```
+├── DESCRIPTION
+├── README.Rmd
+```
+
+:::
+
+::::
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
 In `vignette1.Rmd`
 
 ````{verbatim}
@@ -275,19 +296,6 @@ Vignette content.
 :::
 
 ::: {.column width='50%'}
-
-**README**
-
-```
-├── DESCRIPTION
-├── README.Rmd
-
-
-
-
-
-
-```
 
 In `README.Rmd`
 
@@ -307,13 +315,14 @@ README content.
 
 ::::
 
+
 ## Using child documents in package: Part-2 {.smaller}
 
 Include contents of child documents in the documentation in multiple locations.
 
 :::: {.columns}
 
-::: {.column width='60%'}
+::: {.column width='30%'}
 
 **Manual**
 
@@ -328,6 +337,10 @@ Include contents of child documents in the documentation in multiple locations.
 │   └── ...
 ```
 
+:::
+
+::: {.column width='50%'}
+
 In `foo1.R`
 
 ```{r}
@@ -341,17 +354,13 @@ foo1 <- function() { ... }
 
 :::
 
-::: {.column width='40%'}
+::::
 
 :::{.callout-important}
 
 The underlying assumption here is that you are using [`{roxygen2}`](https://roxygen2.r-lib.org/) to generate package documentation.
 
 :::
-
-:::
-
-::::
 
 ## What about non-child documents? {.smaller}
 
@@ -440,6 +449,27 @@ Include contents of various files in the documentation in multiple locations.
 │       └── ...
 ```
 
+:::
+
+::: {.column width='50%'}
+
+**README**
+
+```
+├── DESCRIPTION
+├── README.Rmd
+```
+
+:::
+
+::::
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
 In `vignette1.Rmd`
 
 ````{verbatim}
@@ -460,19 +490,6 @@ Vignette content.
 :::
 
 ::: {.column width='50%'}
-
-**README**
-
-```
-├── DESCRIPTION
-├── README.Rmd
-
-
-
-
-
-
-```
 
 In `README.Rmd`
 
@@ -501,7 +518,7 @@ Include contents of child documents in the documentation in multiple locations.
 
 :::: {.columns}
 
-::: {.column width='60%'}
+::: {.column width='30%'}
 
 **Manual**
 
@@ -514,6 +531,10 @@ Include contents of child documents in the documentation in multiple locations.
 │   └── foo1.Rd
 │   └── ...
 ```
+
+:::
+
+::: {.column width='50%'}
 
 In `foo1.R`
 
@@ -530,7 +551,7 @@ foo1 <- function() { ... }
 
 :::
 
-::: {.column width='40%'}
+::::
 
 :::{.callout-important}
 
@@ -538,17 +559,13 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 
 :::
 
-:::
-
-::::
-
 ##  
 
 :::{.callout-tip}
 
 ## Summary on how to repeat documentation
 
-If you are overwhelmed, note that you actually need to remember only the following rules:
+If you are overwhelmed by this section, note that you actually need to remember only the following rules:
 
 - Store reusable document files in the `/man` folder.
 
@@ -1589,7 +1606,7 @@ And Happy (DRY) Package Development! 😊
 
 ## Session information {.smaller}
 
-```{r}
+```{r, eval = TRUE}
 sessioninfo::session_info(include_base = TRUE)
 ```
 
