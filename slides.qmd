@@ -263,7 +263,7 @@ output: html_vignette
 
 Vignette content.
 
-```{r, child = "../man/rmd-children/info1.Rmd"}
+```{r, child="../man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -294,7 +294,7 @@ output: github_document
 
 README content.
 
-```{r, child = "man/rmd-children/info1.Rmd"}
+```{r, child="man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -328,12 +328,10 @@ In `foo1.R`
 
 ```{r}
 #' @title Foo1
-#' 
 #' @section Information:
 #' 
 #' ```{r, child="man/rmd-children/info1.Rmd"}
 #' ```
-#' @export
 foo1 <- function() { ... }
 ```
 
@@ -350,7 +348,6 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 :::
 
 ::::
-
 
 ## What about non-child documents? {.smaller}
 
@@ -413,19 +410,19 @@ in the documentation.
 
 ## Folder names
 
-You can name these folders however you wish, but it is advisable for names to suggest their contents (e.g., `r-examples`, `yaml-snippets`, etc.).
+You can name these folders however you wish, but it is advisable that the names provide information about file contents (e.g., `r-examples`, `yaml-snippets`, `md-fragments`, etc.).
 
 :::
 
-## Using non-child documents in package {.smaller}
+## Using non-child documents in package: Part-1 {.smaller}
 
-You can now insert contents of these documents in the package documentation anywhere and as many as times as you want.
+Include contents of various files in the documentation in multiple locations.
 
 . . . 
 
 :::: {.columns}
 
-::: {.column width='30%'}
+::: {.column width='50%'}
 
 **Vignette**
 
@@ -439,55 +436,53 @@ You can now insert contents of these documents in the package documentation anyw
 │       └── ...
 ```
 
-:::
-
-::: {.column width='70%'}
-
-**Example** (`vignettes/vignette1.Rmd`)
+In `vignette1.Rmd`
 
 ````{verbatim}
 ---
 output: html_vignette
 ---
 
-Some content.
+Vignette content.
 
-```{r, child = "../man/md-fragments/info1.Rmd"}
+```{asis, file="../man/md-fragments/fragment1.md"}
+```
+
+```{r, file="../man/r-chunks/chunk1.R"}
 ```
 
 ````
 
 :::
 
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width='30%'}
+::: {.column width='50%'}
 
 **README**
 
 ```
 ├── DESCRIPTION
 ├── README.Rmd
+
+
+
+
+
+
 ```
 
-:::
-
-::: {.column width='70%'}
-
-**Example** (`README.Rmd`)
+In `README.Rmd`
 
 ````{verbatim}
 ---
 output: github_document
 ---
 
-Some content.
+README content.
 
-```{r, child = "man/md-fragments/info1.Rmd"}
+```{asis, file="man/md-fragments/fragment1.md"}
+```
+
+```{r, file="man/r-chunks/chunk1.R"}
 ```
 
 ````
@@ -496,14 +491,74 @@ Some content.
 
 ::::
 
-. . . 
+## Using non-child documents in package: Part-2 {.smaller}
 
-**etc.**
+Include contents of child documents in the documentation in multiple locations.
 
+:::: {.columns}
+
+::: {.column width='60%'}
+
+**Manual**
+
+```
+├── DESCRIPTION
+├── R
+│   └── foo1.R
+│   └── ...
+├── man
+│   └── foo1.Rd
+│   └── ...
+```
+
+In `foo1.R`
+
+```{r}
+#' @title Foo1
+#' @section Information:
+#' 
+#' ```{r, file="man/md-fragments/fragment1.Rmd"}
+#' ```
+#' 
+#' @example man/r-chunks/chunk1.R
+foo1 <- function() { ... }
+```
+
+:::
+
+::: {.column width='40%'}
+
+:::{.callout-important}
+
+The underlying assumption here is that you are using [`{roxygen2}`](https://roxygen2.r-lib.org/) to generate package documentation.
+
+:::
+
+:::
+
+::::
+
+##  
+
+:::{.callout-tip}
+
+## Summary on how to repeat documentation
+
+If you are overwhelmed, note that you actually need to remember only the following rules:
+
+- Store reusable document files in `/man` folder.
+
+- When you wish to include their contents, provide paths to these files **relative** to the document you are linking from.
+
+- If it's a child `.Rmd` document, use the `child` option to include its contents.
+
+- If it's not an `.Rmd` document, use the `file` option to include its contents and use appropriate `{knitr}` engine. To see available engines, run `names(knitr::knit_engines$get())`.
+
+:::
 
 ## Self-study
 
-Example packages that use child documents to repeat documentation.
+Example packages that use reusable component documents to repeat documentation.
 
 - [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments){target="_blank"}
 
@@ -783,7 +838,7 @@ The datasets are stored in `data/`, and documented in `R/data.R`.
 ```{r, eval=FALSE}
 # In `exdat.R`
 exdat <- matrix(c(71, 50))
-save(exdat, file = "data/exdat.rdata")
+save(exdat, file="data/exdat.rdata")
 ```
 
 :::
