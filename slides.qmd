@@ -402,16 +402,29 @@ How can this repetition be avoided?
 
 :::: {.columns}
 
-::: {.column width='80%'}
+::: {.column width='60%'}
 
-To avoid repeating the same setup across vignettes, you can extract the **common** setup out into a script (`vignettes/setup/setup.R`), and source it from vignettes.
+This repetition can be avoided by moving the **common** setup to a script, and sourcing it from vignettes. Storing this script in a folder (`/setup`) is advisable if there are many reusable artifacts.
 
 :::
 
 ::: {.column width='20%'}
 
+**Option 1**
+
+```
+├── DESCRIPTION
+├── vignettes
+│   └── setup.R
 ```
 
+:::
+
+::: {.column width='20%'}
+
+**Option 2**
+
+```
 ├── DESCRIPTION
 ├── vignettes
 │   └── setup
@@ -421,8 +434,6 @@ To avoid repeating the same setup across vignettes, you can extract the **common
 :::
 
 ::::
-
-<br>
 
 . . . 
 
