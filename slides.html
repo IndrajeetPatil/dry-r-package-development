@@ -419,7 +419,9 @@
 <div class="columns">
 <div class="column" style="width:60%;">
 <p>The DRY Principles states that:</p>
+<div style="color: red;">
 <p><em>Every piece of <strong>knowledge</strong> must have a <strong>single</strong> representation in the codebase.</em></p>
+</div>
 <p>That is, you should not express the same thing in multiple places in multiple ways.</p>
 </div><div class="column" style="width:40%;">
 <div class="cell">
@@ -480,7 +482,7 @@
 </section></section>
 <section id="plan" class="title-slide slide level1 center">
 <h1>Plan</h1>
-<p>Let’s see how to apply DRY principle to remove duplication in following aspects of package development:</p>
+<p>Apply the DRY principle to remove duplication in following aspects of R package development:</p>
 <ul>
 <li>Documentation</li>
 <li>Vignette setup</li>
@@ -550,7 +552,7 @@
 │       └── info1.Rmd
 │       └── ...</code></pre>
 </div><div class="column" style="width:70%;">
-<p><code>man/rmd-children/info1.Rmd</code> example.</p>
+<p><code>info1.Rmd</code> example:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1"></a>This is some crucial information to be repeated across documentation.</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a>```{r}</span>
@@ -818,7 +820,7 @@
 <div class="callout-content">
 <p>If you are overwhelmed, note that you actually need to remember only the following rules:</p>
 <ul>
-<li><p>Store reusable document files in <code>/man</code> folder.</p></li>
+<li><p>Store reusable document files in the <code>/man</code> folder.</p></li>
 <li><p>When you wish to include their contents, provide paths to these files <strong>relative</strong> to the document you are linking from.</p></li>
 <li><p>If it’s a child <code>.Rmd</code> document, use the <code>child</code> option to include its contents.</p></li>
 <li><p>If it’s not an <code>.Rmd</code> document, use the <code>file</code> option to include its contents and use appropriate <code>{knitr}</code> engine. To see available engines, run <code>names(knitr::knit_engines$get())</code>.</p></li>
