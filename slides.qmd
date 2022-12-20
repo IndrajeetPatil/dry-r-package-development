@@ -61,7 +61,7 @@ That is, you should not express the same thing in multiple places in multiple wa
 
 ::: {.column width='40%'}
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, eval=TRUE}
 knitr::include_graphics("media/dry.gif")
 ```
 
