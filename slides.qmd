@@ -10,6 +10,7 @@ format:
 #affiliation: 
 execute:
   echo: true
+  eval: false
 keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
 ---
 
@@ -111,9 +112,9 @@ Thus, it applies to all programming entities that encode knowledge:
 Let's see how to apply DRY principle to remove duplication in following aspects of package development:
 
 - Documentation
-- Unit testing
 - Vignette setup
-- Importing external functions
+- Unit testing
+- Dependency management
 - Exceptions
 
 # Documentation
@@ -160,7 +161,7 @@ Some documentation is important enough to be included in multiple places (e.g. i
 
 ::: {.column width='60%'}
 
-```{r, echo=FALSE, out.width="100%"}
+```{r, echo=FALSE, eval=TRUE, out.width="100%"}
 knitr::include_graphics("media/spiderman.jpeg")
 ```
 
@@ -231,9 +232,194 @@ This is some crucial information to be repeated across documentation.
 
 :::
 
-## Using child documents in package {.smaller}
+## Using child documents in package: Part-1 {.smaller}
 
-You can now insert contents of these child documents in the package documentation anywhere and as many as times as you want.
+Include contents of child documents in the documentation in multiple locations.
+
+. . . 
+
+:::: {.columns}
+
+::: {.column width='50%'}
+
+**Vignette**
+
+```
+├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── ...
+│   └── web_only
+│       └── vignette2.Rmd
+│       └── ...
+```
+
+In `vignette1.Rmd`
+
+````{verbatim}
+---
+output: html_vignette
+---
+
+Vignette content.
+
+```{r, child = "../man/rmd-children/info1.Rmd"}
+```
+
+````
+
+:::
+
+::: {.column width='50%'}
+
+**README**
+
+```
+├── DESCRIPTION
+├── README.Rmd
+
+
+
+
+
+
+```
+
+In `README.Rmd`
+
+````{verbatim}
+---
+output: github_document
+---
+
+README content.
+
+```{r, child = "man/rmd-children/info1.Rmd"}
+```
+
+````
+
+:::
+
+::::
+
+## Using child documents in package: Part-2 {.smaller}
+
+Include contents of child documents in the documentation in multiple locations.
+
+:::: {.columns}
+
+::: {.column width='60%'}
+
+**Manual**
+
+```
+├── DESCRIPTION
+├── R
+│   └── foo1.R
+│   └── foo2.R
+├── man
+│   └── foo1.Rd
+│   └── foo2.Rd
+│   └── ...
+```
+
+In `foo1.R`
+
+```{r}
+#' @title Foo1
+#' 
+#' @section Information:
+#' 
+#' ```{r, child="man/rmd-children/info1.Rmd"}
+#' ```
+#' @export
+foo1 <- function() { ... }
+```
+
+:::
+
+::: {.column width='40%'}
+
+:::{.callout-important}
+
+The underlying assumption here is that you are using [`{roxygen2}`](https://roxygen2.r-lib.org/) to generate package documentation.
+
+:::
+
+:::
+
+::::
+
+
+## What about non-child documents? {.smaller}
+
+What if you can't store reusable documentation in child documents and still wish to not repeat yourself? 
+
+You can use the same stratagem as before!
+
+:::: {.columns}
+
+::: {.column width='30%'}
+
+**Reusable content**
+
+```
+├── DESCRIPTION
+├── man
+│   └── rmd-children
+│       └── info1.Rmd
+│       └── ...
+│   └── md-fragments
+│       └── fragment1.md
+│       └── ...
+│   └── r-chunks
+│       └── chunk1.R
+│       └── ...
+```
+
+:::
+
+::: {.column width='35%'}
+
+`fragment1.md` example:
+
+````{verbatim}
+This `.md` file contains 
+content to be included *as is*
+across multiple locations
+in the documentation.
+````
+
+:::
+
+::: {.column width='35%'}
+
+`chunk1.R` example:
+
+````{verbatim}
+# some comment and code
+1 + 1
+
+# more comments and code
+2 + 3
+````
+
+:::
+
+::::
+
+:::{.callout-note}
+
+## Folder names
+
+You can name these folders however you wish, but it is advisable for names to suggest their contents (e.g., `r-examples`, `yaml-snippets`, etc.).
+
+:::
+
+## Using non-child documents in package {.smaller}
+
+You can now insert contents of these documents in the package documentation anywhere and as many as times as you want.
 
 . . . 
 
@@ -266,7 +452,7 @@ output: html_vignette
 
 Some content.
 
-```{r, child = "../man/rmd-children/info1.Rmd"}
+```{r, child = "../man/md-fragments/info1.Rmd"}
 ```
 
 ````
@@ -301,7 +487,7 @@ output: github_document
 
 Some content.
 
-```{r, child = "man/rmd-children/info1.Rmd"}
+```{r, child = "man/md-fragments/info1.Rmd"}
 ```
 
 ````
@@ -314,6 +500,7 @@ Some content.
 
 **etc.**
 
+
 ## Self-study
 
 Example packages that use child documents to repeat documentation.
@@ -322,7 +509,7 @@ Example packages that use child documents to repeat documentation.
 
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man){target="_blank"}
 
-- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man/rmd-fragments){target="_blank"}
+- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man){target="_blank"}
 
 # Vignette Setup
 
@@ -1251,7 +1438,7 @@ Example of R package that imports this list and appends it:
 
 [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R){target="_blank"}
 
-# Import specification
+# Dependency management
 
 How not to repeat yourself while importing external package functions.
 
