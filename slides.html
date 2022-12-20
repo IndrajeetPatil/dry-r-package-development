@@ -595,25 +595,26 @@
 │   └── web_only
 │       └── vignette2.Rmd
 │       └── ...</code></pre>
-<p>In <code>vignette1.Rmd</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1"></a>---</span>
-<span id="cb4-2"><a href="#cb4-2"></a>output: html_vignette</span>
-<span id="cb4-3"><a href="#cb4-3"></a>---</span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a>Vignette content.</span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a>```{r, child="../man/rmd-children/info1.Rmd"}</span>
-<span id="cb4-8"><a href="#cb4-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p><strong>README</strong></p>
 <pre><code>├── DESCRIPTION
-├── README.Rmd
-
-
-
-
-
-</code></pre>
+├── README.Rmd</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>In <code>vignette1.Rmd</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1"></a>---</span>
+<span id="cb5-2"><a href="#cb5-2"></a>output: html_vignette</span>
+<span id="cb5-3"><a href="#cb5-3"></a>---</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>Vignette content.</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>```{r, child="../man/rmd-children/info1.Rmd"}</span>
+<span id="cb5-8"><a href="#cb5-8"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
 <p>In <code>README.Rmd</code></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1"></a>---</span>
 <span id="cb6-2"><a href="#cb6-2"></a>output: github_document</span>
@@ -631,7 +632,7 @@
 <h2>Using child documents in package: Part-2</h2>
 <p>Include contents of child documents in the documentation in multiple locations.</p>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:30%;">
 <p><strong>Manual</strong></p>
 <pre><code>├── DESCRIPTION
 ├── R
@@ -641,6 +642,7 @@
 │   └── foo1.Rd
 │   └── foo2.Rd
 │   └── ...</code></pre>
+</div><div class="column" style="width:50%;">
 <p>In <code>foo1.R</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#' @title Foo1</span></span>
@@ -650,7 +652,8 @@
 <span id="cb8-5"><a href="#cb8-5"></a><span class="co">#' ```</span></span>
 <span id="cb8-6"><a href="#cb8-6"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:40%;">
+</div>
+</div>
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -661,8 +664,6 @@
 </div>
 <div class="callout-content">
 <p>The underlying assumption here is that you are using <a href="https://roxygen2.r-lib.org/"><code>{roxygen2}</code></a> to generate package documentation.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -728,28 +729,29 @@
 │   └── web_only
 │       └── vignette2.Rmd
 │       └── ...</code></pre>
-<p>In <code>vignette1.Rmd</code></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb13-1"><a href="#cb13-1"></a>---</span>
-<span id="cb13-2"><a href="#cb13-2"></a>output: html_vignette</span>
-<span id="cb13-3"><a href="#cb13-3"></a>---</span>
-<span id="cb13-4"><a href="#cb13-4"></a></span>
-<span id="cb13-5"><a href="#cb13-5"></a>Vignette content.</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a>```{asis, file="../man/md-fragments/fragment1.md"}</span>
-<span id="cb13-8"><a href="#cb13-8"></a>```</span>
-<span id="cb13-9"><a href="#cb13-9"></a></span>
-<span id="cb13-10"><a href="#cb13-10"></a>```{r, file="../man/r-chunks/chunk1.R"}</span>
-<span id="cb13-11"><a href="#cb13-11"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p><strong>README</strong></p>
 <pre><code>├── DESCRIPTION
-├── README.Rmd
-
-
-
-
-
-</code></pre>
+├── README.Rmd</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>In <code>vignette1.Rmd</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1"></a>---</span>
+<span id="cb14-2"><a href="#cb14-2"></a>output: html_vignette</span>
+<span id="cb14-3"><a href="#cb14-3"></a>---</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>Vignette content.</span>
+<span id="cb14-6"><a href="#cb14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7"></a>```{asis, file="../man/md-fragments/fragment1.md"}</span>
+<span id="cb14-8"><a href="#cb14-8"></a>```</span>
+<span id="cb14-9"><a href="#cb14-9"></a></span>
+<span id="cb14-10"><a href="#cb14-10"></a>```{r, file="../man/r-chunks/chunk1.R"}</span>
+<span id="cb14-11"><a href="#cb14-11"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column" style="width:50%;">
 <p>In <code>README.Rmd</code></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="#cb15-1"></a>---</span>
 <span id="cb15-2"><a href="#cb15-2"></a>output: github_document</span>
@@ -770,7 +772,7 @@
 <h2>Using non-child documents in package: Part-2</h2>
 <p>Include contents of child documents in the documentation in multiple locations.</p>
 <div class="columns">
-<div class="column" style="width:60%;">
+<div class="column" style="width:30%;">
 <p><strong>Manual</strong></p>
 <pre><code>├── DESCRIPTION
 ├── R
@@ -779,6 +781,7 @@
 ├── man
 │   └── foo1.Rd
 │   └── ...</code></pre>
+</div><div class="column" style="width:50%;">
 <p>In <code>foo1.R</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">#' @title Foo1</span></span>
@@ -790,7 +793,8 @@
 <span id="cb17-7"><a href="#cb17-7"></a><span class="co">#' @example man/r-chunks/chunk1.R</span></span>
 <span id="cb17-8"><a href="#cb17-8"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:40%;">
+</div>
+</div>
 <div class="callout callout-important callout-captioned callout-style-default">
 <div class="callout-body">
 <div class="callout-caption">
@@ -801,8 +805,6 @@
 </div>
 <div class="callout-content">
 <p>The underlying assumption here is that you are using <a href="https://roxygen2.r-lib.org/"><code>{roxygen2}</code></a> to generate package documentation.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -818,7 +820,7 @@
 <p><strong>Summary on how to repeat documentation</strong></p>
 </div>
 <div class="callout-content">
-<p>If you are overwhelmed, note that you actually need to remember only the following rules:</p>
+<p>If you are overwhelmed by this section, note that you actually need to remember only the following rules:</p>
 <ul>
 <li><p>Store reusable document files in the <code>/man</code> folder.</p></li>
 <li><p>When you wish to include their contents, provide paths to these files <strong>relative</strong> to the document you are linking from.</p></li>
@@ -1583,6 +1585,56 @@
 <h2>Session information</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>sessioninfo<span class="sc">::</span><span class="fu">session_info</span>(<span class="at">include_base =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.2.2 (2022-10-31)
+ os       Ubuntu 22.04.1 LTS
+ system   x86_64, linux-gnu
+ ui       X11
+ language (EN)
+ collate  C.UTF-8
+ ctype    C.UTF-8
+ tz       UTC
+ date     2022-12-20
+ pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────
+ package     * version date (UTC) lib source
+ base        * 4.2.2   2022-10-31 [3] local
+ cli           3.4.1   2022-09-23 [1] RSPM
+ compiler      4.2.2   2022-10-31 [3] local
+ datasets    * 4.2.2   2022-10-31 [3] local
+ digest        0.6.31  2022-12-11 [1] RSPM
+ evaluate      0.19    2022-12-13 [1] RSPM
+ fastmap       1.1.0   2021-01-25 [1] RSPM
+ glue          1.6.2   2022-02-24 [1] RSPM
+ graphics    * 4.2.2   2022-10-31 [3] local
+ grDevices   * 4.2.2   2022-10-31 [3] local
+ htmltools     0.5.4   2022-12-07 [1] RSPM
+ jsonlite      1.8.4   2022-12-06 [1] RSPM
+ knitr         1.41    2022-11-18 [1] RSPM
+ lifecycle     1.0.3   2022-10-07 [1] RSPM
+ magrittr      2.0.3   2022-03-30 [1] RSPM
+ methods     * 4.2.2   2022-10-31 [3] local
+ rlang         1.0.6   2022-09-24 [1] RSPM
+ rmarkdown     2.19    2022-12-15 [1] RSPM
+ sessioninfo   1.2.2   2021-12-06 [1] any (@1.2.2)
+ stats       * 4.2.2   2022-10-31 [3] local
+ stringi       1.7.8   2022-07-11 [1] RSPM
+ stringr       1.5.0   2022-12-02 [1] RSPM
+ tools         4.2.2   2022-10-31 [3] local
+ utils       * 4.2.2   2022-10-31 [3] local
+ vctrs         0.5.1   2022-11-16 [1] RSPM
+ xfun          0.35    2022-11-16 [1] RSPM
+ yaml          2.3.6   2022-10-18 [1] RSPM
+
+ [1] /home/runner/work/_temp/Library
+ [2] /opt/R/4.2.2/lib/R/site-library
+ [3] /opt/R/4.2.2/lib/R/library
+
+──────────────────────────────────────────────────────────────────────────────</code></pre>
+</div>
 </div>
 <div class="footer footer-default">
 <p>Source code for the slides can be found <a href="https://github.com/IndrajeetPatil/dry-r-package-development/" target="_blank">here</a>.</p>
