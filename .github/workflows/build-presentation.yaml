@@ -25,6 +25,7 @@ jobs:
           version: pre-release
       - run: |
           quarto --version
+          quarto install extension quarto-ext/fontawesome --no-prompt
 
       - uses: r-lib/actions/setup-r@v2
         with:
