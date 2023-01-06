@@ -51,7 +51,7 @@ Why should you not repeat yourself?
 
 ::: {.column width='60%'}
 
-The DRY Principles states that:
+The DRY Principle states that:
 
 ::: {style="color: red;"}
 
