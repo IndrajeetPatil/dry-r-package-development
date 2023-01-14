@@ -24,14 +24,6 @@ Indrajeet Patil
 
 :::
 
-
-<!-- ::: {style="margin-top: 10em; font-size:0.75em"} -->
-
-<!-- - [Link to slides](https://indrajeetpatil.github.io/dry-r-package-development/) -->
-<!-- - [Github repo](https://github.com/IndrajeetPatil/dry-r-package-development/) -->
-
-<!-- ::: -->
-
 ![](media/simpsons.png){.absolute width="900" height="500" left="70" top="155"}
 
 <!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
