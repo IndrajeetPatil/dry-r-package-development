@@ -1,7 +1,8 @@
 ---
 #title: "DRY R Package Development"
 format:
-  revealjs: 
+  revealjs:
+    css: style.css
     theme: solarized
     slide-number: true
     preview-links: auto
