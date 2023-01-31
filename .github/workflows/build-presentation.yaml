@@ -50,6 +50,6 @@ jobs:
       - name: Build PDF using decktape
         run: |
           npm install -g decktape
-          docker run --rm -t -v `pwd`:/slides astefanutti/decktape https://indrajeetpatil.github.io/dry-r-package-development/ slides/slides.pdf
+          docker run --rm -t -v `pwd`:/slides astefanutti/decktape reveal https://indrajeetpatil.github.io/dry-r-package-development/ slides/slides.pdf
 
       - uses: stefanzweifel/git-auto-commit-action@v4
