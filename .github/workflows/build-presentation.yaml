@@ -44,20 +44,7 @@ jobs:
           fs::file_copy("slides.html", "index.html", overwrite = TRUE)
         shell: Rscript {0}
 
-      - name: Install decktape
+      - name: Build PDF using decktape
         run: |
-          npm install decktape
-          decktape
-
-      - name: Build PDF slides
-        run: |
-          options(crayon.enabled = TRUE)
-          Sys.which('decktape')
-          #xaringan::decktape(
-          #  file = "slides.html",
-          #  output = "slides.pdf",
-          #  docker = TRUE
-          #)
-        shell: Rscript {0}
-
-      #- uses: stefanzweifel/git-auto-commit-action@v4
+          npm install -g decktape
+          docker run --rm -t -v `pwd`:/slides astefanutti/decktape https://indrajeetpatil.github.io/dry-r-package-development/ slides.pdf
