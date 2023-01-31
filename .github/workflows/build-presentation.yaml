@@ -52,6 +52,7 @@ jobs:
       - name: Build PDF slides
         run: |
           options(crayon.enabled = TRUE)
+          Sys.which('decktape')
           xaringan::decktape(
             file = "slides.html",
             output = "slides.pdf",
