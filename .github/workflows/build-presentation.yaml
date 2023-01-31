@@ -44,4 +44,20 @@ jobs:
           fs::file_copy("slides.html", "index.html", overwrite = TRUE)
         shell: Rscript {0}
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Install decktape
+        run: |
+          npm install -g decktape
+          decktape
+
+      - name: Build PDF slides
+        run: |
+          options(crayon.enabled = TRUE)
+          xaringan::decktape(
+            file = "slides.html",
+            output = "slides.pdf",
+            args = "--chrome-arg=--allow-file-access-from-files",
+            docker = TRUE
+          )
+        shell: Rscript {0}
+
+      #- uses: stefanzweifel/git-auto-commit-action@v4

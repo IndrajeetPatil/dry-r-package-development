@@ -21,4 +21,5 @@ Depends:
     knitr,
     fs,
     quarto,
-    reticulate
+    reticulate,
+    xaringan
