@@ -46,5 +46,6 @@ jobs:
 
       - name: Build PDF using decktape
         run: |
+          sudo chmod -R a+rwx /slides
           npm install -g decktape
           docker run --rm -t -v `pwd`:/slides astefanutti/decktape https://indrajeetpatil.github.io/dry-r-package-development/ slides.pdf
