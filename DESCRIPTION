@@ -1,4 +1,5 @@
 Package: dry-r-package-development
+Type: Presentation
 Title: Developing R packages without violating the DRY (Don’t Repeat Yourself) Principle
 Version: 1.0
 Authors@R: 
