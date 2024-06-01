@@ -36,8 +36,10 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           pak-version: devel
+          upgrade: 'TRUE'
           extra-packages: |
             quarto-dev/quarto-r
+            r-lib/sessioninfo
 
       - name: Render slides
         run: |
@@ -51,5 +53,9 @@ jobs:
           mkdir slides && sudo chmod 777 slides
           sudo npm install -g --unsafe-perm=true --allow-root decktape
           docker run --rm -t -v `pwd`:/slides -v ~:/home/user astefanutti/decktape slides.html slides/slides.pdf
+
+      - name: Copy PDF slides to top-level directory
+        run: |
+          cp slides/slides.pdf . && rm -rf slides
 
       - uses: stefanzweifel/git-auto-commit-action@v5.0.1
