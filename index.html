@@ -10,7 +10,7 @@
 <link href="slides_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="slides_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.45">
+  <meta name="generator" content="quarto-1.5.47">
 
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>slides</title>
@@ -433,8 +433,7 @@
 </div>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -536,8 +535,7 @@
 </div>
 </div>
 </div>
-</div>
-</div>
+</div></div>
 </section>
 <section id="child-documents" class="slide level2">
 <h2>Child documents</h2>
@@ -566,8 +564,7 @@
 <span id="cb2-3"><a href=""></a>```{r}</span>
 <span id="cb2-4"><a href=""></a>1 + 1</span>
 <span id="cb2-5"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -607,8 +604,7 @@
 <p><strong>README</strong></p>
 <pre><code>├── DESCRIPTION
 ├── README.Rmd</code></pre>
-</div>
-</div>
+</div></div>
 </div>
 <div class="fragment">
 <div class="columns">
@@ -632,8 +628,7 @@
 <span id="cb6-6"><a href=""></a></span>
 <span id="cb6-7"><a href=""></a>```{r, child="man/rmd-children/info1.Rmd"}</span>
 <span id="cb6-8"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </div>
 </section>
 <section id="using-child-documents-in-package-part-2" class="slide level2 smaller">
@@ -660,8 +655,7 @@
 <span id="cb8-5"><a href=""></a><span class="co">#' ```</span></span>
 <span id="cb8-6"><a href=""></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
@@ -717,8 +711,7 @@
 <span id="cb11-3"><a href=""></a></span>
 <span id="cb11-4"><a href=""></a># more comments and code</span>
 <span id="cb11-5"><a href=""></a>2 + 3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -752,8 +745,7 @@
 <p><strong>README</strong></p>
 <pre><code>├── DESCRIPTION
 ├── README.Rmd</code></pre>
-</div>
-</div>
+</div></div>
 </div>
 <div class="fragment">
 <div class="columns">
@@ -783,8 +775,7 @@
 <span id="cb15-9"><a href=""></a></span>
 <span id="cb15-10"><a href=""></a>```{r, file="man/r-chunks/chunk1.R"}</span>
 <span id="cb15-11"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </div>
 </section>
 <section id="using-non-child-documents-in-package-part-2" class="slide level2 smaller">
@@ -812,8 +803,7 @@
 <span id="cb17-7"><a href=""></a><span class="co">#' @example man/r-chunks/chunk1.R</span></span>
 <span id="cb17-8"><a href=""></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
@@ -905,8 +895,7 @@
 <span id="cb20-12"><a href=""></a></span>
 <span id="cb20-13"><a href=""></a>options(crayon.enabled = TRUE)</span>
 <span id="cb20-14"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <p>How can this repetition be avoided?</p>
 </section>
@@ -926,8 +915,7 @@
 ├── vignettes
 │   └── setup
 │       └── setup.R</code></pre>
-</div>
-</div>
+</div></div>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:26%;">
@@ -958,8 +946,7 @@
 <span id="cb25-7"><a href=""></a>source("setup/setup.R")</span>
 <span id="cb25-8"><a href=""></a>options(crayon.enabled = TRUE)</span>
 <span id="cb25-9"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -1022,8 +1009,7 @@
 <span id="cb28-6"><a href=""></a>exdat &lt;- matrix(c(71, 50))</span>
 <span id="cb28-7"><a href=""></a>foo(exdat)</span>
 <span id="cb28-8"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 </div>
 <div class="fragment">
@@ -1053,8 +1039,7 @@
 │   └── exdat.rdata
 ├── R
 │   └── data.R</code></pre>
-</div>
-</div>
+</div></div>
 </div>
 <div class="fragment">
 <div class="callout callout-caution callout-titled callout-style-default">
@@ -1102,8 +1087,7 @@
 <span id="cb33-5"><a href=""></a>```{r}</span>
 <span id="cb33-6"><a href=""></a>foo(exdat)</span>
 <span id="cb33-7"><a href=""></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1172,8 +1156,7 @@
 <span id="cb34-14"><a href=""></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
 <span id="cb34-15"><a href=""></a>  }</span>
 <span id="cb34-16"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </div>
 </section>
 <section id="parametrized-unit-testing" class="slide level2 smaller">
@@ -1209,8 +1192,7 @@
 <span id="cb36-10"><a href=""></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
 <span id="cb36-11"><a href=""></a>  )</span>
 <span id="cb36-12"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1251,8 +1233,7 @@
 │           └── testdat1.rdata
 │           └── testdat2.rdata
 │           └── ...</code></pre>
-</div>
-</div>
+</div></div>
 <div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1286,8 +1267,7 @@
 <span id="cb40-2"><a href=""></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="fragment">
 <p>With saved datasets, you define just <strong>once</strong> and load them from test files.</p>
@@ -1302,8 +1282,7 @@
 <span id="cb42-2"><a href=""></a><span class="fu">foo2</span>(testdat1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1356,8 +1335,7 @@
 <span id="cb44-5"><a href=""></a>  </span>
 <span id="cb44-6"><a href=""></a>  ...</span>
 <span id="cb44-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><strong>unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1370,8 +1348,7 @@
 <span id="cb46-2"><a href=""></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
 <span id="cb46-3"><a href=""></a>  <span class="st">"Argument `y` should be positive."</span></span>
 <span id="cb46-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </div>
 <div class="fragment">
 <p>How can this repetition be avoided?</p>
@@ -1427,8 +1404,7 @@
 <span id="cb49-5"><a href=""></a>  </span>
 <span id="cb49-6"><a href=""></a>  ...</span>
 <span id="cb49-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><strong>Unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1441,8 +1417,7 @@
 <span id="cb51-2"><a href=""></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
 <span id="cb51-3"><a href=""></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
 <span id="cb51-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><br></p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1484,8 +1459,7 @@
 <span id="cb54-3"><a href=""></a>  </span>
 <span id="cb54-4"><a href=""></a>  ...</span>
 <span id="cb54-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 <p><strong>Unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1496,8 +1470,7 @@
 <span id="cb55-5"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:50%;">
 <p>Since the validation has moved to a new function, you only need to test it once.</p>
-</div>
-</div>
+</div></div>
 </section>
 <section id="dry-once-dry-multiple-times" class="slide level2 smaller">
 <h2>DRY once, DRY multiple times</h2>
@@ -1568,8 +1541,7 @@
 <span id="cb57-5"><a href=""></a><span class="co">#'</span></span>
 <span id="cb57-6"><a href=""></a><span class="do">## {pkgname} namespace: end</span></span>
 <span id="cb57-7"><a href=""></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
+</div></div>
 </div>
 </section>
 <section id="self-study-5" class="slide level2">
@@ -1636,14 +1608,14 @@
  collate  C.UTF-8
  ctype    C.UTF-8
  tz       UTC
- date     2024-06-16
+ date     2024-06-23
  pandoc   3.2 @ /opt/hostedtoolcache/pandoc/3.2/x64/ (via rmarkdown)
- quarto   1.5.45 @ /usr/local/bin/quarto
+ quarto   1.5.47 @ /usr/local/bin/quarto
 
 [1m[36m─ Packages ───────────────────────────────────────────────────────────────────[39m[22m
  [3m[90mpackage    [39m[23m [3m[90m*[39m[23m [3m[90mversion   [39m[23m [3m[90mdate (UTC)[39m[23m [3m[90mlib[39m[23m [3m[90msource[39m[23m
  base        * 4.4.1      [90m2024-06-14[39m [90m[3][39m [1m[35mlocal[39m[22m
- cli           3.6.2      [90m2023-12-11[39m [90m[1][39m [1m[35mRSPM[39m[22m
+ cli           3.6.3      [90m2024-06-21[39m [90m[1][39m [1m[35mRSPM[39m[22m
  compiler      4.4.1      [90m2024-06-14[39m [90m[3][39m [1m[35mlocal[39m[22m
  datasets    * 4.4.1      [90m2024-06-14[39m [90m[3][39m [1m[35mlocal[39m[22m
  digest        0.6.35     [90m2024-03-11[39m [90m[1][39m [1m[35mRSPM[39m[22m
@@ -1661,7 +1633,7 @@
  stats       * 4.4.1      [90m2024-06-14[39m [90m[3][39m [1m[35mlocal[39m[22m
  tools         4.4.1      [90m2024-06-14[39m [90m[3][39m [1m[35mlocal[39m[22m
  utils       * 4.4.1      [90m2024-06-14[39m [90m[3][39m [1m[35mlocal[39m[22m
- xfun          0.44       [90m2024-05-15[39m [90m[1][39m [1m[35mRSPM[39m[22m
+ xfun          0.45       [90m2024-06-16[39m [90m[1][39m [1m[35mRSPM[39m[22m
  yaml          2.3.8      [90m2023-12-11[39m [90m[1][39m [1m[35mRSPM[39m[22m
 
 [90m [1] /home/runner/work/_temp/Library[39m
