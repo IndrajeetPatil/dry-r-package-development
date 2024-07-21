@@ -43,7 +43,7 @@ jobs:
 
       - name: Render slides
         run: |
-          options(crayon.enabled = TRUE)
+          options(crayon.enabled = FALSE)
           callr::rscript("renderer.R")
         shell: Rscript {0}
 
