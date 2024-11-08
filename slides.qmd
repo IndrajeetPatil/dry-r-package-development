@@ -72,8 +72,8 @@ knitr::include_graphics("media/dry.gif")
 
 ## It's about *knowledge* and not just *code*
 
-The DRY principle is about duplication of knowledge. 
-Thus, it applies to all programming entities that encode knowledge: 
+The DRY principle is about duplication of knowledge.
+Thus, it applies to all programming entities that encode knowledge:
 
 - You should not duplicate code.
 - You should not duplicate intent across code and comments.
