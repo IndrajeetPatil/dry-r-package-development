@@ -19,6 +19,9 @@ keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
 
 <!-- Don't render this file manually. Run `renderer.R` script instead. -->
 
+<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
+
 ::: {style="text-align: center;"}
 
 Indrajeet Patil
@@ -27,8 +30,6 @@ Indrajeet Patil
 
 ![](media/simpsons.png){.absolute width="900" height="500" left="70" top="155"}
 
-<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
-<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 
 # 
 
