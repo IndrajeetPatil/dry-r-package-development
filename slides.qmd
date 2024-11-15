@@ -6,6 +6,7 @@ format:
     theme: solarized
     slide-number: true
     preview-links: auto
+    embed-resources: true
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/){target='_blank'}."
 #author: "Indrajeet Patil"
 #affiliation: 
