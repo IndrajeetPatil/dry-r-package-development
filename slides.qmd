@@ -14,6 +14,9 @@ execute:
   echo: true
   eval: false
 keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
+pagetitle: "DRY R Package Development"
+author-meta: "Indrajeet Patil"
+date-meta: "`r Sys.time()`"
 ---
 
 ## DRY Package Development in R {style="text-align: center;"}
