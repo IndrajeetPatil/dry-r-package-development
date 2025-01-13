@@ -58,4 +58,4 @@ jobs:
         run: |
           cp slides/slides.pdf . && rm -rf slides
 
-      - uses: stefanzweifel/git-auto-commit-action@v5.0.1
+      - uses: stefanzweifel/git-auto-commit-action@v5.1.0
