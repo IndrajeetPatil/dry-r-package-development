@@ -6,6 +6,7 @@ format:
     theme: solarized
     slide-number: true
     preview-links: auto
+    link-external-newwindow: true
     embed-resources: true
     footer: "Source code for the slides can be found [here](https://github.com/IndrajeetPatil/dry-r-package-development/){target='_blank'}."
 #author: "Indrajeet Patil"
@@ -105,7 +106,7 @@ Thus, it applies to all programming entities that encode knowledge:
 
 - Thomas, D., & Hunt, A. (2019). *The Pragmatic Programmer*. Addison-Wesley Professional. (**pp. 30-38**)
 
-- Understand distinction between DRY and [DAMP (Descriptive And Meaningful Phrases)](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests){target="_blank"}
+- Understand distinction between DRY and [DAMP (Descriptive And Meaningful Phrases)](https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests)
 
 :::
 
@@ -173,7 +174,7 @@ knitr::include_graphics("media/spiderman.jpeg")
 
 ## Child documents
 
-You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html){target="_blank"}.
+You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
 
 &nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa soliud equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
 
@@ -617,11 +618,11 @@ If you are overwhelmed by this section, note that you actually need to remember 
 
 Example packages that use reusable component documents to repeat documentation.
 
-- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments){target="_blank"}
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments)
 
-- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man){target="_blank"}
+- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man)
 
-- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man){target="_blank"}
+- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man)
 
 # Vignette Setup
 
@@ -805,9 +806,9 @@ Now common setup can be modified with a change in only *one* place!
 
 Packages in the wild that use this trick.
 
-- [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R){target="_blank"}
+- [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R)
 
-- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/blob/main/vignettes/setup.R){target="_blank"}
+- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/blob/main/vignettes/setup.R)
 
 # Data
 
@@ -997,9 +998,9 @@ Note that if you now wish to update the dataset, you need to change its definiti
 
 Examples of R packages that define datasets and use them repeatedly.
 
-- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot){target="_blank"}
+- [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot)
 
-- [`{effectsize}`](https://github.com/easystats/effectsize){target="_blank"}
+- [`{effectsize}`](https://github.com/easystats/effectsize)
 
 # Unit testing
 
@@ -1060,7 +1061,7 @@ test_that(
 
 ## Parametrized unit testing {.smaller}
 
-To avoid such repetition, you can write parameterized unit tests using  [`{patrick}`](https://github.com/google/patrick){target="_blank"}.
+To avoid such repetition, you can write parameterized unit tests using  [`{patrick}`](https://github.com/google/patrick).
 
 . . . 
 
@@ -1264,9 +1265,9 @@ The exact path provided to `readRDS()` will depend on where the datasets are sto
 
 Examples of R packages that save datasets required for unit testing.
 
-- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data){target="_blank"}
+- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data)
 
-- [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm){target="_blank"}
+- [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
 # Exceptions
 
@@ -1545,11 +1546,11 @@ But storing them in a list has the following advantages:
 
 Example of R package that create a list of exception functions and exports it:
 
-[`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R){target="_blank"}
+[`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R)
 
 Example of R package that imports this list and appends it:
 
-[`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R){target="_blank"}
+[`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R)
 
 # Dependency management
 
@@ -1613,9 +1614,9 @@ NULL
 
 Examples of R packages that list the `NAMESPACE` imports in a single file this way.
 
-- [`{usethis}`](https://github.com/r-lib/usethis/blob/main/R/usethis-package.R){target="_blank"}
+- [`{usethis}`](https://github.com/r-lib/usethis/blob/main/R/usethis-package.R)
 
-- [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R){target="_blank"}
+- [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R)
 
 # Conclusion
 
@@ -1625,31 +1626,29 @@ You can use these techniques to avoid repetition while developing R packages, wh
 
 Although related to package development at a meta level, these issues are beyond the scope of the current presentation. I can only point to resources to help you get started.
 
-- [DRY GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows){target="_blank"}
+- [DRY GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 
    - <https://github.com/krlmlr/actions-sync>
    - <https://github.com/rstudio/education-workflows>
 
-- [DRY pkdown website templates for multiple packages in organizations](https://pkgdown.r-lib.org/articles/customise.html#template-packages){target="_blank"}
+- [DRY pkdown website templates for multiple packages in organizations](https://pkgdown.r-lib.org/articles/customise.html#template-packages)
 
    - <https://github.com/tidyverse/tidytemplate>
    - <https://github.com/easystats/easystatstemplate>
 
 # For more
 
-If you are interested in reading more of my slide decks on related topics, visit [this](https://sites.google.com/site/indrajeetspatilmorality/presentations){target="_blank"} page.
+If you are interested in reading more of my slide decks on related topics, visit [this](https://sites.google.com/site/indrajeetspatilmorality/presentations) page.
 
 # Find me at...
 
-{{< fa brands twitter >}} [Twitter](http://twitter.com/patilindrajeets){target="_blank"}
+{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/)
 
-{{< fa brands linkedin >}} [LikedIn](https://www.linkedin.com/in/indrajeet-patil-397865174/){target="_blank"}
+{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
 
-{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil){target="_blank"}
+{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
 
-{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/){target="_blank"}
-
-{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com){target="_blank"}
+{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
 
 # Thank You 
 
