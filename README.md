@@ -1,6 +1,3 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # DRY R Package Development
 
 Link to slides:
@@ -15,7 +12,7 @@ violating the DRY (Don’t Repeat Yourself) Principle in
 - data
 - conditions
 
-<img src="media/simpsons.png" width="50%" />
+<img src="media/simpsons.png" width="50%" alt="Simpsons cartoon where a character is writing on the blackboard that they will not repeat themselves while repeating themselves by writing the same thing again and again" />
 
 ## Code of Conduct
 
