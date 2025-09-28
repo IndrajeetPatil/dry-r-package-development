@@ -1,0 +1,25 @@
+Package: dry-r-package-development
+Type: Presentation
+Title: Developing R packages without violating the DRY (Don’t Repeat Yourself) Principle
+Version: 1.0
+Authors@R: 
+    person(given = "Indrajeet",
+           family = "Patil",
+           role = c("cre", "aut", "cph"),
+           email = "patilindrajeet.science@gmail.com",
+           comment = c(ORCID = "0000-0003-1995-6531", Twitter = "@patilindrajeets"))
+Description: This presentation contains tips on how not to repeat yourself during 
+    R package development. This is not a package, and the DESCRIPTION file is 
+    included to make it easier to install required packages in GitHub action workflows.
+License: CC0 1.0 Universal
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.2
+URL: https://github.com/IndrajeetPatil/dry-r-package-development/,
+    https://indrajeetpatil.github.io/dry-r-package-development/
+BugReports: https://github.com/IndrajeetPatil/dry-r-package-development/issues
+Depends:
+    knitr,
+    fs,
+    quarto,
+    reticulate

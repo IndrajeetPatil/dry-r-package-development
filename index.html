@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-c6982bbdd90c704a9b15aa23d87ad911.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.2">
+
+  <meta name="author" content="Indrajeet Patil">
+  <meta name="dcterms.date" content="2025-09-28 08:40:56.183793">
+  <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
+  <title>DRY R Package Development</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-832775eafbd512325564c8c290c39367.css">
+  <link rel="stylesheet" href="style.css">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QHTR7WCFDV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-QHTR7WCFDV");
+  </script>
+
+  <meta property="og:title" content="DRY Package Development in R">
+  <meta property="og:description" content="Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable.">
+  <meta property="og:image" content="https://indrajeetpatil.github.io/dry-r-package-development/media/social-media-card.png">
+  <meta property="og:url" content="https://indrajeetpatil.github.io/dry-r-package-development/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DRY Package Development in R">
+  <meta name="twitter:description" content="Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable.">
+  <meta name="twitter:image" content="https://indrajeetpatil.github.io/dry-r-package-development/media/social-media-card.png">
+<link rel="canonical" href="https://indrajeetpatil.github.io/dry-r-package-development/">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="dry-package-development-in-r" class="slide level2" style="text-align: center;">
+<h2>DRY Package Development in R</h2>
+<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
+<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
+<div style="text-align: center;">
+<p>Indrajeet Patil</p>
+</div>
+<p><img data-src="media/simpsons.png" class="absolute" style="top: 155px; left: 70px; width: 900px; height: 500px; "></p>
+</section>
+<section id="section" class="title-slide slide level1 center">
+<h1></h1>
+<p><em>“Copy and paste is a design error.”</em> &nbsp; - David Parnas</p>
+</section>
+
+<section>
+<section id="why-so-dry" class="title-slide slide level1 center">
+<h1>Why So DRY</h1>
+<p>Why should you not repeat yourself?</p>
+</section>
+<section id="dont-repeat-yourself-dry-principle" class="slide level2 smaller">
+<h2>Don’t Repeat Yourself (DRY) Principle</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>The DRY Principle states that:</p>
+<div style="color: red;">
+<p><em>Every piece of <strong>knowledge</strong> must have a <strong>single</strong> representation in the codebase.</em></p>
+</div>
+<p>That is, you should not express the same thing in multiple places in multiple ways.</p>
+</div><div class="column" style="width:40%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="media/dry.gif"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>It’s about <em>knowledge</em> and not just <em>code</em></strong></p>
+</div>
+<div class="callout-content">
+<p>The DRY principle is about duplication of knowledge. Thus, it applies to all programming entities that encode knowledge:</p>
+<ul>
+<li>You should not duplicate code.</li>
+<li>You should not duplicate intent across code and comments.</li>
+<li>You should not duplicate knowledge in data structures.</li>
+<li>…</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="benefits-of-dry-codebase" class="slide level2 smaller">
+<h2>Benefits of DRY codebase</h2>
+<ul>
+<li><p>When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.</p></li>
+<li><p>Easy to maintain since there is only a single representation of knowledge that needs to be updated if the underlying knowledge changes.</p></li>
+<li><p>As a side effect, routines developed to remove duplicated code can become part of general-purpose utilities.</p></li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Further Reading</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>Thomas, D., &amp; Hunt, A. (2019). <em>The Pragmatic Programmer</em>. Addison-Wesley Professional. (<strong>pp.&nbsp;30-38</strong>)</p></li>
+<li><p>Understand distinction between DRY and <a href="https://stackoverflow.com/questions/6453235/what-does-damp-not-dry-mean-when-talking-about-unit-tests">DAMP (Descriptive And Meaningful Phrases)</a></p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section id="plan" class="title-slide slide level1 center">
+<h1>Plan</h1>
+<p>Apply the DRY principle to remove duplication in following aspects of R package development:</p>
+<ul>
+<li>Documentation</li>
+<li>Vignette setup</li>
+<li>Unit testing</li>
+<li>Dependency management</li>
+<li>Exceptions</li>
+</ul>
+</section>
+
+<section>
+<section id="documentation" class="title-slide slide level1 center">
+<h1>Documentation</h1>
+<p>How not to repeat yourself while writing documentation.</p>
+</section>
+<section id="what-do-users-read" class="slide level2 smaller">
+<h2>What do users read?</h2>
+<p>What users consult to find needed information may be context-dependent.</p>
+<p><br></p>
+<div class="fragment">
+<p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: While exploring the package repository.</p>
+<p><br></p>
+<p><i class="fa-solid fa-file fa-2xl" aria-label="file"></i> <strong>Vignettes</strong>: When first learning how to use a package.</p>
+<p><br></p>
+<p><i class="fa-solid fa-file-invoice fa-2xl" aria-label="file-invoice"></i> <strong>Manual</strong>: When checking details about a specific function.</p>
+<p><br></p>
+</div>
+<div class="fragment">
+<p>Thus, including crucial information <strong>only in one place</strong> makes it likely that the users might miss out on it in certain contexts.</p>
+</div>
+</section>
+<section id="go-forth-and-multiply-without-repetition" class="slide level2 smaller">
+<h2>Go forth and multiply (without repetition)</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Some documentation is important enough to be included in multiple places (e.g.&nbsp;in the function documentation and in a vignette).</p>
+<p><br></p>
+<blockquote>
+<p>How can you document something just <em>once</em> but include it in <em>multiple</em> locations?</p>
+</blockquote>
+</div><div class="column" style="width:60%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="media/spiderman.jpeg" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="child-documents" class="slide level2">
+<h2>Child documents</h2>
+<p>You can stitch an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
+<p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-5x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp;&nbsp; <i class="fa-soliud fa-equals fa-5x" aria-label="equals"></i> &nbsp;&nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
+<p>(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
+<div class="fragment">
+<p>Thus, the information to repeat can be stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
+</div>
+</section>
+<section id="storing-child-documents-in-package" class="slide level2 smaller">
+<h2>Storing child documents in package</h2>
+<p>Stratagem: You can store child documents in the manual directory and reuse them.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Child documents</strong></p>
+<pre><code>├── DESCRIPTION
+├── man
+│   └── rmd-children
+│       └── info1.Rmd
+│       └── ...</code></pre>
+</div><div class="column" style="width:70%;">
+<p><code>info1.Rmd</code> example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>This is some crucial information to be repeated across documentation.</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>1 + 1</span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><br></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tips</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>You can include as many child documents as you want.</li>
+<li>The child document is just like any <code>.Rmd</code> file and can include everything that any other <code>.Rmd</code> file can include.</li>
+<li>You can choose a different name for the folder containing child documents (e.g.&nbsp;<code>rmd-fragments</code>).</li>
+<li>Make sure to include <code>Roxygen: list(markdown = TRUE)</code> field in the <code>DESCRIPTION</code> file.</li>
+<li>The child documents will not pose a problem either for <code>R CMD check</code> or for <code>{pkgdown}</code> website.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="using-child-documents-in-package-part-1" class="slide level2 smaller">
+<h2>Using child documents in package: Part-1</h2>
+<p>Include contents of child documents in the documentation in multiple locations.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Vignette</strong></p>
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── ...
+│   └── web_only
+│       └── vignette2.Rmd
+│       └── ...</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>README</strong></p>
+<pre><code>├── DESCRIPTION
+├── README.Rmd</code></pre>
+</div></div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>In <code>vignette1.Rmd</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>Vignette content.</span>
+<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, child="../man/rmd-children/info1.Rmd"}</span>
+<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p>In <code>README.Rmd</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>README content.</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, child="man/rmd-children/info1.Rmd"}</span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</div>
+</section>
+<section id="using-child-documents-in-package-part-2" class="slide level2 smaller">
+<h2>Using child documents in package: Part-2</h2>
+<p>Include contents of child documents in the documentation in multiple locations.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Manual</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── foo1.R
+│   └── foo2.R
+├── man
+│   └── foo1.Rd
+│   └── foo2.Rd
+│   └── ...</code></pre>
+</div><div class="column" style="width:50%;">
+<p>In <code>foo1.R</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Information:</span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```{r, child="man/rmd-children/info1.Rmd"}</span></span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```</span></span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div></div>
+<p><br></p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>The underlying assumption here is that you are using <a href="https://roxygen2.r-lib.org/"><code>{roxygen2}</code></a> to generate package documentation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-about-non-child-documents" class="slide level2 smaller">
+<h2>What about non-child documents?</h2>
+<p>You can include contents from <strong>any</strong> file in <code>.Rmd</code>, not just a child document!</p>
+<p><br></p>
+<p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-code fa-5x" aria-label="file-code"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-image fa-5x" aria-label="file-image"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-solid fa-ellipsis fa-2x" aria-label="ellipsis"></i></p>
+<p>(parent Rmd) &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; (<code>.R</code> + <code>R</code> engine) &nbsp; (<code>.md</code> + <code>asis</code> engine) &nbsp; &nbsp;</p>
+<p><br></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <i class="fa-regular fa-equals fa-3x" aria-label="equals"></i> &nbsp; &nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
+</section>
+<section id="storing-other-documentation-files-in-package" class="slide level2 smaller">
+<h2>Storing other documentation files in package</h2>
+<p>Like child documents, other types of documents are also stored in <code>man/</code> folder.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Reusable content</strong></p>
+<pre><code>├── DESCRIPTION
+├── man
+│   └── rmd-children
+│       └── info1.Rmd
+│       └── ...
+│   └── md-fragments
+│       └── fragment1.md
+│       └── ...
+│   └── r-chunks
+│       └── chunk1.R
+│       └── ...</code></pre>
+</div><div class="column" style="width:35%;">
+<p><code>fragment1.md</code> example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>This `.md` file contains </span>
+<span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>content to be included *as is*</span>
+<span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>across multiple locations</span>
+<span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>in the documentation.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:35%;">
+<p><code>chunk1.R</code> example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a># some comment and code</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>1 + 1</span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a># more comments and code</span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>2 + 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><br></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Folder names</strong></p>
+</div>
+<div class="callout-content">
+<p>You can name these folders however you wish, but it is advisable that the names provide information about file contents (e.g., <code>r-examples</code>, <code>yaml-snippets</code>, <code>md-fragments</code>, etc.).</p>
+</div>
+</div>
+</div>
+</section>
+<section id="using-non-child-documents-in-package-part-1" class="slide level2 smaller">
+<h2>Using non-child documents in package: Part-1</h2>
+<p>Include contents of various files in the documentation in multiple locations.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Vignette</strong></p>
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── ...
+│   └── web_only
+│       └── vignette2.Rmd
+│       └── ...</code></pre>
+</div><div class="column" style="width:50%;">
+<p><strong>README</strong></p>
+<pre><code>├── DESCRIPTION
+├── README.Rmd</code></pre>
+</div></div>
+</div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>In <code>vignette1.Rmd</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>Vignette content.</span>
+<span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{asis, file="../man/md-fragments/fragment1.md"}</span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, file="../man/r-chunks/chunk1.R"}</span>
+<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p>In <code>README.Rmd</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>README content.</span>
+<span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{asis, file="man/md-fragments/fragment1.md"}</span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb15-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, file="man/r-chunks/chunk1.R"}</span>
+<span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</div>
+</section>
+<section id="using-non-child-documents-in-package-part-2" class="slide level2 smaller">
+<h2>Using non-child documents in package: Part-2</h2>
+<p>Include contents of child documents in the documentation in multiple locations.</p>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><strong>Manual</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+│   └── foo1.R
+│   └── ...
+├── man
+│   └── foo1.Rd
+│   └── ...</code></pre>
+</div><div class="column" style="width:50%;">
+<p>In <code>foo1.R</code></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
+<span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Information:</span></span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```{r, file="man/md-fragments/fragment1.Rmd"}</span></span>
+<span id="cb17-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```</span></span>
+<span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb17-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @example man/r-chunks/chunk1.R</span></span>
+<span id="cb17-8"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div></div>
+<p><br></p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>The underlying assumption here is that you are using <a href="https://roxygen2.r-lib.org/"><code>{roxygen2}</code></a> to generate package documentation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Summary on how to repeat documentation</strong></p>
+</div>
+<div class="callout-content">
+<p>If you are overwhelmed by this section, note that you actually need to remember only the following rules:</p>
+<ul>
+<li><p>Store reusable document files in the <code>/man</code> folder.</p></li>
+<li><p>When you wish to include their contents, provide paths to these files <strong>relative</strong> to the document you are linking from.</p></li>
+<li><p>If it’s a child <code>.Rmd</code> document, use the <code>child</code> option to include its contents.</p></li>
+<li><p>If it’s not an <code>.Rmd</code> document, use the <code>file</code> option to include its contents and use appropriate <code>{knitr}</code> engine. To see available engines, run <code>names(knitr::knit_engines$get())</code>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study" class="slide level2">
+<h2>Self-study</h2>
+<p>Example packages that use reusable component documents to repeat documentation.</p>
+<ul>
+<li><p><a href="https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments"><code>{pkgdown}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man"><code>{ggstatsplot}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/statsExpressions/tree/main/man"><code>{statsExpressions}</code></a></p></li>
+</ul>
+</section></section>
+<section>
+<section id="vignette-setup" class="title-slide slide level1 center">
+<h1>Vignette Setup</h1>
+<p>How not to repeat yourself while setting up vignettes.</p>
+</section>
+<section id="setup-chunks-in-vignettes" class="slide level2 smaller">
+<h2>Setup chunks in vignettes</h2>
+<p>Another duplication that occurs is in setup chunks for vignettes.</p>
+<p>For example, some parts of the setup can be same across vignettes.</p>
+<p><br></p>
+<div class="columns">
+<div class="column" style="width:25%;">
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── vignette1.Rmd
+│   └── vignette2.Rmd
+│   └── ...</code></pre>
+</div><div class="column" style="width:37%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-1"</span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb19-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb19-7"><a href="" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(</span>
+<span id="cb19-8"><a href="" aria-hidden="true" tabindex="-1"></a>  message = FALSE,</span>
+<span id="cb19-9"><a href="" aria-hidden="true" tabindex="-1"></a>  collapse = TRUE,</span>
+<span id="cb19-10"><a href="" aria-hidden="true" tabindex="-1"></a>  comment = "#&gt;"</span>
+<span id="cb19-11"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-12"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:37%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-2"</span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(</span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a>  message = FALSE,</span>
+<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a>  collapse = TRUE,</span>
+<span id="cb20-10"><a href="" aria-hidden="true" tabindex="-1"></a>  comment = "#&gt;"</span>
+<span id="cb20-11"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="" aria-hidden="true" tabindex="-1"></a>options(crayon.enabled = TRUE)</span>
+<span id="cb20-14"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><br></p>
+<p>How can this repetition be avoided?</p>
+</section>
+<section id="sourcing-setup-chunks-in-vignettes" class="slide level2 smaller">
+<h2>Sourcing setup chunks in vignettes</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>This repetition can be avoided by moving the <strong>common</strong> setup to a script, and sourcing it from vignettes. Storing this script in a folder (<code>/setup</code>) is advisable if there are many reusable artifacts.</p>
+</div><div class="column" style="width:20%;">
+<p><strong>Option 1</strong></p>
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── setup.R</code></pre>
+</div><div class="column" style="width:20%;">
+<p><strong>Option 2</strong></p>
+<pre><code>├── DESCRIPTION
+├── vignettes
+│   └── setup
+│       └── setup.R</code></pre>
+</div></div>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:26%;">
+<p><code>setup.R</code> contents</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
+<span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:37%;">
+<p>Sourcing common setup</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-1"</span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r setup, include = FALSE}</span>
+<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a>source("setup/setup.R")</span>
+<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:37%;">
+<p>Sourcing common setup</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-2"</span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb25-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r setup, include = FALSE}</span>
+<span id="cb25-7"><a href="" aria-hidden="true" tabindex="-1"></a>source("setup/setup.R")</span>
+<span id="cb25-8"><a href="" aria-hidden="true" tabindex="-1"></a>options(crayon.enabled = TRUE)</span>
+<span id="cb25-9"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>No parallel modification</strong></p>
+</div>
+<div class="callout-content">
+<p>Now common setup can be modified with a change in only <em>one</em> place!</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-1" class="slide level2">
+<h2>Self-study</h2>
+<p>Packages in the wild that use this trick.</p>
+<ul>
+<li><p><a href="https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R"><code>{dm}</code></a></p></li>
+<li><p><a href="https://github.com/IndrajeetPatil/statsExpressions/blob/main/vignettes/setup.R"><code>{statsExpressions}</code></a></p></li>
+</ul>
+</section></section>
+<section>
+<section id="data" class="title-slide slide level1 center">
+<h1>Data</h1>
+<p>How not to repeat yourself while creating and re-using example datasets.</p>
+</section>
+<section id="illustrative-example-datasets" class="slide level2 smaller">
+<h2>Illustrative example datasets</h2>
+<p>If none of the existing datasets are useful to illustrate your functions, you can create new datasets.</p>
+<div class="fragment">
+<p>Let’s say your example dataset is called <code>exdat</code> and function is called <code>foo()</code>. Using it in examples, vignettes, README, etc. requires that it be define <em>multiple</em> times.</p>
+<div class="columns">
+<div class="column" style="width:33%;">
+<p><strong>In examples</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' exdat &lt;- matrix(c(71, 50))</span></span>
+<span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' foo(exdat)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:33%;">
+<p><strong>In vignettes</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "My Vignette"</span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb27-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb27-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb27-7"><a href="" aria-hidden="true" tabindex="-1"></a>exdat &lt;- matrix(c(71, 50))</span>
+<span id="cb27-8"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
+<span id="cb27-9"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:33%;">
+<p><strong>In README</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
+<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb28-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb28-6"><a href="" aria-hidden="true" tabindex="-1"></a>exdat &lt;- matrix(c(71, 50))</span>
+<span id="cb28-7"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
+<span id="cb28-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><br></p>
+</div>
+<div class="fragment">
+<p>How can this repetition be avoided?</p>
+</div>
+</section>
+<section id="shipping-data-in-a-package" class="slide level2 smaller">
+<h2>Shipping data in a package</h2>
+<p>You can avoid this repetition by defining the data just <em>once</em>, saving and shipping it with the package.</p>
+<p>The datasets are stored in <code>data/</code>, and documented in <code>R/data.R</code>.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:70%;">
+<p><strong>Saving data</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># In `exdat.R`</span></span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
+<span id="cb29-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(exdat, <span class="at">file=</span><span class="st">"data/exdat.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div><div class="column" style="width:30%;">
+<p><strong>Directory structure</strong></p>
+<pre><code>├── DESCRIPTION
+├── R
+├── data-raw
+│   └── exdat.R
+├── data
+│   └── exdat.rdata
+├── R
+│   └── data.R</code></pre>
+</div></div>
+</div>
+<div class="fragment">
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Don’t forget!</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li>For future reference, save script (in <code>data-raw/</code> folder) to (re)create or update the dataset.</li>
+<li>If you include datasets, set <code>LazyData: true</code> in the <code>DESCRIPTION</code> file.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="reusable-dataset" class="slide level2 smaller">
+<h2>Reusable dataset</h2>
+<p><code>exdat</code> can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.</p>
+<div class="columns">
+<div class="column" style="width:33%;">
+<p><strong>In examples</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' foo(exdat)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:33%;">
+<p><strong>In vignettes</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "My Vignette"</span>
+<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
+<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb32-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb32-7"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
+<span id="cb32-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:33%;">
+<p><strong>In README</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
+<span id="cb33-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb33-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
+<span id="cb33-6"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
+<span id="cb33-7"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><br></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>No parallel modification</strong></p>
+</div>
+<div class="callout-content">
+<p>Note that if you now wish to update the dataset, you need to change its definition only in <em>one</em> place!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-2" class="slide level2">
+<h2>Self-study</h2>
+<p>Examples of R packages that define datasets and use them repeatedly.</p>
+<ul>
+<li><p><a href="https://github.com/IndrajeetPatil/ggstatsplot"><code>{ggstatsplot}</code></a></p></li>
+<li><p><a href="https://github.com/easystats/effectsize"><code>{effectsize}</code></a></p></li>
+</ul>
+</section></section>
+<section>
+<section id="unit-testing" class="title-slide slide level1 center">
+<h1>Unit testing</h1>
+<p>How not to repeat yourself while writing unit tests.</p>
+</section>
+<section id="repeated-test-patterns" class="slide level2 smaller">
+<h2>Repeated test patterns</h2>
+<p>A <strong>unit test</strong> records the code to describe expected output.</p>
+<p><br></p>
+<p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-code fa-2xl" aria-label="file-code"></i> (expected)</p>
+<p><br></p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Unit testing involves checking function output with a <strong>range of inputs</strong>, and this can involve recycling a test pattern.</p>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Not DRY</strong></p>
+</div>
+<div class="callout-content">
+<p>But such recycling violates the DRY principle. How can you avoid this?</p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:60%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to test</span></span>
+<span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">*</span> y</span>
+<span id="cb34-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb34-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Tests</span></span>
+<span id="cb34-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(</span>
+<span id="cb34-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb34-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> {</span>
+<span id="cb34-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb34-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb34-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb34-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb34-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb34-15"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb34-16"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</div>
+</section>
+<section id="parametrized-unit-testing" class="slide level2 smaller">
+<h2>Parametrized unit testing</h2>
+<p>To avoid such repetition, you can write parameterized unit tests using <a href="https://github.com/google/patrick"><code>{patrick}</code></a>.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:51%;">
+<p><strong>Repeated test pattern</strong></p>
+<p><code>expect_identical()</code> used repeatedly.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(</span>
+<span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> {</span>
+<span id="cb35-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
+<span id="cb35-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">0</span>,  <span class="fl">3.4</span>), <span class="dv">0</span>)</span>
+<span id="cb35-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="cn">NA</span>, <span class="dv">4</span>),   <span class="cn">NA_real_</span>)</span>
+<span id="cb35-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),  <span class="dv">4</span>)</span>
+<span id="cb35-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
+<span id="cb35-9"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb35-10"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:49%;">
+<p><strong>Parametrized test pattern</strong></p>
+<p><code>expect_identical()</code> used once.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
+<span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
+<span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
+<span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb36-5"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>x,  <span class="sc">~</span>y,  <span class="sc">~</span>res,</span>
+<span id="cb36-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span><span class="dv">1</span>,  <span class="dv">3</span>,   <span class="sc">-</span><span class="dv">3</span>,</span>
+<span id="cb36-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>,   <span class="fl">3.4</span>,  <span class="dv">0</span>,</span>
+<span id="cb36-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,  <span class="dv">4</span>,    <span class="cn">NA_real_</span>,</span>
+<span id="cb36-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="sc">-</span><span class="dv">2</span>,  <span class="sc">-</span><span class="dv">2</span>,   <span class="dv">4</span>,</span>
+<span id="cb36-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
+<span id="cb36-11"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb36-12"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Combinatorial explosion</strong></p>
+</div>
+<div class="callout-content">
+<p>The parametrized version may not seem impressive for this simple example, but it becomes exceedingly useful when there is a combinatorial explosion of possibilities. Creating each such test manually is cumbersome and error-prone.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="repeated-usage-of-testing-datasets" class="slide level2 smaller">
+<h2>Repeated usage of testing datasets</h2>
+<p>You have already seen how <em>user</em>-facing datasets — useful for illustrating function usage — can be defined and saved once and then used repeatedly.</p>
+<p>Similarly, you can define and save <em>developer</em>-facing datasets - useful for testing purposes - and use them across multiple tests.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:40%;">
+<p>Saving datasets in either of these locations is fine.</p>
+</div><div class="column" style="width:30%;">
+<pre><code>├── DESCRIPTION
+├── tests
+│   └── data
+│       └── script.R
+│       └── testdat1.rdata
+│       └── testdat2.rdata
+│       └── ...</code></pre>
+</div><div class="column" style="width:30%;">
+<pre><code>├── DESCRIPTION
+├── tests
+│   └── testthat
+│       └── data
+│           └── script.R
+│           └── testdat1.rdata
+│           └── testdat2.rdata
+│           └── ...</code></pre>
+</div></div>
+<div class="callout callout-caution callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Save the script!</strong></p>
+</div>
+<div class="callout-content">
+<p>Always save the script used to create datasets. This script:</p>
+<ul>
+<li>acts as documentation for the datasets</li>
+<li>makes it easy to modify the datasets in the future (if needed)</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-test-datasets" class="slide level2 smaller">
+<h2>Using test datasets</h2>
+<p>Without stored datasets, you define the same datasets <strong>multiple</strong> times across test files.</p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<p>In <code>test-foo1.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo1</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:35%;">
+<p>In <code>test-foo2.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo2</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:30%;">
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
+</div></div>
+<p><br></p>
+<div class="fragment">
+<p>With saved datasets, you define just <strong>once</strong> and load them from test files.</p>
+<div class="columns">
+<div class="column" style="width:35%;">
+<p>In <code>test-foo1.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo1</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:35%;">
+<p>In <code>test-foo2.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo2</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:30%;">
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
+</div></div>
+<p><br></p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The exact path provided to <code>readRDS()</code> will depend on where the datasets are stored inside the <code>tests/</code> folder.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-3" class="slide level2">
+<h2>Self-study</h2>
+<p>Examples of R packages that save datasets required for unit testing.</p>
+<ul>
+<li><p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data"><code>{ospsuite}</code></a></p></li>
+<li><p><a href="https://github.com/cynkra/dm/tree/main/tests/testthat/dm"><code>{dm}</code></a></p></li>
+</ul>
+</section></section>
+<section>
+<section id="exceptions" class="title-slide slide level1 center">
+<h1>Exceptions</h1>
+<p>How not to repeat yourself while signalling exceptions</p>
+</section>
+<section id="sending-signals" class="slide level2 smaller">
+<h2>Sending signals</h2>
+<p>Exceptions/conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. Often, similar exceptions need to be signalled across functions.</p>
+<div class="fragment">
+<p>E.g., for functions that don’t accept negative values:</p>
+<p><strong>input validation</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Argument `x` should be positive."</span>)</span>
+<span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb43-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb44-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Argument `y` should be positive."</span>)</span>
+<span id="cb44-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb44-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb44-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><strong>unit testing</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb45-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Argument `x` should be positive."</span></span>
+<span id="cb45-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb46-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb46-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Argument `y` should be positive."</span></span>
+<span id="cb46-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</div>
+<div class="fragment">
+<p>How can this repetition be avoided?</p>
+</div>
+</section>
+<section id="list-of-exception-functions" class="slide level2 smaller">
+<h2>List of exception functions</h2>
+<p>We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
+<span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
+<span id="cb47-4"><a href="" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb47-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb47-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
+<span id="cb47-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why not include the entire validation?</strong></p>
+</div>
+<div class="callout-content">
+<p>You can move the entire <code>if()</code> block to <code>only_positives_allowed()</code> and create a new validation function.</p>
+<p>But this is not done here to address the most general case where:</p>
+<ul>
+<li>the exception message string can be used outside of an <code>if()</code> block</li>
+<li>it can be used not only as a message, but may be as a warning or an error</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="reusable-exceptions-part-1" class="slide level2 smaller">
+<h2>Reusable exceptions: Part-1</h2>
+<p>We can then use these functions to signal exceptions.</p>
+<p><strong>Input validation</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb48-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
+<span id="cb48-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb48-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb49-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
+<span id="cb49-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb49-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><strong>Unit testing</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb50-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb50-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
+<span id="cb50-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb51-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
+<span id="cb51-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><br></p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>No parallel modification</strong></p>
+</div>
+<div class="callout-content">
+<p>Note that if you now wish to change the condition string, this change needs to be made only in <em>one</em> place!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="reusable-exceptions-part-2" class="slide level2 smaller">
+<h2>Reusable exceptions: Part-2</h2>
+<p>As noted before, you can also move the entire validation to a new function. E.g.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb52-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">check_only_positive =</span> <span class="cf">function</span>(arg) {</span>
+<span id="cb52-3"><a href="" aria-hidden="true" tabindex="-1"></a>    arg_name <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(arg))</span>
+<span id="cb52-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (arg <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
+<span id="cb52-5"><a href="" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>))</span>
+<span id="cb52-6"><a href="" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb52-7"><a href="" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb52-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
+<span id="cb52-9"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Input validation</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">check_only_positive</span>(x)</span>
+<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb53-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb53-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<span id="cb54-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">check_only_positive</span>(y)</span>
+<span id="cb54-3"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb54-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p><strong>Unit testing</strong></p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb55-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">check_only_positive</span>(x), </span>
+<span id="cb55-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Argument `x` should be positive."</span></span>
+<span id="cb55-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p>Since the validation has moved to a new function, you only need to test it once.</p>
+</div></div>
+</section>
+<section id="dry-once-dry-multiple-times" class="slide level2 smaller">
+<h2>DRY once, DRY multiple times</h2>
+<p>Most often the exceptions will be useful only for the package in which they are defined in. But, if the exceptions are generic enough, you can even export them. This will make them reusable not only in the current package, but also in other packages.</p>
+<p>That is, DRYing up exceptions in one package does the same for many!</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Why a list?</strong></p>
+</div>
+<div class="callout-content">
+<p>It is not <em>necessary</em> that you store exceptions in a list; you can create individual functions outside of a list and export them.</p>
+<p>But storing them in a list has the following advantages:</p>
+<ul>
+<li><p><strong>Simpler <code>NAMESPACE</code></strong>: There is a <em>single</em> export for all exceptions (e.g.&nbsp;<code>exceptions</code>), instead of dozens (e.g., <code>only_positives_allowed()</code>, <code>only_negatives_allowed</code>, <code>only_scalar_allowed()</code>, etc.), which can overpower the rest of the package API.</p></li>
+<li><p><strong>Extendability</strong>: You can easily append a list of imported exceptions by adding more exceptions which are relevant only for the current package. E.g. <code>exceptions$my_new_exception_function &lt;- function() {...}</code></p></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="self-study-4" class="slide level2">
+<h2>Self-study</h2>
+<p>Example of R package that create a list of exception functions and exports it:</p>
+<p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R"><code>{ospsuite.utils}</code></a></p>
+<p>Example of R package that imports this list and appends it:</p>
+<p><a href="https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R"><code>{ospsuite}</code></a></p>
+</section></section>
+<section>
+<section id="dependency-management" class="title-slide slide level1 center">
+<h1>Dependency management</h1>
+<p>How not to repeat yourself while importing external package functions.</p>
+</section>
+<section id="imports" class="slide level2 smaller">
+<h2>Imports</h2>
+<p>Instead of using <code>::</code> to access external package function (<code>rlang::warn()</code>), you can specify imports explicitly via roxygen directive <code>#' @importFrom</code>.</p>
+<p>But if you are importing some functions multiple times, you should avoid specifying the import multiple times, and instead collect all imports in a single file.</p>
+<div class="fragment">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Import statements scattered across files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-1</span></span>
+<span id="cb56-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb56-3"><a href="" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb56-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-2</span></span>
+<span id="cb56-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom rlang warn</span></span>
+<span id="cb56-7"><a href="" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb56-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb56-10"><a href="" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb56-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-3</span></span>
+<span id="cb56-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb56-14"><a href="" aria-hidden="true" tabindex="-1"></a>...</span>
+<span id="cb56-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-4, file-5, etc.</span></span>
+<span id="cb56-17"><a href="" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<p>In <code>{pkgname}-package.R</code> file:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<span id="cb57-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb57-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
+<span id="cb57-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom purrr pluck</span></span>
+<span id="cb57-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb57-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## {pkgname} namespace: end</span></span>
+<span id="cb57-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</div>
+</section>
+<section id="self-study-5" class="slide level2">
+<h2>Self-study</h2>
+<p>Examples of R packages that list the <code>NAMESPACE</code> imports in a single file this way.</p>
+<ul>
+<li><p><a href="https://github.com/r-lib/usethis/blob/main/R/usethis-package.R"><code>{usethis}</code></a></p></li>
+<li><p><a href="https://github.com/r-lib/lintr/blob/main/R/lintr-package.R"><code>{lintr}</code></a></p></li>
+</ul>
+</section></section>
+<section id="conclusion" class="title-slide slide level1 center">
+<h1>Conclusion</h1>
+<p>You can use these techniques to avoid repetition while developing R packages, which should make the development workflow faster, more maintainable, and less error-prone.</p>
+</section>
+
+<section id="advanced" class="title-slide slide level1 smaller center">
+<h1>Advanced</h1>
+<p>Although related to package development at a meta level, these issues are beyond the scope of the current presentation. I can only point to resources to help you get started.</p>
+<ul>
+<li><p><a href="https://docs.github.com/en/actions/using-workflows/reusing-workflows">DRY GitHub Actions workflows</a></p>
+<ul>
+<li><a href="https://github.com/krlmlr/actions-sync" class="uri">https://github.com/krlmlr/actions-sync</a></li>
+<li><a href="https://github.com/rstudio/education-workflows" class="uri">https://github.com/rstudio/education-workflows</a></li>
+</ul></li>
+<li><p><a href="https://pkgdown.r-lib.org/articles/customise.html#template-packages">DRY pkdown website templates for multiple packages in organizations</a></p>
+<ul>
+<li><a href="https://github.com/tidyverse/tidytemplate" class="uri">https://github.com/tidyverse/tidytemplate</a></li>
+<li><a href="https://github.com/easystats/easystatstemplate" class="uri">https://github.com/easystats/easystatstemplate</a></li>
+</ul></li>
+</ul>
+</section>
+
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank You</h1>
+<p>And Happy (DRY) Package Development! 😊</p>
+</section>
+
+<section id="for-more" class="title-slide slide level1 center" data-visibility="uncounted">
+<h1>For more</h1>
+<p>Source code for these slides can be found <a href="https://github.com/IndrajeetPatil/dry-r-package-development">on GitHub</a>.</p>
+<p>If you are interested in good programming and software development practices, check out my other <a href="https://sites.google.com/site/indrajeetspatilmorality/presentations">slide decks</a>.</p>
+</section>
+
+<section id="find-me-at" class="title-slide slide level1 center" data-visibility="uncounted">
+<h1>Find me at…</h1>
+<p><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> <a href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/">LinkedIn</a></p>
+<p><i class="fa-brands fa-github" aria-label="github"></i> <a href="http://github.com/IndrajeetPatil">GitHub</a></p>
+<p><i class="fa-solid fa-link" aria-label="link"></i> <a href="https://sites.google.com/site/indrajeetspatilmorality/">Website</a></p>
+<p><i class="fa-solid fa-envelope" aria-label="envelope"></i> <a href="mailto:patilindrajeet.science@gmail.com">E-mail</a></p>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
