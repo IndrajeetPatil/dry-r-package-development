@@ -1,3 +1,5 @@
+name: Build Presentation
+
 on:
   push:
     branches: [main, master]
@@ -8,54 +10,50 @@ on:
     # Trigger once a week, on a Sunday (0)
     - cron: "0 0 * * 0"
 
-name: Build Presentation
-
 jobs:
   build-presentation:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Setup Pandoc
+        uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: "latest"
 
-      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: pre-release
-      - run: |
+
+      - name: Install Quarto extensions
+        run: |
           quarto --version
           quarto install extension quarto-ext/fontawesome --no-prompt
 
-      - uses: r-lib/actions/setup-r@v2
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
         with:
           pak-version: devel
-          upgrade: 'TRUE'
-          extra-packages: |
-            quarto-dev/quarto-r
-            r-lib/sessioninfo
+          upgrade: "TRUE"
 
       - name: Render slides
         run: |
-          options(crayon.enabled = FALSE)
-          callr::rscript("renderer.R")
-        shell: Rscript {0}
+          quarto render index.qmd
 
-      - name: Build PDF using decktape
-        run: |
-          rm -rf slides
-          mkdir slides && sudo chmod 777 slides
-          sudo npm install -g --unsafe-perm=true --allow-root decktape
-          docker run --rm -t -v `pwd`:/slides -v ~:/home/user astefanutti/decktape slides.html slides/slides.pdf
-
-      - name: Copy PDF slides to top-level directory
-        run: |
-          cp slides/slides.pdf . && rm -rf slides
-
-      - uses: stefanzweifel/git-auto-commit-action@v5.2.0
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
+        with:
+          branch: docs
+          folder: .
