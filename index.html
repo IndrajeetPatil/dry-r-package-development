@@ -12,7 +12,7 @@
   <meta name="generator" content="quarto-1.9.2">
 
   <meta name="author" content="Indrajeet Patil">
-  <meta name="dcterms.date" content="2025-10-05 00:09:32.29427">
+  <meta name="dcterms.date" content="2025-10-05 15:39:30.996452">
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>DRY R Package Development</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -383,12 +383,16 @@
 │       └── info1.Rmd
 │       └── ...</code></pre>
 </div><div class="column" style="width:70%;">
-<p><code>info1.Rmd</code> example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>This is some crucial information to be repeated across documentation.</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>info1.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-filename="info1.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>This is some crucial information to be repeated across documentation.</span>
 <span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a>1 + 1</span>
-<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb2-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><br></p>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -434,25 +438,33 @@
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>In <code>vignette1.Rmd</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette1.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="vignette1.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>Vignette content.</span>
 <span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, child="../man/rmd-children/info1.Rmd"}</span>
-<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}, child="../man/rmd-children/info1.Rmd"}</span></span>
+<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<p>In <code>README.Rmd</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
-<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>README.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-filename="README.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> github_document</span></span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>README content.</span>
 <span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, child="man/rmd-children/info1.Rmd"}</span>
-<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}, child="man/rmd-children/info1.Rmd"}</span></span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 </div>
 </section>
@@ -471,14 +483,18 @@
 │   └── foo2.Rd
 │   └── ...</code></pre>
 </div><div class="column" style="width:50%;">
-<p>In <code>foo1.R</code></p>
 <div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo1.R</strong></pre>
+</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
 <span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Information:</span></span>
-<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```{r, child="man/rmd-children/info1.Rmd"}</span></span>
 <span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```</span></span>
 <span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div></div>
 <p><br></p>
@@ -524,18 +540,26 @@
 │       └── chunk1.R
 │       └── ...</code></pre>
 </div><div class="column" style="width:35%;">
-<p><code>fragment1.md</code> example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>This `.md` file contains </span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>fragment1.md</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-filename="fragment1.md"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="" aria-hidden="true" tabindex="-1"></a>This <span class="in">`.md`</span> file contains</span>
 <span id="cb10-2"><a href="" aria-hidden="true" tabindex="-1"></a>content to be included *as is*</span>
 <span id="cb10-3"><a href="" aria-hidden="true" tabindex="-1"></a>across multiple locations</span>
 <span id="cb10-4"><a href="" aria-hidden="true" tabindex="-1"></a>in the documentation.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:35%;">
-<p><code>chunk1.R</code> example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a># some comment and code</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>chunk1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="chunk1.R"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu"># some comment and code</span></span>
 <span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>1 + 1</span>
 <span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a># more comments and code</span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu"># more comments and code</span></span>
 <span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>2 + 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><br></p>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -575,31 +599,39 @@
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>In <code>vignette1.Rmd</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette1.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-filename="vignette1.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb14-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb14-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb14-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-5"><a href="" aria-hidden="true" tabindex="-1"></a>Vignette content.</span>
 <span id="cb14-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{asis, file="../man/md-fragments/fragment1.md"}</span>
-<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb14-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{asis}, file="../man/md-fragments/fragment1.md"}</span></span>
+<span id="cb14-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, file="../man/r-chunks/chunk1.R"}</span>
-<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}, file="../man/r-chunks/chunk1.R"}</span></span>
+<span id="cb14-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<p>In <code>README.Rmd</code></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
-<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>README.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-filename="README.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> github_document</span></span>
+<span id="cb15-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb15-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-5"><a href="" aria-hidden="true" tabindex="-1"></a>README content.</span>
 <span id="cb15-6"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a>```{asis, file="man/md-fragments/fragment1.md"}</span>
-<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span>
+<span id="cb15-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{asis}, file="man/md-fragments/fragment1.md"}</span></span>
+<span id="cb15-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-9"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a>```{r, file="man/r-chunks/chunk1.R"}</span>
-<span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-10"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}, file="man/r-chunks/chunk1.R"}</span></span>
+<span id="cb15-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 </div>
 </section>
@@ -617,16 +649,20 @@
 │   └── foo1.Rd
 │   └── ...</code></pre>
 </div><div class="column" style="width:50%;">
-<p>In <code>foo1.R</code></p>
 <div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo1.R</strong></pre>
+</div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
 <span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Information:</span></span>
-<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```{r, file="man/md-fragments/fragment1.Rmd"}</span></span>
 <span id="cb17-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```</span></span>
-<span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' </span></span>
+<span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb17-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @example man/r-chunks/chunk1.R</span></span>
 <span id="cb17-8"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div></div>
 <p><br></p>
@@ -693,33 +729,43 @@
 │   └── vignette2.Rmd
 │   └── ...</code></pre>
 </div><div class="column" style="width:37%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-1"</span>
-<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette1.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" data-filename="vignette1.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb19-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Vignette-1"</span></span>
+<span id="cb19-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb19-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb19-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb19-7"><a href="" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(</span>
-<span id="cb19-8"><a href="" aria-hidden="true" tabindex="-1"></a>  message = FALSE,</span>
-<span id="cb19-9"><a href="" aria-hidden="true" tabindex="-1"></a>  collapse = TRUE,</span>
-<span id="cb19-10"><a href="" aria-hidden="true" tabindex="-1"></a>  comment = "#&gt;"</span>
+<span id="cb19-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-7"><a href="" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb19-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb19-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
 <span id="cb19-11"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-12"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:37%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-2"</span>
-<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette2.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-filename="vignette2.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb20-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Vignette-2"</span></span>
+<span id="cb20-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb20-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb20-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>knitr::opts_chunk$set(</span>
-<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a>  message = FALSE,</span>
-<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a>  collapse = TRUE,</span>
-<span id="cb20-10"><a href="" aria-hidden="true" tabindex="-1"></a>  comment = "#&gt;"</span>
+<span id="cb20-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-7"><a href="" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb20-8"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb20-9"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-10"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
 <span id="cb20-11"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb20-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-13"><a href="" aria-hidden="true" tabindex="-1"></a>options(crayon.enabled = TRUE)</span>
-<span id="cb20-14"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-13"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">crayon.enabled =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-14"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><br></p>
 <p>How can this repetition be avoided?</p>
@@ -744,33 +790,47 @@
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:26%;">
-<p><code>setup.R</code> contents</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>setup.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-filename="setup.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
 <span id="cb23-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb23-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">collapse =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb23-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#&gt;"</span></span>
 <span id="cb23-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:37%;">
 <p>Sourcing common setup</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-1"</span>
-<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette1.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" data-filename="vignette1.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Vignette-1"</span></span>
+<span id="cb24-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb24-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb24-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r setup, include = FALSE}</span>
-<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a>source("setup/setup.R")</span>
-<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb24-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r} setup, include = FALSE}</span></span>
+<span id="cb24-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup/setup.R"</span>)</span>
+<span id="cb24-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:37%;">
 <p>Sourcing common setup</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "Vignette-2"</span>
-<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb25-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette2.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-filename="vignette2.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb25-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Vignette-2"</span></span>
+<span id="cb25-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb25-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb25-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r setup, include = FALSE}</span>
-<span id="cb25-7"><a href="" aria-hidden="true" tabindex="-1"></a>source("setup/setup.R")</span>
-<span id="cb25-8"><a href="" aria-hidden="true" tabindex="-1"></a>options(crayon.enabled = TRUE)</span>
-<span id="cb25-9"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r} setup, include = FALSE}</span></span>
+<span id="cb25-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"setup/setup.R"</span>)</span>
+<span id="cb25-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">crayon.enabled =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 </div>
 <div class="fragment">
@@ -810,30 +870,45 @@
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>In examples</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" data-filename="foo.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
 <span id="cb26-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' exdat &lt;- matrix(c(71, 50))</span></span>
 <span id="cb26-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' foo(exdat)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:33%;">
 <p><strong>In vignettes</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "My Vignette"</span>
-<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb27-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27" data-filename="vignette.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb27-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My Vignette"</span></span>
+<span id="cb27-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb27-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb27-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb27-7"><a href="" aria-hidden="true" tabindex="-1"></a>exdat &lt;- matrix(c(71, 50))</span>
-<span id="cb27-8"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
-<span id="cb27-9"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb27-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb27-7"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
+<span id="cb27-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo</span>(exdat)</span>
+<span id="cb27-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:33%;">
 <p><strong>In README</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
-<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>README.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28" data-filename="README.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> github_document</span></span>
+<span id="cb28-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb28-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb28-6"><a href="" aria-hidden="true" tabindex="-1"></a>exdat &lt;- matrix(c(71, 50))</span>
-<span id="cb28-7"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
-<span id="cb28-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-6"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
+<span id="cb28-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo</span>(exdat)</span>
+<span id="cb28-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><br></p>
 </div>
@@ -850,9 +925,13 @@
 <div class="column" style="width:70%;">
 <p><strong>Saving data</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># In `exdat.R`</span></span>
-<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
-<span id="cb29-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(exdat, <span class="at">file=</span><span class="st">"data/exdat.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exdat.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
+<span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(exdat, <span class="at">file=</span><span class="st">"data/exdat.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div><div class="column" style="width:30%;">
 <p><strong>Directory structure</strong></p>
@@ -891,27 +970,42 @@
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>In examples</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31" data-filename="foo.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
 <span id="cb31-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' foo(exdat)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:33%;">
 <p><strong>In vignettes</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a>title: "My Vignette"</span>
-<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a>output: html_vignette</span>
-<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>vignette.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32" data-filename="vignette.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb32-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb32-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My Vignette"</span></span>
+<span id="cb32-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_vignette</span></span>
+<span id="cb32-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb32-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb32-7"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
-<span id="cb32-8"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb32-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb32-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo</span>(exdat)</span>
+<span id="cb32-8"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:33%;">
 <p><strong>In README</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a>output: github_document</span>
-<span id="cb33-3"><a href="" aria-hidden="true" tabindex="-1"></a>---</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>README.Rmd</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" data-filename="README.Rmd"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb33-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> github_document</span></span>
+<span id="cb33-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb33-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="" aria-hidden="true" tabindex="-1"></a>```{r}</span>
-<span id="cb33-6"><a href="" aria-hidden="true" tabindex="-1"></a>foo(exdat)</span>
-<span id="cb33-7"><a href="" aria-hidden="true" tabindex="-1"></a>```</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb33-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo</span>(exdat)</span>
+<span id="cb33-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><br></p>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -965,7 +1059,11 @@
 </div>
 </div>
 </div><div class="column" style="width:60%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to test</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>multiplier.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34" data-filename="multiplier.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to test</span></span>
 <span id="cb34-2"><a href="" aria-hidden="true" tabindex="-1"></a>multiplier <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
 <span id="cb34-3"><a href="" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">*</span> y</span>
 <span id="cb34-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span>
@@ -981,6 +1079,7 @@
 <span id="cb34-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
 <span id="cb34-15"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb34-16"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 </div>
 </section>
@@ -992,7 +1091,11 @@
 <div class="column" style="width:51%;">
 <p><strong>Repeated test pattern</strong></p>
 <p><code>expect_identical()</code> used repeatedly.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-multiplier.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35" data-filename="test-multiplier.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(</span>
 <span id="cb35-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc =</span> <span class="st">"multiplier works as expected"</span>,</span>
 <span id="cb35-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> {</span>
 <span id="cb35-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">3</span>),  <span class="sc">-</span><span class="dv">3</span>)</span>
@@ -1002,10 +1105,15 @@
 <span id="cb35-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(<span class="dv">3</span>,  <span class="dv">3</span>),   <span class="dv">9</span>)</span>
 <span id="cb35-9"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb35-10"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:49%;">
 <p><strong>Parametrized test pattern</strong></p>
 <p><code>expect_identical()</code> used once.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-multiplier.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36" data-filename="test-multiplier.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="" aria-hidden="true" tabindex="-1"></a>patrick<span class="sc">::</span><span class="fu">with_parameters_test_that</span>(</span>
 <span id="cb36-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">desc_stub =</span> <span class="st">"multiplier works as expected"</span>,</span>
 <span id="cb36-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">code =</span> <span class="fu">expect_identical</span>(<span class="fu">multiplier</span>(x, y), res),</span>
 <span id="cb36-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">.cases =</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
@@ -1017,6 +1125,7 @@
 <span id="cb36-10"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>,   <span class="dv">3</span>,    <span class="dv">9</span></span>
 <span id="cb36-11"><a href="" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb36-12"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1083,13 +1192,25 @@
 <p>Without stored datasets, you define the same datasets <strong>multiple</strong> times across test files.</p>
 <div class="columns">
 <div class="column" style="width:35%;">
-<p>In <code>test-foo1.R</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
 <span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo1</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div><div class="column" style="width:35%;">
-<p>In <code>test-foo2.R</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
 <span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo2</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
 </div></div>
@@ -1098,13 +1219,25 @@
 <p>With saved datasets, you define just <strong>once</strong> and load them from test files.</p>
 <div class="columns">
 <div class="column" style="width:35%;">
-<p>In <code>test-foo1.R</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
 <span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo1</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div><div class="column" style="width:35%;">
-<p>In <code>test-foo2.R</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
 <span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo2</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
 </div></div>
@@ -1145,34 +1278,54 @@
 <p><strong>input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43" data-filename="foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Argument `x` should be positive."</span>)</span>
 <span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb43-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44" data-filename="foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
 <span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb44-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Argument `y` should be positive."</span>)</span>
 <span id="cb44-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb44-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><strong>unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45" data-filename="test-foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb45-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>),</span>
 <span id="cb45-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Argument `x` should be positive."</span></span>
 <span id="cb45-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb46-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46" data-filename="test-foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb46-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>),</span>
 <span id="cb46-3"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Argument `y` should be positive."</span></span>
 <span id="cb46-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 </div>
 <div class="fragment">
@@ -1182,13 +1335,20 @@
 <section id="list-of-exception-functions" class="slide level2 smaller">
 <h2>List of exception functions</h2>
 <p>We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exceptions.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
 <span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
 <span id="cb47-4"><a href="" aria-hidden="true" tabindex="-1"></a>  },</span>
-<span id="cb47-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb47-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
 <span id="cb47-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1214,34 +1374,58 @@
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb48-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
 <span id="cb48-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb48-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
 <span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb49-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
 <span id="cb49-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb49-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 </div></div>
 <p><strong>Unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb50-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50" data-filename="test-foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb50-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo1</span>(<span class="sc">-</span><span class="dv">1</span>),</span>
 <span id="cb50-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>)</span>
 <span id="cb50-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>), </span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51" data-filename="test-foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
+<span id="cb51-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">foo2</span>(<span class="sc">-</span><span class="dv">1</span>),</span>
 <span id="cb51-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>)</span>
 <span id="cb51-4"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><br></p>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -1261,7 +1445,11 @@
 <section id="reusable-exceptions-part-2" class="slide level2 smaller">
 <h2>Reusable exceptions: Part-2</h2>
 <p>As noted before, you can also move the entire validation to a new function. E.g.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exceptions.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52" data-filename="exceptions.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb52-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">check_only_positive =</span> <span class="cf">function</span>(arg) {</span>
 <span id="cb52-3"><a href="" aria-hidden="true" tabindex="-1"></a>    arg_name <span class="ot">&lt;-</span> <span class="fu">deparse</span>(<span class="fu">substitute</span>(arg))</span>
 <span id="cb52-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (arg <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
@@ -1270,29 +1458,45 @@
 <span id="cb52-7"><a href="" aria-hidden="true" tabindex="-1"></a>  },</span>
 <span id="cb52-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
 <span id="cb52-9"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo1.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53" data-filename="foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">check_only_positive</span>(x)</span>
-<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb53-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>foo2.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54" data-filename="foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
 <span id="cb54-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">check_only_positive</span>(y)</span>
-<span id="cb54-3"><a href="" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb54-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb54-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 <p><strong>Unit testing</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>test-check-only-positive.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55" data-filename="test-check-only-positive.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
 <span id="cb55-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">expect_error</span>(</span>
-<span id="cb55-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">check_only_positive</span>(x), </span>
+<span id="cb55-3"><a href="" aria-hidden="true" tabindex="-1"></a>  exceptions<span class="sc">$</span><span class="fu">check_only_positive</span>(x),</span>
 <span id="cb55-4"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Argument `x` should be positive."</span></span>
 <span id="cb55-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
 <p>Since the validation has moved to a new function, you only need to test it once.</p>
 </div></div>
@@ -1340,7 +1544,11 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Import statements scattered across files:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-1</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Multiple R files</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56" data-filename="Multiple R files"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-1</span></span>
 <span id="cb56-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom rlang warn</span></span>
 <span id="cb56-3"><a href="" aria-hidden="true" tabindex="-1"></a>...</span>
 <span id="cb56-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
@@ -1357,15 +1565,20 @@
 <span id="cb56-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb56-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># file-4, file-5, etc.</span></span>
 <span id="cb56-17"><a href="" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div><div class="column" style="width:50%;">
-<p>In <code>{pkgname}-package.R</code> file:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## {pkgname} namespace: start</span></span>
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>{pkgname}-package.R</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57" data-filename="{pkgname}-package.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## {pkgname} namespace: start</span></span>
 <span id="cb57-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb57-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom rlang warn seq2</span></span>
 <span id="cb57-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom purrr pluck</span></span>
 <span id="cb57-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb57-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="do">## {pkgname} namespace: end</span></span>
 <span id="cb57-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div></div>
 </div>
 </section>

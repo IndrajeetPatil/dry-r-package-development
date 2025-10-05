@@ -211,12 +211,10 @@ Stratagem: You can store child documents in the manual directory and reuse them.
 
 ::: {.column width='70%'}
 
-`info1.Rmd` example:
-
-````{verbatim}
+````{.markdown filename="info1.Rmd"}
 This is some crucial information to be repeated across documentation.
 
-```{r}
+```{{r}}
 1 + 1
 ```
 
@@ -283,16 +281,14 @@ Include contents of child documents in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-In `vignette1.Rmd`
-
-````{verbatim}
+````{.markdown filename="vignette1.Rmd"}
 ---
 output: html_vignette
 ---
 
 Vignette content.
 
-```{r, child="../man/rmd-children/info1.Rmd"}
+```{{r}}, child="../man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -301,16 +297,14 @@ Vignette content.
 
 ::: {.column width='50%'}
 
-In `README.Rmd`
-
-````{verbatim}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
 README content.
 
-```{r, child="man/rmd-children/info1.Rmd"}
+```{{r}}, child="man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -345,12 +339,10 @@ Include contents of child documents in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-In `foo1.R`
-
-```{r}
+```{r filename="foo1.R"}
 #' @title Foo1
 #' @section Information:
-#' 
+#'
 #' ```{r, child="man/rmd-children/info1.Rmd"}
 #' ```
 foo1 <- function() { ... }
@@ -384,7 +376,7 @@ You can include contents from **any** file in `.Rmd`, not just a child document!
 &nbsp; &nbsp; {{< fa regular plus size=3x >}}
 &nbsp; &nbsp; {{< fa solid ellipsis size=2x >}}
 
-(parent Rmd) &nbsp; &nbsp; &nbsp; 
+(parent Rmd) &nbsp; &nbsp; &nbsp;
 (child Rmd) &nbsp; &nbsp; &nbsp;
 (`.R` + `R` engine) &nbsp; 
 (`.md` + `asis` engine) &nbsp; &nbsp; 
@@ -430,10 +422,8 @@ Like child documents, other types of documents are also stored in `man/` folder.
 
 ::: {.column width='35%'}
 
-`fragment1.md` example:
-
-````{verbatim}
-This `.md` file contains 
+````{.markdown filename="fragment1.md"}
+This `.md` file contains
 content to be included *as is*
 across multiple locations
 in the documentation.
@@ -443,9 +433,7 @@ in the documentation.
 
 ::: {.column width='35%'}
 
-`chunk1.R` example:
-
-````{verbatim}
+````{.markdown filename="chunk1.R"}
 # some comment and code
 1 + 1
 
@@ -510,19 +498,17 @@ Include contents of various files in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-In `vignette1.Rmd`
-
-````{verbatim}
+````{.markdown filename="vignette1.Rmd"}
 ---
 output: html_vignette
 ---
 
 Vignette content.
 
-```{asis, file="../man/md-fragments/fragment1.md"}
+```{{asis}}, file="../man/md-fragments/fragment1.md"}
 ```
 
-```{r, file="../man/r-chunks/chunk1.R"}
+```{{r}}, file="../man/r-chunks/chunk1.R"}
 ```
 
 ````
@@ -531,19 +517,17 @@ Vignette content.
 
 ::: {.column width='50%'}
 
-In `README.Rmd`
-
-````{verbatim}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
 README content.
 
-```{asis, file="man/md-fragments/fragment1.md"}
+```{{asis}}, file="man/md-fragments/fragment1.md"}
 ```
 
-```{r, file="man/r-chunks/chunk1.R"}
+```{{r}}, file="man/r-chunks/chunk1.R"}
 ```
 
 ````
@@ -576,15 +560,13 @@ Include contents of child documents in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-In `foo1.R`
-
-```{r}
+```{r filename="foo1.R"}
 #' @title Foo1
 #' @section Information:
-#' 
+#'
 #' ```{r, file="man/md-fragments/fragment1.Rmd"}
 #' ```
-#' 
+#'
 #' @example man/r-chunks/chunk1.R
 foo1 <- function() { ... }
 ```
@@ -657,13 +639,13 @@ For example, some parts of the setup can be same across vignettes.
 
 ::: {.column width='37%'}
 
-````{verbatim}
+````{.markdown filename="vignette1.Rmd"}
 ---
 title: "Vignette-1"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 knitr::opts_chunk$set(
   message = FALSE,
   collapse = TRUE,
@@ -677,13 +659,13 @@ knitr::opts_chunk$set(
 
 ::: {.column width='37%'}
 
-````{verbatim}
+````{.markdown filename="vignette2.Rmd"}
 ---
 title: "Vignette-2"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 knitr::opts_chunk$set(
   message = FALSE,
   collapse = TRUE,
@@ -746,9 +728,7 @@ This repetition can be avoided by moving the **common** setup to a script, and s
 
 ::: {.column width='26%'}
 
-`setup.R` contents
-
-```{.r}
+```{.r filename="setup.R"}
 knitr::opts_chunk$set(
   message = FALSE,
   collapse = TRUE,
@@ -762,13 +742,13 @@ knitr::opts_chunk$set(
 
 Sourcing common setup
 
-````{verbatim}
+````{.markdown filename="vignette1.Rmd"}
 ---
 title: "Vignette-1"
 output: html_vignette
 ---
 
-```{r setup, include = FALSE}
+```{{r}} setup, include = FALSE}
 source("setup/setup.R")
 ```
 
@@ -780,13 +760,13 @@ source("setup/setup.R")
 
 Sourcing common setup
 
-````{verbatim}
+````{.markdown filename="vignette2.Rmd"}
 ---
 title: "Vignette-2"
 output: html_vignette
 ---
 
-```{r setup, include = FALSE}
+```{{r}} setup, include = FALSE}
 source("setup/setup.R")
 options(crayon.enabled = TRUE)
 ```
@@ -833,7 +813,7 @@ Let's say your example dataset is called `exdat` and function is called `foo()`.
 
 **In examples**
 
-```{.r}
+```{.r filename="foo.R"}
 #' @examples
 #' exdat <- matrix(c(71, 50))
 #' foo(exdat)
@@ -845,13 +825,13 @@ Let's say your example dataset is called `exdat` and function is called `foo()`.
 
 **In vignettes**
 
-````{verbatim}
+````{.markdown filename="vignette.Rmd"}
 ---
 title: "My Vignette"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 exdat <- matrix(c(71, 50))
 foo(exdat)
 ```
@@ -863,12 +843,12 @@ foo(exdat)
 
 **In README**
 
-````{verbatim}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
-```{r}
+```{{r}}
 exdat <- matrix(c(71, 50))
 foo(exdat)
 ```
@@ -898,8 +878,8 @@ The datasets are stored in `data/`, and documented in `R/data.R`.
 
 **Saving data**
 
-```{r, eval=FALSE}
-# In `exdat.R`
+```{r filename="exdat.R"}
+#| eval: false
 exdat <- matrix(c(71, 50))
 save(exdat, file="data/exdat.rdata")
 ```
@@ -946,7 +926,7 @@ save(exdat, file="data/exdat.rdata")
 
 **In examples**
 
-```{.r}
+```{.r filename="foo.R"}
 #' @examples
 #' foo(exdat)
 ```
@@ -957,13 +937,13 @@ save(exdat, file="data/exdat.rdata")
 
 **In vignettes**
 
-````{verbatim}
+````{.markdown filename="vignette.Rmd"}
 ---
 title: "My Vignette"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 foo(exdat)
 ```
 ````
@@ -974,12 +954,12 @@ foo(exdat)
 
 **In README**
 
-````{verbatim}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
-```{r}
+```{{r}}
 foo(exdat)
 ```
 ````
@@ -1041,7 +1021,7 @@ But such recycling violates the DRY principle. How can you avoid this?
 
 ::: {.column width='60%'}
 
-```{.r}
+```{.r filename="multiplier.R"}
 # Function to test
 multiplier <- function(x, y) {
   x * y
@@ -1078,7 +1058,7 @@ To avoid such repetition, you can write parameterized unit tests using  [`{patri
 
 `expect_identical()` used repeatedly.
 
-```{.r}
+```{.r filename="test-multiplier.R"}
 test_that(
   desc = "multiplier works as expected",
   code = {
@@ -1099,7 +1079,7 @@ test_that(
 
 `expect_identical()` used once.
 
-```{.r}
+```{.r filename="test-multiplier.R"}
 patrick::with_parameters_test_that(
   desc_stub = "multiplier works as expected",
   code = expect_identical(multiplier(x, y), res),
@@ -1191,9 +1171,7 @@ Without stored datasets, you define the same datasets **multiple** times across 
 
 ::: {.column width='35%'}
 
-In `test-foo1.R`:
-
-```r
+```{r filename="test-foo1.R"}
 testdat1 <- { ... }
 foo1(testdat1)
 ```
@@ -1202,9 +1180,7 @@ foo1(testdat1)
 
 ::: {.column width='35%'}
 
-In `test-foo2.R`:
-
-```r
+```{r filename="test-foo2.R"}
 testdat1 <- { ... }
 foo2(testdat1)
 ```
@@ -1229,9 +1205,7 @@ With saved datasets, you define just **once** and load them from test files.
 
 ::: {.column width='35%'}
 
-In `test-foo1.R`:
-
-```r
+```{r filename="test-foo1.R"}
 testdat1 <- readRDS("testdat1")
 foo1(testdat1)
 ```
@@ -1240,9 +1214,7 @@ foo1(testdat1)
 
 ::: {.column width='35%'}
 
-In `test-foo2.R`:
-
-```r
+```{r filename="test-foo2.R"}
 testdat1 <- readRDS("testdat1")
 foo2(testdat1)
 ```
@@ -1292,12 +1264,12 @@ E.g., for functions that don't accept negative values:
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="foo1.R"}
 foo1 <- function(x) {
   if (x < 0) {
     stop("Argument `x` should be positive.")
   }
-  
+
   ...
 }
 ```
@@ -1306,12 +1278,12 @@ foo1 <- function(x) {
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="foo2.R"}
 foo2 <- function(y) {
   if (y < 0) {
     stop("Argument `y` should be positive.")
   }
-  
+
   ...
 }
 ```
@@ -1326,9 +1298,9 @@ foo2 <- function(y) {
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="test-foo1.R"}
 expect_error(
-  foo1(-1), 
+  foo1(-1),
   "Argument `x` should be positive."
 )
 ```
@@ -1337,9 +1309,9 @@ expect_error(
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="test-foo2.R"}
 expect_error(
-  foo2(-1), 
+  foo2(-1),
   "Argument `y` should be positive."
 )
 ```
@@ -1356,12 +1328,12 @@ How can this repetition be avoided?
 
 We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.
 
-```r
+```{r filename="exceptions.R"}
 exceptions <- list(
   only_positives_allowed = function(arg_name) {
     paste0("Argument `", arg_name, "` should be positive.")
   },
-  
+
   ... # you can store as many functions as you want
 )
 ```
@@ -1389,12 +1361,12 @@ We can then use these functions to signal exceptions.
 
 ::: {.column width='50%'}
 
-```r
+```{r filename="foo1.R"}
 foo1 <- function(x) {
   if (x < 0) {
     stop(exceptions$only_positives_allowed("x"))
   }
-  
+
   ...
 }
 ```
@@ -1403,12 +1375,12 @@ foo1 <- function(x) {
 
 ::: {.column width='50%'}
 
-```r
+```{r filename="foo2.R"}
 foo2 <- function(y) {
   if (y < 0) {
     stop(exceptions$only_positives_allowed("y"))
   }
-  
+
   ...
 }
 ```
@@ -1424,9 +1396,9 @@ foo2 <- function(y) {
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="test-foo1.R"}
 expect_error(
-  foo1(-1), 
+  foo1(-1),
   exceptions$only_positives_allowed("x")
 )
 ```
@@ -1435,9 +1407,9 @@ expect_error(
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="test-foo2.R"}
 expect_error(
-  foo2(-1), 
+  foo2(-1),
   exceptions$only_positives_allowed("y")
 )
 ```
@@ -1460,7 +1432,7 @@ Note that if you now wish to change the condition string, this change needs to b
 
 As noted before, you can also move the entire validation to a new function. E.g.
 
-```{.r}
+```{.r filename="exceptions.R"}
 exceptions <- list(
   check_only_positive = function(arg) {
     arg_name <- deparse(substitute(arg))
@@ -1478,10 +1450,10 @@ exceptions <- list(
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="foo1.R"}
 foo1 <- function(x) {
   check_only_positive(x)
-  
+
   ...
 }
 ```
@@ -1490,10 +1462,10 @@ foo1 <- function(x) {
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="foo2.R"}
 foo2 <- function(y) {
   check_only_positive(y)
-  
+
   ...
 }
 ```
@@ -1509,10 +1481,10 @@ foo2 <- function(y) {
 
 ::: {.column width='50%'}
 
-```{.r}
+```{.r filename="test-check-only-positive.R"}
 x <- -1
 expect_error(
-  exceptions$check_only_positive(x), 
+  exceptions$check_only_positive(x),
   "Argument `x` should be positive."
 )
 ```
@@ -1575,7 +1547,7 @@ But if you are importing some functions multiple times, you should avoid specify
 
 Import statements scattered across files:
 
-```{.r}
+```{.r filename="Multiple R files"}
 # file-1
 #' @importFrom rlang warn
 ...
@@ -1599,9 +1571,7 @@ Import statements scattered across files:
 
 ::: {.column width='50%'}
 
-In `{pkgname}-package.R` file:
-
-```{.r}
+```{.r filename="{pkgname}-package.R"}
 ## {pkgname} namespace: start
 #'
 #' @importFrom rlang warn seq2
