@@ -211,10 +211,10 @@ Stratagem: You can store child documents in the manual directory and reuse them.
 
 ::: {.column width='70%'}
 
-````{verbatim filename="info1.Rmd"}
+````{.markdown filename="info1.Rmd"}
 This is some crucial information to be repeated across documentation.
 
-```{r}
+```{{r}}
 1 + 1
 ```
 
@@ -281,14 +281,14 @@ Include contents of child documents in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-````{verbatim filename="vignette1.Rmd"}
+````{.markdown filename="vignette1.Rmd"}
 ---
 output: html_vignette
 ---
 
 Vignette content.
 
-```{r, child="../man/rmd-children/info1.Rmd"}
+```{{r}}, child="../man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -297,14 +297,14 @@ Vignette content.
 
 ::: {.column width='50%'}
 
-````{verbatim filename="README.Rmd"}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
 README content.
 
-```{r, child="man/rmd-children/info1.Rmd"}
+```{{r}}, child="man/rmd-children/info1.Rmd"}
 ```
 
 ````
@@ -376,7 +376,7 @@ You can include contents from **any** file in `.Rmd`, not just a child document!
 &nbsp; &nbsp; {{< fa regular plus size=3x >}}
 &nbsp; &nbsp; {{< fa solid ellipsis size=2x >}}
 
-(parent Rmd) &nbsp; &nbsp; &nbsp; 
+(parent Rmd) &nbsp; &nbsp; &nbsp;
 (child Rmd) &nbsp; &nbsp; &nbsp;
 (`.R` + `R` engine) &nbsp; 
 (`.md` + `asis` engine) &nbsp; &nbsp; 
@@ -422,7 +422,7 @@ Like child documents, other types of documents are also stored in `man/` folder.
 
 ::: {.column width='35%'}
 
-````{verbatim filename="fragment1.md"}
+````{.markdown filename="fragment1.md"}
 This `.md` file contains
 content to be included *as is*
 across multiple locations
@@ -433,7 +433,7 @@ in the documentation.
 
 ::: {.column width='35%'}
 
-````{verbatim filename="chunk1.R"}
+````{.markdown filename="chunk1.R"}
 # some comment and code
 1 + 1
 
@@ -498,17 +498,17 @@ Include contents of various files in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-````{verbatim filename="vignette1.Rmd"}
+````{.markdown filename="vignette1.Rmd"}
 ---
 output: html_vignette
 ---
 
 Vignette content.
 
-```{asis, file="../man/md-fragments/fragment1.md"}
+```{{asis}}, file="../man/md-fragments/fragment1.md"}
 ```
 
-```{r, file="../man/r-chunks/chunk1.R"}
+```{{r}}, file="../man/r-chunks/chunk1.R"}
 ```
 
 ````
@@ -517,17 +517,17 @@ Vignette content.
 
 ::: {.column width='50%'}
 
-````{verbatim filename="README.Rmd"}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
 README content.
 
-```{asis, file="man/md-fragments/fragment1.md"}
+```{{asis}}, file="man/md-fragments/fragment1.md"}
 ```
 
-```{r, file="man/r-chunks/chunk1.R"}
+```{{r}}, file="man/r-chunks/chunk1.R"}
 ```
 
 ````
@@ -639,13 +639,13 @@ For example, some parts of the setup can be same across vignettes.
 
 ::: {.column width='37%'}
 
-````{verbatim filename="vignette1.Rmd"}
+````{.markdown filename="vignette1.Rmd"}
 ---
 title: "Vignette-1"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 knitr::opts_chunk$set(
   message = FALSE,
   collapse = TRUE,
@@ -659,13 +659,13 @@ knitr::opts_chunk$set(
 
 ::: {.column width='37%'}
 
-````{verbatim filename="vignette2.Rmd"}
+````{.markdown filename="vignette2.Rmd"}
 ---
 title: "Vignette-2"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 knitr::opts_chunk$set(
   message = FALSE,
   collapse = TRUE,
@@ -742,13 +742,13 @@ knitr::opts_chunk$set(
 
 Sourcing common setup
 
-````{verbatim filename="vignette1.Rmd"}
+````{.markdown filename="vignette1.Rmd"}
 ---
 title: "Vignette-1"
 output: html_vignette
 ---
 
-```{r setup, include = FALSE}
+```{{r}} setup, include = FALSE}
 source("setup/setup.R")
 ```
 
@@ -760,13 +760,13 @@ source("setup/setup.R")
 
 Sourcing common setup
 
-````{verbatim filename="vignette2.Rmd"}
+````{.markdown filename="vignette2.Rmd"}
 ---
 title: "Vignette-2"
 output: html_vignette
 ---
 
-```{r setup, include = FALSE}
+```{{r}} setup, include = FALSE}
 source("setup/setup.R")
 options(crayon.enabled = TRUE)
 ```
@@ -825,13 +825,13 @@ Let's say your example dataset is called `exdat` and function is called `foo()`.
 
 **In vignettes**
 
-````{verbatim filename="vignette.Rmd"}
+````{.markdown filename="vignette.Rmd"}
 ---
 title: "My Vignette"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 exdat <- matrix(c(71, 50))
 foo(exdat)
 ```
@@ -843,12 +843,12 @@ foo(exdat)
 
 **In README**
 
-````{verbatim filename="README.Rmd"}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
-```{r}
+```{{r}}
 exdat <- matrix(c(71, 50))
 foo(exdat)
 ```
@@ -937,13 +937,13 @@ save(exdat, file="data/exdat.rdata")
 
 **In vignettes**
 
-````{verbatim filename="vignette.Rmd"}
+````{.markdown filename="vignette.Rmd"}
 ---
 title: "My Vignette"
 output: html_vignette
 ---
 
-```{r}
+```{{r}}
 foo(exdat)
 ```
 ````
@@ -954,12 +954,12 @@ foo(exdat)
 
 **In README**
 
-````{verbatim filename="README.Rmd"}
+````{.markdown filename="README.Rmd"}
 ---
 output: github_document
 ---
 
-```{r}
+```{{r}}
 foo(exdat)
 ```
 ````
