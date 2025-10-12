@@ -730,6 +730,8 @@ This repetition can be avoided by moving the **common** setup to a script, and s
 
 ::: {.column width='26%'}
 
+Common setup
+
 ```{.r filename="setup.R"}
 knitr::opts_chunk$set(
   message = FALSE,
