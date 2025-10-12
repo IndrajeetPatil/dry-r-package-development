@@ -183,7 +183,7 @@ knitr::include_graphics("media/spiderman.jpeg")
 
 You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
 
-&nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa soliud equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
+&nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa solid equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
 
 (parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)
 
