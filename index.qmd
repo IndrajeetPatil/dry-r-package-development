@@ -11,6 +11,8 @@ format:
     help: true
     include-in-header: meta-tags.html
     link-external-newwindow: true
+revealjs-plugins:
+  - fontawesome
 execute:
   echo: true
   eval: false
