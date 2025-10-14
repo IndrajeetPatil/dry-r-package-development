@@ -40,10 +40,14 @@ Indrajeet Patil
 
 :::
 
-![](media/simpsons.png){.absolute width="800" height="400" left="70" top="155"}
+```{r}
+#| echo: false
+#| eval: true
+knitr::include_graphics("media/simpsons.png")
+```
 
 ::: {style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;"}
-Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/second-hardest-cs-thing/).
+Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/dry-r-package-development/).
 :::
 
 # 
