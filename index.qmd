@@ -40,8 +40,11 @@ Indrajeet Patil
 
 :::
 
-![](media/simpsons.png){.absolute width="900" height="500" left="70" top="155"}
+![](media/simpsons.png){.absolute width="800" height="400" left="70" top="155"}
 
+::: {style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;"}
+Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/second-hardest-cs-thing/).
+:::
 
 # 
 
@@ -1619,18 +1622,22 @@ Although related to package development at a meta level, these issues are beyond
 
 And Happy (DRY) Package Development! 😊
 
-# For more {data-visibility="uncounted"}
+<br>
+<br>
 
-Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/dry-r-package-development).
+::: {style="text-align: center; font-size: 0.7em;"}
 
-If you are interested in good programming and software development practices, check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations).
+Check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations) on software development best practices
 
-# Find me at... {data-visibility="uncounted"}
+:::
 
-{{< fa brands linkedin >}} [LinkedIn](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
+::: {style="text-align: center; font-size: 1em;"}
 
-{{< fa brands github >}} [GitHub](http://github.com/IndrajeetPatil)
+[{{< fa brands linkedin >}}](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
+&nbsp;&nbsp;
+[{{< fa brands github >}}](http://github.com/IndrajeetPatil) 
+&nbsp;&nbsp;
+[{{< fa solid envelope >}}](mailto:patilindrajeet.science@gmail.com)
 
-{{< fa solid link >}} [Website](https://sites.google.com/site/indrajeetspatilmorality/)
+:::
 
-{{< fa solid envelope >}} [E-mail](mailto:patilindrajeet.science@gmail.com)
