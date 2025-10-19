@@ -1458,7 +1458,6 @@ exceptions <- list(
 ```{.r filename="foo1.R"}
 foo1 <- function(x) {
   check_only_positive(x)
-
   ...
 }
 ```
@@ -1470,7 +1469,6 @@ foo1 <- function(x) {
 ```{.r filename="foo2.R"}
 foo2 <- function(y) {
   check_only_positive(y)
-
   ...
 }
 ```
