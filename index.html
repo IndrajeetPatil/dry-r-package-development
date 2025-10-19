@@ -12,7 +12,7 @@
   <meta name="generator" content="quarto-1.9.8">
 
   <meta name="author" content="Indrajeet Patil">
-  <meta name="dcterms.date" content="2025-10-19 22:31:43.611381">
+  <meta name="dcterms.date" content="2025-10-19 22:43:07.302967">
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>DRY R Package Development</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1289,9 +1289,8 @@
 <span id="cb43-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb43-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Argument `x` should be positive."</span>)</span>
 <span id="cb43-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb43-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb43-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb43-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="code-with-filename">
@@ -1302,9 +1301,8 @@
 <span id="cb44-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb44-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Argument `y` should be positive."</span>)</span>
 <span id="cb44-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb44-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb44-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb44-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 <p><strong>unit testing</strong></p>
@@ -1383,9 +1381,8 @@
 <span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb48-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
 <span id="cb48-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb48-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb48-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb48-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="code-with-filename">
@@ -1396,9 +1393,8 @@
 <span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb49-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
 <span id="cb49-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb49-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb49-6"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 <p><strong>Unit testing</strong></p>
@@ -1441,7 +1437,10 @@
 </section>
 <section id="reusable-exceptions-part-2" class="slide level2 smaller">
 <h2>Reusable exceptions: Part-2</h2>
+<div class="columns">
+<div class="column" style="width:30%;">
 <p>Alternatively, move entire validations to new functions:</p>
+</div><div class="column" style="width:70%;">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>exceptions.R</strong></pre>
@@ -1456,6 +1455,7 @@
 <span id="cb52-8"><a href="" aria-hidden="true" tabindex="-1"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
 <span id="cb52-9"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</div></div>
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
