@@ -11,10 +11,11 @@ format:
     help: true
     include-in-header: meta-tags.html
     link-external-newwindow: true
+    mermaid-format: png
 revealjs-plugins:
   - fontawesome
 execute:
-  echo: true
+  echo: false
   eval: false
 keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
 pagetitle: "DRY R Package Development"
@@ -186,13 +187,21 @@ knitr::include_graphics("media/spiderman.jpeg")
 
 ::::
 
-## Child documents
+## Child documents {.smaller}
 
 You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
 
-&nbsp; &nbsp; {{< fa regular file size=5x >}} &nbsp; &nbsp; {{< fa regular plus size=5x >}} &nbsp; &nbsp; {{< fa regular file-lines size=5x >}} &nbsp;&nbsp; {{< fa solid equals size=5x >}} &nbsp;&nbsp; {{< fa solid file-lines size=5x >}}
-
-(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)
+```{mermaid}
+%%| eval: true
+%%| fig-width: 7
+%%| fig-height: 4.5
+graph LR
+    A[Parent Rmd] --> C[Result Rmd]
+    B[Child Rmd] --> C
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#e8f5e9
+```
 
 . . .
 
@@ -348,7 +357,7 @@ Include contents of child documents in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-```{r filename="foo1.R"}
+```{.r filename="foo1.R"}
 #' @title Foo1
 #' @section Information:
 #'
@@ -373,35 +382,23 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 
 You can include contents from **any** file in `.Rmd`, not just a child document!
 
-<br>
-
-&nbsp; &nbsp; {{< fa regular file size=5x >}} 
-&nbsp; &nbsp; {{< fa regular plus size=3x >}}
-&nbsp; &nbsp; {{< fa regular file-lines size=5x >}} 
-&nbsp; &nbsp; {{< fa regular plus size=3x >}}
-&nbsp; &nbsp; {{< fa regular file-code size=5x >}} 
-&nbsp; &nbsp; {{< fa regular plus size=3x >}}
-&nbsp; &nbsp; {{< fa regular file-image size=5x >}} 
-&nbsp; &nbsp; {{< fa regular plus size=3x >}}
-&nbsp; &nbsp; {{< fa solid ellipsis size=2x >}}
-
-(parent Rmd) &nbsp; &nbsp; &nbsp;
-(child Rmd) &nbsp; &nbsp; &nbsp;
-(`.R` + `R` engine) &nbsp; 
-(`.md` + `asis` engine) &nbsp; &nbsp; 
-
-<br>
-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{< fa regular equals size=3x >}} 
-&nbsp; &nbsp; {{< fa solid file-lines size=5x >}} 
-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; (result Rmd)
+```{mermaid}
+%%| eval: true
+%%| fig-width: 14
+%%| fig-height: 4
+graph TD
+    A[Parent Rmd] --> F[Result Rmd]
+    B[Child Rmd] --> F
+    C[.R file<br/>R engine] --> F
+    D[.md file<br/>asis engine] --> F
+    E[...] --> F
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#ffe1f5
+    style D fill:#f5e1ff
+    style E fill:#f0f0f0
+    style F fill:#e8f5e9
+```
 
 ## Storing other documentation files in package {.smaller}
 
@@ -569,7 +566,7 @@ Include contents of child documents in the documentation in multiple locations.
 
 ::: {.column width='50%'}
 
-```{r filename="foo1.R"}
+```{.r filename="foo1.R"}
 #' @title Foo1
 #' @section Information:
 #'
@@ -885,19 +882,18 @@ The datasets are stored in `data/`, and documented in `R/data.R`.
 
 :::: {.columns}
 
-::: {.column width='70%'}
+::: {.column width='60%'}
 
 **Saving data**
 
-```{r filename="exdat.R"}
-#| eval: false
+```{.r filename="exdat.R"}
 exdat <- matrix(c(71, 50))
 save(exdat, file="data/exdat.rdata")
 ```
 
 :::
 
-::: {.column width='30%'}
+::: {.column width='40%'}
 
 **Directory structure**
 
@@ -1182,7 +1178,7 @@ Without stored datasets, you define the same datasets **multiple** times across 
 
 ::: {.column width='35%'}
 
-```{r filename="test-foo1.R"}
+```{.r filename="test-foo1.R"}
 testdat1 <- { ... }
 foo1(testdat1)
 ```
@@ -1191,7 +1187,7 @@ foo1(testdat1)
 
 ::: {.column width='35%'}
 
-```{r filename="test-foo2.R"}
+```{.r filename="test-foo2.R"}
 testdat1 <- { ... }
 foo2(testdat1)
 ```
@@ -1216,7 +1212,7 @@ With saved datasets, you define just **once** and load them from test files.
 
 ::: {.column width='35%'}
 
-```{r filename="test-foo1.R"}
+```{.r filename="test-foo1.R"}
 testdat1 <- readRDS("testdat1")
 foo1(testdat1)
 ```
@@ -1225,7 +1221,7 @@ foo1(testdat1)
 
 ::: {.column width='35%'}
 
-```{r filename="test-foo2.R"}
+```{.r filename="test-foo2.R"}
 testdat1 <- readRDS("testdat1")
 foo2(testdat1)
 ```
@@ -1339,7 +1335,7 @@ How can this repetition be avoided?
 
 We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.
 
-```{r filename="exceptions.R"}
+```{.r filename="exceptions.R"}
 exceptions <- list(
   only_positives_allowed = function(arg_name) {
     paste0("Argument `", arg_name, "` should be positive.")
@@ -1372,7 +1368,7 @@ We can then use these functions to signal exceptions.
 
 ::: {.column width='50%'}
 
-```{r filename="foo1.R"}
+```{.r filename="foo1.R"}
 foo1 <- function(x) {
   if (x < 0) {
     stop(exceptions$only_positives_allowed("x"))
@@ -1386,7 +1382,7 @@ foo1 <- function(x) {
 
 ::: {.column width='50%'}
 
-```{r filename="foo2.R"}
+```{.r filename="foo2.R"}
 foo2 <- function(y) {
   if (y < 0) {
     stop(exceptions$only_positives_allowed("y"))
@@ -1581,6 +1577,9 @@ Import statements scattered across files:
 :::
 
 ::: {.column width='50%'}
+
+
+Import statements in a single file:
 
 ```{.r filename="{pkgname}-package.R"}
 ## {pkgname} namespace: start
