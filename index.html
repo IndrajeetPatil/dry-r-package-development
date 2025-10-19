@@ -6,13 +6,13 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-2e0b4708489a94d7cf3aaa82802539fe.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-095e6f6405c331e3b33229e03003579f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="index_files/libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
 <link href="index_files/libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.5">
+  <meta name="generator" content="quarto-1.9.8">
 
   <meta name="author" content="Indrajeet Patil">
-  <meta name="dcterms.date" content="2025-10-14 21:02:32.296144">
+  <meta name="dcterms.date" content="2025-10-19 22:19:27.581274">
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>DRY R Package Development</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -365,11 +365,20 @@
 </div>
 </div></div>
 </section>
-<section id="child-documents" class="slide level2">
+<section id="child-documents" class="slide level2 smaller">
 <h2>Child documents</h2>
 <p>You can stitch an R Markdown document from smaller <a href="https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html">child documents</a>.</p>
-<p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-5x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp;&nbsp; <i class="fa-solid fa-equals fa-5x" aria-label="equals"></i> &nbsp;&nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
-<p>(parent Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
+<div class="cell" data-eval="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<p><img data-src="index_files/figure-revealjs/mermaid-figure-1.png" style="width:7in;height:4.5in"></p>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <div class="fragment">
 <p>Thus, the information to repeat can be stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
 </div>
@@ -486,18 +495,16 @@
 │   └── foo2.Rd
 │   └── ...</code></pre>
 </div><div class="column" style="width:50%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>foo1.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" data-filename="foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
 <span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Information:</span></span>
 <span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```{r, child="man/rmd-children/info1.Rmd"}</span></span>
 <span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```</span></span>
 <span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 </div></div>
 <p><br></p>
@@ -518,12 +525,17 @@
 <section id="what-about-non-child-documents" class="slide level2 smaller">
 <h2>What about non-child documents?</h2>
 <p>You can include contents from <strong>any</strong> file in <code>.Rmd</code>, not just a child document!</p>
-<p><br></p>
-<p>&nbsp; &nbsp; <i class="fa-regular fa-file fa-5x" aria-label="file"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-lines fa-5x" aria-label="file-lines"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-code fa-5x" aria-label="file-code"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-regular fa-file-image fa-5x" aria-label="file-image"></i> &nbsp; &nbsp; <i class="fa-regular fa-plus fa-3x" aria-label="plus"></i> &nbsp; &nbsp; <i class="fa-solid fa-ellipsis fa-2x" aria-label="ellipsis"></i></p>
-<p>(parent Rmd) &nbsp; &nbsp; &nbsp; (child Rmd) &nbsp; &nbsp; &nbsp; (<code>.R</code> + <code>R</code> engine) &nbsp; (<code>.md</code> + <code>asis</code> engine) &nbsp; &nbsp;</p>
-<p><br></p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <i class="fa-regular fa-equals fa-3x" aria-label="equals"></i> &nbsp; &nbsp; <i class="fa-solid fa-file-lines fa-5x" aria-label="file-lines"></i></p>
-<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (result Rmd)</p>
+<div class="cell" data-eval="true" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<p><img data-src="index_files/figure-revealjs/mermaid-figure-2.png" style="width:14in;height:4in"></p>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 <section id="storing-other-documentation-files-in-package" class="slide level2 smaller">
 <h2>Storing other documentation files in package</h2>
@@ -652,12 +664,11 @@
 │   └── foo1.Rd
 │   └── ...</code></pre>
 </div><div class="column" style="width:50%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>foo1.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-filename="foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @title Foo1</span></span>
 <span id="cb17-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Information:</span></span>
 <span id="cb17-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb17-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' ```{r, file="man/md-fragments/fragment1.Rmd"}</span></span>
@@ -665,7 +676,6 @@
 <span id="cb17-6"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
 <span id="cb17-7"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co">#' @example man/r-chunks/chunk1.R</span></span>
 <span id="cb17-8"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>() { ... }</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 </div></div>
 <p><br></p>
@@ -926,18 +936,16 @@
 <p>The datasets are stored in <code>data/</code>, and documented in <code>R/data.R</code>.</p>
 <div class="fragment">
 <div class="columns">
-<div class="column" style="width:70%;">
+<div class="column" style="width:60%;">
 <p><strong>Saving data</strong></p>
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>exdat.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-filename="exdat.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="" aria-hidden="true" tabindex="-1"></a>exdat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">71</span>, <span class="dv">50</span>))</span>
 <span id="cb29-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(exdat, <span class="at">file=</span><span class="st">"data/exdat.rdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-</div><div class="column" style="width:30%;">
+</div><div class="column" style="width:40%;">
 <p><strong>Directory structure</strong></p>
 <pre><code>├── DESCRIPTION
 ├── R
@@ -1196,24 +1204,20 @@
 <p>Without stored datasets, you define the same datasets <strong>multiple</strong> times across test files.</p>
 <div class="columns">
 <div class="column" style="width:35%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>test-foo1.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39" data-filename="test-foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
 <span id="cb39-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo1</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
 </div><div class="column" style="width:35%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>test-foo2.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40" data-filename="test-foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> { ... }</span>
 <span id="cb40-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo2</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
@@ -1223,24 +1227,20 @@
 <p>With saved datasets, you define just <strong>once</strong> and load them from test files.</p>
 <div class="columns">
 <div class="column" style="width:35%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>test-foo1.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41" data-filename="test-foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
 <span id="cb41-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo1</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
 </div><div class="column" style="width:35%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>test-foo2.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42" data-filename="test-foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="" aria-hidden="true" tabindex="-1"></a>testdat1 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"testdat1"</span>)</span>
 <span id="cb42-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">foo2</span>(testdat1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 </div><div class="column" style="width:30%;">
 <p>&nbsp; &nbsp; &nbsp; &nbsp; <code>...</code></p>
@@ -1339,19 +1339,17 @@
 <section id="list-of-exception-functions" class="slide level2 smaller">
 <h2>List of exception functions</h2>
 <p>We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.</p>
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>exceptions.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47" data-filename="exceptions.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="" aria-hidden="true" tabindex="-1"></a>exceptions <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb47-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="at">only_positives_allowed =</span> <span class="cf">function</span>(arg_name) {</span>
 <span id="cb47-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">"Argument `"</span>, arg_name, <span class="st">"` should be positive."</span>)</span>
 <span id="cb47-4"><a href="" aria-hidden="true" tabindex="-1"></a>  },</span>
 <span id="cb47-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ... <span class="co"># you can store as many functions as you want</span></span>
 <span id="cb47-7"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1378,12 +1376,11 @@
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>foo1.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48" data-filename="foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb48-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb48-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"x"</span>))</span>
 <span id="cb48-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
@@ -1391,21 +1388,18 @@
 <span id="cb48-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb48-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
 </div><div class="column" style="width:50%;">
-<div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>foo2.R</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49" data-filename="foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
 <span id="cb49-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (y <span class="sc">&lt;</span> <span class="dv">0</span>) {</span>
 <span id="cb49-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(exceptions<span class="sc">$</span><span class="fu">only_positives_allowed</span>(<span class="st">"y"</span>))</span>
 <span id="cb49-4"><a href="" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb49-5"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-6"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
 <span id="cb49-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 </div>
 </div></div>
 <p><strong>Unit testing</strong></p>
@@ -1571,6 +1565,7 @@
 <span id="cb56-17"><a href="" aria-hidden="true" tabindex="-1"></a>...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
+<p>Import statements in a single file:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>{pkgname}-package.R</strong></pre>
