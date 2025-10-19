@@ -12,7 +12,7 @@
   <meta name="generator" content="quarto-1.9.8">
 
   <meta name="author" content="Indrajeet Patil">
-  <meta name="dcterms.date" content="2025-10-19 22:19:27.581274">
+  <meta name="dcterms.date" content="2025-10-19 22:24:56.574215">
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>DRY R Package Development</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -287,9 +287,9 @@
 <section id="benefits-of-dry-codebase" class="slide level2 smaller">
 <h2>Benefits of DRY codebase</h2>
 <ul>
-<li><p>When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.</p></li>
-<li><p>Easy to maintain since there is only a single representation of knowledge that needs to be updated if the underlying knowledge changes.</p></li>
-<li><p>As a side effect, routines developed to remove duplicated code can become part of general-purpose utilities.</p></li>
+<li><p>Duplicated code requires parallel changes in multiple places; DRY code eliminates this need.</p></li>
+<li><p>Easier to maintain - update knowledge in one place only.</p></li>
+<li><p>Routines developed to remove duplicated code can become general-purpose utilities.</p></li>
 </ul>
 <p><br></p>
 <div class="fragment">
@@ -313,7 +313,7 @@
 </section></section>
 <section id="plan" class="title-slide slide level1 center">
 <h1>Plan</h1>
-<p>Apply the DRY principle to remove duplication in following aspects of R package development:</p>
+<p>Apply DRY to remove duplication in:</p>
 <ul>
 <li>Documentation</li>
 <li>Vignette setup</li>
@@ -326,11 +326,11 @@
 <section>
 <section id="documentation" class="title-slide slide level1 center">
 <h1>Documentation</h1>
-<p>How not to repeat yourself while writing documentation.</p>
+<p>Avoiding repetition in documentation.</p>
 </section>
 <section id="what-do-users-read" class="slide level2 smaller">
 <h2>What do users read?</h2>
-<p>What users consult to find needed information may be context-dependent.</p>
+<p>Users consult different sources depending on context.</p>
 <p><br></p>
 <div class="fragment">
 <p><i class="fa-brands fa-readme fa-2xl" aria-label="readme"></i> <strong>README</strong>: While exploring the package repository.</p>
@@ -341,7 +341,7 @@
 <p><br></p>
 </div>
 <div class="fragment">
-<p>Thus, including crucial information <strong>only in one place</strong> makes it likely that the users might miss out on it in certain contexts.</p>
+<p>Including crucial information in only one place risks users missing it in certain contexts.</p>
 </div>
 </section>
 <section id="go-forth-and-multiply-without-repetition" class="slide level2 smaller">
@@ -380,12 +380,12 @@
 </div>
 </div>
 <div class="fragment">
-<p>Thus, the information to repeat can be stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
+<p>Information is stored <em>once</em> in child documents and reused <em>multiple</em> times across parents.</p>
 </div>
 </section>
 <section id="storing-child-documents-in-package" class="slide level2 smaller">
 <h2>Storing child documents in package</h2>
-<p>Stratagem: You can store child documents in the manual directory and reuse them.</p>
+<p>Store child documents in the manual directory and reuse them.</p>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Child documents</strong></p>
@@ -417,8 +417,8 @@
 </div>
 <div class="callout-content">
 <ul>
-<li>You can include as many child documents as you want.</li>
-<li>The child document is just like any <code>.Rmd</code> file and can include everything that any other <code>.Rmd</code> file can include.</li>
+<li>Include as many child documents as needed.</li>
+<li>Child documents are standard <code>.Rmd</code> files with full <code>.Rmd</code> capabilities.</li>
 <li>You can choose a different name for the folder containing child documents (e.g.&nbsp;<code>rmd-fragments</code>).</li>
 <li>Make sure to include <code>Roxygen: list(markdown = TRUE)</code> field in the <code>DESCRIPTION</code> file.</li>
 <li>The child documents will not pose a problem either for <code>R CMD check</code> or for <code>{pkgdown}</code> website.</li>
@@ -429,7 +429,7 @@
 </section>
 <section id="using-child-documents-in-package-part-1" class="slide level2 smaller">
 <h2>Using child documents in package: Part-1</h2>
-<p>Include contents of child documents in the documentation in multiple locations.</p>
+<p>Include child document contents in multiple documentation locations.</p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -482,7 +482,7 @@
 </section>
 <section id="using-child-documents-in-package-part-2" class="slide level2 smaller">
 <h2>Using child documents in package: Part-2</h2>
-<p>Include contents of child documents in the documentation in multiple locations.</p>
+<p>Include child document contents in multiple documentation locations.</p>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Manual</strong></p>
@@ -539,7 +539,7 @@
 </section>
 <section id="storing-other-documentation-files-in-package" class="slide level2 smaller">
 <h2>Storing other documentation files in package</h2>
-<p>Like child documents, other types of documents are also stored in <code>man/</code> folder.</p>
+<p>Like child documents, store other document types in the <code>man/</code> folder.</p>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Reusable content</strong></p>
@@ -586,14 +586,14 @@
 <p><strong>Folder names</strong></p>
 </div>
 <div class="callout-content">
-<p>You can name these folders however you wish, but it is advisable that the names provide information about file contents (e.g., <code>r-examples</code>, <code>yaml-snippets</code>, <code>md-fragments</code>, etc.).</p>
+<p>Name folders to describe their contents (e.g., <code>r-examples</code>, <code>yaml-snippets</code>, <code>md-fragments</code>).</p>
 </div>
 </div>
 </div>
 </section>
 <section id="using-non-child-documents-in-package-part-1" class="slide level2 smaller">
 <h2>Using non-child documents in package: Part-1</h2>
-<p>Include contents of various files in the documentation in multiple locations.</p>
+<p>Include various file contents in multiple documentation locations.</p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -652,7 +652,7 @@
 </section>
 <section id="using-non-child-documents-in-package-part-2" class="slide level2 smaller">
 <h2>Using non-child documents in package: Part-2</h2>
-<p>Include contents of child documents in the documentation in multiple locations.</p>
+<p>Include child document contents in multiple documentation locations.</p>
 <div class="columns">
 <div class="column" style="width:30%;">
 <p><strong>Manual</strong></p>
@@ -727,12 +727,12 @@
 <section>
 <section id="vignette-setup" class="title-slide slide level1 center">
 <h1>Vignette Setup</h1>
-<p>How not to repeat yourself while setting up vignettes.</p>
+<p>Avoiding repetition in vignette setup.</p>
 </section>
 <section id="setup-chunks-in-vignettes" class="slide level2 smaller">
 <h2>Setup chunks in vignettes</h2>
-<p>Another duplication that occurs is in setup chunks for vignettes.</p>
-<p>For example, some parts of the setup can be same across vignettes.</p>
+<p>Setup chunks for vignettes often contain duplication.</p>
+<p>Some setup code is identical across vignettes.</p>
 <p><br></p>
 <div class="columns">
 <div class="column" style="width:25%;">
@@ -787,7 +787,7 @@
 <h2>Sourcing setup chunks in vignettes</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
-<p>This repetition can be avoided by moving the <strong>common</strong> setup to a script, and sourcing it from vignettes. Storing this script in a folder (<code>/setup</code>) is advisable if there are many reusable artifacts.</p>
+<p>Avoid this by moving <strong>common</strong> setup to a script and sourcing it from vignettes. If you have many reusable artifacts, store scripts in a <code>/setup</code> folder.</p>
 </div><div class="column" style="width:20%;">
 <p><strong>Option 1</strong></p>
 <pre><code>├── DESCRIPTION
@@ -857,7 +857,7 @@
 <p><strong>No parallel modification</strong></p>
 </div>
 <div class="callout-content">
-<p>Now common setup can be modified with a change in only <em>one</em> place!</p>
+<p>Modify common setup in <em>one</em> place only!</p>
 </div>
 </div>
 </div>
@@ -874,13 +874,13 @@
 <section>
 <section id="data" class="title-slide slide level1 center">
 <h1>Data</h1>
-<p>How not to repeat yourself while creating and re-using example datasets.</p>
+<p>Avoiding repetition with example datasets.</p>
 </section>
 <section id="illustrative-example-datasets" class="slide level2 smaller">
 <h2>Illustrative example datasets</h2>
-<p>If none of the existing datasets are useful to illustrate your functions, you can create new datasets.</p>
+<p>Create new datasets when existing ones don’t illustrate your functions well.</p>
 <div class="fragment">
-<p>Let’s say your example dataset is called <code>exdat</code> and function is called <code>foo()</code>. Using it in examples, vignettes, README, etc. requires that it be define <em>multiple</em> times.</p>
+<p>Using dataset <code>exdat</code> with function <code>foo()</code> in examples, vignettes, and README requires defining it <em>multiple</em> times.</p>
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>In examples</strong></p>
@@ -932,8 +932,8 @@
 </section>
 <section id="shipping-data-in-a-package" class="slide level2 smaller">
 <h2>Shipping data in a package</h2>
-<p>You can avoid this repetition by defining the data just <em>once</em>, saving and shipping it with the package.</p>
-<p>The datasets are stored in <code>data/</code>, and documented in <code>R/data.R</code>.</p>
+<p>Define data <em>once</em>, save it, and ship it with the package.</p>
+<p>Store datasets in <code>data/</code> and document them in <code>R/data.R</code>.</p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:60%;">
@@ -968,8 +968,8 @@
 </div>
 <div class="callout-content">
 <ul>
-<li>For future reference, save script (in <code>data-raw/</code> folder) to (re)create or update the dataset.</li>
-<li>If you include datasets, set <code>LazyData: true</code> in the <code>DESCRIPTION</code> file.</li>
+<li>Save the creation script in <code>data-raw/</code> for future updates.</li>
+<li>Set <code>LazyData: true</code> in <code>DESCRIPTION</code> when including datasets.</li>
 </ul>
 </div>
 </div>
@@ -978,7 +978,7 @@
 </section>
 <section id="reusable-dataset" class="slide level2 smaller">
 <h2>Reusable dataset</h2>
-<p><code>exdat</code> can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.</p>
+<p><code>exdat</code> can now be used everywhere without redefining it.</p>
 <div class="columns">
 <div class="column" style="width:33%;">
 <p><strong>In examples</strong></p>
@@ -1029,7 +1029,7 @@
 <p><strong>No parallel modification</strong></p>
 </div>
 <div class="callout-content">
-<p>Note that if you now wish to update the dataset, you need to change its definition only in <em>one</em> place!</p>
+<p>Update the dataset in <em>one</em> place only!</p>
 </div>
 </div>
 </div>
@@ -1045,18 +1045,18 @@
 <section>
 <section id="unit-testing" class="title-slide slide level1 center">
 <h1>Unit testing</h1>
-<p>How not to repeat yourself while writing unit tests.</p>
+<p>Avoiding repetition in unit tests.</p>
 </section>
 <section id="repeated-test-patterns" class="slide level2 smaller">
 <h2>Repeated test patterns</h2>
-<p>A <strong>unit test</strong> records the code to describe expected output.</p>
+<p>A <strong>unit test</strong> describes expected output.</p>
 <p><br></p>
 <p>(actual) <i class="fa-regular fa-file-code fa-2xl" aria-label="file-code"></i> <i class="fa-solid fa-arrows-left-right fa-2xl" aria-label="arrows-left-right"></i> <i class="fa-solid fa-file-code fa-2xl" aria-label="file-code"></i> (expected)</p>
 <p><br></p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:40%;">
-<p>Unit testing involves checking function output with a <strong>range of inputs</strong>, and this can involve recycling a test pattern.</p>
+<p>Testing functions with a <strong>range of inputs</strong> often recycles test patterns.</p>
 <div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1097,7 +1097,7 @@
 </section>
 <section id="parametrized-unit-testing" class="slide level2 smaller">
 <h2>Parametrized unit testing</h2>
-<p>To avoid such repetition, you can write parameterized unit tests using <a href="https://github.com/google/patrick"><code>{patrick}</code></a>.</p>
+<p>Write parameterized unit tests using <a href="https://github.com/google/patrick"><code>{patrick}</code></a>.</p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:51%;">
@@ -1156,12 +1156,11 @@
 </section>
 <section id="repeated-usage-of-testing-datasets" class="slide level2 smaller">
 <h2>Repeated usage of testing datasets</h2>
-<p>You have already seen how <em>user</em>-facing datasets — useful for illustrating function usage — can be defined and saved once and then used repeatedly.</p>
-<p>Similarly, you can define and save <em>developer</em>-facing datasets - useful for testing purposes - and use them across multiple tests.</p>
+<p>Like <em>user</em>-facing datasets, define <em>developer</em>-facing test datasets once and reuse them across multiple tests.</p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:40%;">
-<p>Saving datasets in either of these locations is fine.</p>
+<p>Either location works for saving datasets.</p>
 </div><div class="column" style="width:30%;">
 <pre><code>├── DESCRIPTION
 ├── tests
@@ -1201,7 +1200,7 @@
 </section>
 <section id="using-test-datasets" class="slide level2 smaller">
 <h2>Using test datasets</h2>
-<p>Without stored datasets, you define the same datasets <strong>multiple</strong> times across test files.</p>
+<p>Without stored datasets, datasets are defined <strong>multiple</strong> times across test files.</p>
 <div class="columns">
 <div class="column" style="width:35%;">
 <div class="code-with-filename">
@@ -1224,7 +1223,7 @@
 </div></div>
 <p><br></p>
 <div class="fragment">
-<p>With saved datasets, you define just <strong>once</strong> and load them from test files.</p>
+<p>With saved datasets, define <strong>once</strong> and load from test files.</p>
 <div class="columns">
 <div class="column" style="width:35%;">
 <div class="code-with-filename">
@@ -1272,11 +1271,11 @@
 <section>
 <section id="exceptions" class="title-slide slide level1 center">
 <h1>Exceptions</h1>
-<p>How not to repeat yourself while signalling exceptions</p>
+<p>Avoiding repetition when signaling exceptions</p>
 </section>
 <section id="sending-signals" class="slide level2 smaller">
 <h2>Sending signals</h2>
-<p>Exceptions/conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. Often, similar exceptions need to be signalled across functions.</p>
+<p>Functions use exceptions (messages, warnings, errors) to signal unexpected events. Similar exceptions are often signaled across functions.</p>
 <div class="fragment">
 <p>E.g., for functions that don’t accept negative values:</p>
 <p><strong>input validation</strong></p>
@@ -1338,7 +1337,7 @@
 </section>
 <section id="list-of-exception-functions" class="slide level2 smaller">
 <h2>List of exception functions</h2>
-<p>We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.</p>
+<p>Extract exception message strings into named functions and store them in a list.</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>exceptions.R</strong></pre>
@@ -1372,7 +1371,7 @@
 </section>
 <section id="reusable-exceptions-part-1" class="slide level2 smaller">
 <h2>Reusable exceptions: Part-1</h2>
-<p>We can then use these functions to signal exceptions.</p>
+<p>Use these functions to signal exceptions.</p>
 <p><strong>Input validation</strong></p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1435,14 +1434,14 @@
 <p><strong>No parallel modification</strong></p>
 </div>
 <div class="callout-content">
-<p>Note that if you now wish to change the condition string, this change needs to be made only in <em>one</em> place!</p>
+<p>Change the condition string in <em>one</em> place only!</p>
 </div>
 </div>
 </div>
 </section>
 <section id="reusable-exceptions-part-2" class="slide level2 smaller">
 <h2>Reusable exceptions: Part-2</h2>
-<p>As noted before, you can also move the entire validation to a new function. E.g.</p>
+<p>Alternatively, move entire validations to new functions:</p>
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>exceptions.R</strong></pre>
@@ -1501,8 +1500,8 @@
 </section>
 <section id="dry-once-dry-multiple-times" class="slide level2 smaller">
 <h2>DRY once, DRY multiple times</h2>
-<p>Most often the exceptions will be useful only for the package in which they are defined in. But, if the exceptions are generic enough, you can even export them. This will make them reusable not only in the current package, but also in other packages.</p>
-<p>That is, DRYing up exceptions in one package does the same for many!</p>
+<p>Exceptions are usually useful only within their package. However, export generic exceptions to reuse them across packages.</p>
+<p>DRYing up exceptions in one package does the same for many!</p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1512,11 +1511,11 @@
 <p><strong>Why a list?</strong></p>
 </div>
 <div class="callout-content">
-<p>It is not <em>necessary</em> that you store exceptions in a list; you can create individual functions outside of a list and export them.</p>
-<p>But storing them in a list has the following advantages:</p>
+<p>Storing exceptions in a list is optional - individual functions work too.</p>
+<p>Lists offer advantages:</p>
 <ul>
-<li><p><strong>Simpler <code>NAMESPACE</code></strong>: There is a <em>single</em> export for all exceptions (e.g.&nbsp;<code>exceptions</code>), instead of dozens (e.g., <code>only_positives_allowed()</code>, <code>only_negatives_allowed</code>, <code>only_scalar_allowed()</code>, etc.), which can overpower the rest of the package API.</p></li>
-<li><p><strong>Extendability</strong>: You can easily append a list of imported exceptions by adding more exceptions which are relevant only for the current package. E.g. <code>exceptions$my_new_exception_function &lt;- function() {...}</code></p></li>
+<li><p><strong>Simpler <code>NAMESPACE</code></strong>: One export for all exceptions instead of dozens that can overpower the package API.</p></li>
+<li><p><strong>Extendability</strong>: Easily append imported exceptions with package-specific ones (e.g., <code>exceptions$my_new_exception &lt;- function() {...}</code>).</p></li>
 </ul>
 </div>
 </div>
@@ -1532,12 +1531,12 @@
 <section>
 <section id="dependency-management" class="title-slide slide level1 center">
 <h1>Dependency management</h1>
-<p>How not to repeat yourself while importing external package functions.</p>
+<p>Avoiding repetition when importing external functions.</p>
 </section>
 <section id="imports" class="slide level2 smaller">
 <h2>Imports</h2>
-<p>Instead of using <code>::</code> to access external package function (<code>rlang::warn()</code>), you can specify imports explicitly via roxygen directive <code>#' @importFrom</code>.</p>
-<p>But if you are importing some functions multiple times, you should avoid specifying the import multiple times, and instead collect all imports in a single file.</p>
+<p>Instead of using <code>::</code> to access external package functions (<code>rlang::warn()</code>), specify imports explicitly via <code>#' @importFrom</code>.</p>
+<p>Collect repeated imports in a single file instead of specifying them multiple times.</p>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -1591,12 +1590,12 @@
 </section></section>
 <section id="conclusion" class="title-slide slide level1 center">
 <h1>Conclusion</h1>
-<p>You can use these techniques to avoid repetition while developing R packages, which should make the development workflow faster, more maintainable, and less error-prone.</p>
+<p>These techniques make R package development faster, more maintainable, and less error-prone.</p>
 </section>
 
 <section id="advanced" class="title-slide slide level1 smaller center">
 <h1>Advanced</h1>
-<p>Although related to package development at a meta level, these issues are beyond the scope of the current presentation. I can only point to resources to help you get started.</p>
+<p>These meta-level topics are beyond this presentation’s scope. See these resources to get started:</p>
 <ul>
 <li><p><a href="https://docs.github.com/en/actions/using-workflows/reusing-workflows">DRY GitHub Actions workflows</a></p>
 <ul>

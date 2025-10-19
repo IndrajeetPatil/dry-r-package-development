@@ -105,11 +105,11 @@ Thus, it applies to all programming entities that encode knowledge:
 
 ## Benefits of DRY codebase {.smaller}
 
-- When code is duplicated, if you make change in one place, you need to make parallel changes in other places. When code is DRY, parallel modifications become unnecessary.
+- Duplicated code requires parallel changes in multiple places; DRY code eliminates this need.
 
-- Easy to maintain since there is only a single representation of knowledge that needs to be updated if the underlying knowledge changes.
+- Easier to maintain - update knowledge in one place only.
 
-- As a side effect, routines developed to remove duplicated code can become part of general-purpose utilities.
+- Routines developed to remove duplicated code can become general-purpose utilities.
 
 <br>
 
@@ -127,7 +127,7 @@ Thus, it applies to all programming entities that encode knowledge:
 
 # Plan
 
-Apply the DRY principle to remove duplication in following aspects of R package development:
+Apply DRY to remove duplication in:
 
 - Documentation
 - Vignette setup
@@ -137,11 +137,11 @@ Apply the DRY principle to remove duplication in following aspects of R package 
 
 # Documentation
 
-How not to repeat yourself while writing documentation.
+Avoiding repetition in documentation.
 
 ## What do users read? {.smaller}
 
-What users consult to find needed information may be context-dependent.
+Users consult different sources depending on context.
 
 <br>
 
@@ -161,7 +161,7 @@ What users consult to find needed information may be context-dependent.
 
 . . .
 
-Thus, including crucial information **only in one place** makes it likely that the users might miss out on it in certain contexts.
+Including crucial information in only one place risks users missing it in certain contexts.
 
 ## Go forth and multiply (without repetition) {.smaller}
 
@@ -205,11 +205,11 @@ graph LR
 
 . . .
 
-Thus, the information to repeat can be stored *once* in child documents and reused *multiple* times across parents.
+Information is stored *once* in child documents and reused *multiple* times across parents.
 
 ## Storing child documents in package {.smaller}
 
-Stratagem: You can store child documents in the manual directory and reuse them.
+Store child documents in the manual directory and reuse them.
 
 :::: {.columns}
 
@@ -248,8 +248,8 @@ This is some crucial information to be repeated across documentation.
 
 ## Tips
 
-- You can include as many child documents as you want.
-- The child document is just like any `.Rmd` file and can include everything that any other `.Rmd` file can include.
+- Include as many child documents as needed.
+- Child documents are standard `.Rmd` files with full `.Rmd` capabilities.
 - You can choose a different name for the folder containing child documents (e.g. `rmd-fragments`).
 - Make sure to include `Roxygen: list(markdown = TRUE)` field in the `DESCRIPTION` file.
 - The child documents will not pose a problem either for `R CMD check` or for `{pkgdown}` website.
@@ -258,7 +258,7 @@ This is some crucial information to be repeated across documentation.
 
 ## Using child documents in package: Part-1 {.smaller}
 
-Include contents of child documents in the documentation in multiple locations.
+Include child document contents in multiple documentation locations.
 
 . . . 
 
@@ -334,7 +334,7 @@ README content.
 
 ## Using child documents in package: Part-2 {.smaller}
 
-Include contents of child documents in the documentation in multiple locations.
+Include child document contents in multiple documentation locations.
 
 :::: {.columns}
 
@@ -402,7 +402,7 @@ graph TD
 
 ## Storing other documentation files in package {.smaller}
 
-Like child documents, other types of documents are also stored in `man/` folder.
+Like child documents, store other document types in the `man/` folder.
 
 :::: {.columns}
 
@@ -457,13 +457,13 @@ in the documentation.
 
 ## Folder names
 
-You can name these folders however you wish, but it is advisable that the names provide information about file contents (e.g., `r-examples`, `yaml-snippets`, `md-fragments`, etc.).
+Name folders to describe their contents (e.g., `r-examples`, `yaml-snippets`, `md-fragments`).
 
 :::
 
 ## Using non-child documents in package: Part-1 {.smaller}
 
-Include contents of various files in the documentation in multiple locations.
+Include various file contents in multiple documentation locations.
 
 . . . 
 
@@ -544,7 +544,7 @@ README content.
 
 ## Using non-child documents in package: Part-2 {.smaller}
 
-Include contents of child documents in the documentation in multiple locations.
+Include child document contents in multiple documentation locations.
 
 :::: {.columns}
 
@@ -619,13 +619,13 @@ Example packages that use reusable component documents to repeat documentation.
 
 # Vignette Setup
 
-How not to repeat yourself while setting up vignettes.
+Avoiding repetition in vignette setup.
 
 ## Setup chunks in vignettes {.smaller}
 
-Another duplication that occurs is in setup chunks for vignettes. 
+Setup chunks for vignettes often contain duplication.
 
-For example, some parts of the setup can be same across vignettes.
+Some setup code is identical across vignettes.
 
 <br>
 
@@ -697,7 +697,7 @@ How can this repetition be avoided?
 
 ::: {.column width='60%'}
 
-This repetition can be avoided by moving the **common** setup to a script, and sourcing it from vignettes. Storing this script in a folder (`/setup`) is advisable if there are many reusable artifacts.
+Avoid this by moving **common** setup to a script and sourcing it from vignettes. If you have many reusable artifacts, store scripts in a `/setup` folder.
 
 :::
 
@@ -791,7 +791,7 @@ options(crayon.enabled = TRUE)
 
 ## No parallel modification
 
-Now common setup can be modified with a change in only *one* place!
+Modify common setup in *one* place only!
 
 :::
 
@@ -805,15 +805,15 @@ Packages in the wild that use this trick.
 
 # Data
 
-How not to repeat yourself while creating and re-using example datasets.
+Avoiding repetition with example datasets.
 
 ## Illustrative example datasets {.smaller}
 
-If none of the existing datasets are useful to illustrate your functions, you can create new datasets.
+Create new datasets when existing ones don't illustrate your functions well.
 
-. . . 
+. . .
 
-Let's say your example dataset is called `exdat` and function is called `foo()`. Using it in examples, vignettes, README, etc. requires that it be define *multiple* times.
+Using dataset `exdat` with function `foo()` in examples, vignettes, and README requires defining it *multiple* times.
 
 :::: {.columns}
 
@@ -874,9 +874,9 @@ How can this repetition be avoided?
 
 ## Shipping data in a package {.smaller}
 
-You can avoid this repetition by defining the data just *once*, saving and shipping it with the package.
+Define data *once*, save it, and ship it with the package.
 
-The datasets are stored in `data/`, and documented in `R/data.R`.
+Store datasets in `data/` and document them in `R/data.R`.
 
 . . . 
 
@@ -918,14 +918,14 @@ save(exdat, file="data/exdat.rdata")
 
 ## Don't forget!
 
-- For future reference, save script (in `data-raw/` folder) to (re)create or update the dataset.
-- If you include datasets, set `LazyData: true` in the `DESCRIPTION` file.
+- Save the creation script in `data-raw/` for future updates.
+- Set `LazyData: true` in `DESCRIPTION` when including datasets.
 
 :::
 
 ## Reusable dataset {.smaller}
 
-`exdat` can now be used in examples, tests, vignettes, etc.; there is no need to define it every time it is used.
+`exdat` can now be used everywhere without redefining it.
 
 :::: {.columns}
 
@@ -982,7 +982,7 @@ foo(exdat)
 
 ## No parallel modification
 
-Note that if you now wish to update the dataset, you need to change its definition only in *one* place!
+Update the dataset in *one* place only!
 
 :::
 
@@ -996,11 +996,11 @@ Examples of R packages that define datasets and use them repeatedly.
 
 # Unit testing
 
-How not to repeat yourself while writing unit tests.
+Avoiding repetition in unit tests.
 
 ## Repeated test patterns {.smaller}
 
-A **unit test** records the code to describe expected output.
+A **unit test** describes expected output.
 
 <br>
 
@@ -1014,7 +1014,7 @@ A **unit test** records the code to describe expected output.
 
 ::: {.column width='40%'}
 
-Unit testing involves checking function output with a **range of inputs**, and this can involve recycling a test pattern.
+Testing functions with a **range of inputs** often recycles test patterns.
 
 :::{.callout-caution}
 
@@ -1053,7 +1053,7 @@ test_that(
 
 ## Parametrized unit testing {.smaller}
 
-To avoid such repetition, you can write parameterized unit tests using  [`{patrick}`](https://github.com/google/patrick).
+Write parameterized unit tests using [`{patrick}`](https://github.com/google/patrick).
 
 . . . 
 
@@ -1115,9 +1115,7 @@ The parametrized version may not seem impressive for this simple example, but it
 
 ## Repeated usage of testing datasets {.smaller}
 
-You have already seen how *user*-facing datasets — useful for illustrating function usage — can be defined and saved once and then used repeatedly.
-
-Similarly, you can define and save *developer*-facing datasets - useful for testing purposes - and use them across multiple tests.
+Like *user*-facing datasets, define *developer*-facing test datasets once and reuse them across multiple tests.
 
 . . . 
 
@@ -1125,7 +1123,7 @@ Similarly, you can define and save *developer*-facing datasets - useful for test
 
 ::: {.column width='40%'}
 
-Saving datasets in either of these locations is fine.
+Either location works for saving datasets.
 
 :::
 
@@ -1172,7 +1170,7 @@ Always save the script used to create datasets. This script:
 
 ## Using test datasets {.smaller}
 
-Without stored datasets, you define the same datasets **multiple** times across test files.
+Without stored datasets, datasets are defined **multiple** times across test files.
 
 :::: {.columns}
 
@@ -1206,7 +1204,7 @@ foo2(testdat1)
 
 . . . 
 
-With saved datasets, you define just **once** and load them from test files.
+With saved datasets, define **once** and load from test files.
 
 :::: {.columns}
 
@@ -1255,11 +1253,11 @@ Examples of R packages that save datasets required for unit testing.
 
 # Exceptions
 
-How not to repeat yourself while signalling exceptions
+Avoiding repetition when signaling exceptions
 
 ## Sending signals {.smaller}
 
-Exceptions/conditions (messages, warnings, and errors) provide a way for functions to signal to the user that something unexpected happened. Often, similar exceptions need to be signalled across functions.
+Functions use exceptions (messages, warnings, errors) to signal unexpected events. Similar exceptions are often signaled across functions.
 
 . . . 
 
@@ -1333,7 +1331,7 @@ How can this repetition be avoided?
 
 ## List of exception functions {.smaller}
 
-We can avoid this repetition by extracting exception message strings in a function with an informative name. And then storing them in a list.
+Extract exception message strings into named functions and store them in a list.
 
 ```{.r filename="exceptions.R"}
 exceptions <- list(
@@ -1360,7 +1358,7 @@ But this is not done here to address the most general case where:
 
 ## Reusable exceptions: Part-1 {.smaller}
 
-We can then use these functions to signal exceptions.
+Use these functions to signal exceptions.
 
 **Input validation**
 
@@ -1431,13 +1429,13 @@ expect_error(
 
 ## No parallel modification
 
-Note that if you now wish to change the condition string, this change needs to be made only in *one* place!
+Change the condition string in *one* place only!
 
 :::
 
 ## Reusable exceptions: Part-2 {.smaller}
 
-As noted before, you can also move the entire validation to a new function. E.g.
+Alternatively, move entire validations to new functions:
 
 ```{.r filename="exceptions.R"}
 exceptions <- list(
@@ -1508,21 +1506,21 @@ Since the validation has moved to a new function, you only need to test it once.
 
 ## DRY once, DRY multiple times {.smaller}
 
-Most often the exceptions will be useful only for the package in which they are defined in. But, if the exceptions are generic enough, you can even export them. This will make them reusable not only in the current package, but also in other packages. 
+Exceptions are usually useful only within their package. However, export generic exceptions to reuse them across packages.
 
-That is, DRYing up exceptions in one package does the same for many!
+DRYing up exceptions in one package does the same for many!
 
 :::{.callout-note}
 
 ## Why a list?
 
-It is not *necessary* that you store exceptions in a list; you can create individual functions outside of a list and export them. 
+Storing exceptions in a list is optional - individual functions work too.
 
-But storing them in a list has the following advantages:
+Lists offer advantages:
 
-- **Simpler `NAMESPACE`**: There is a *single* export for all exceptions (e.g. `exceptions`), instead of dozens (e.g., `only_positives_allowed()`, `only_negatives_allowed`, `only_scalar_allowed()`, etc.), which can overpower the rest of the package API.
+- **Simpler `NAMESPACE`**: One export for all exceptions instead of dozens that can overpower the package API.
 
-- **Extendability**: You can easily append a list of imported exceptions by adding more exceptions which are relevant only for the current package. E.g. `exceptions$my_new_exception_function <- function() {...}`
+- **Extendability**: Easily append imported exceptions with package-specific ones (e.g., `exceptions$my_new_exception <- function() {...}`).
 
 :::
 
@@ -1538,13 +1536,13 @@ Example of R package that imports this list and appends it:
 
 # Dependency management
 
-How not to repeat yourself while importing external package functions.
+Avoiding repetition when importing external functions.
 
 ## Imports {.smaller}
 
-Instead of using `::` to access external package function (`rlang::warn()`), you can specify imports explicitly via roxygen directive `#' @importFrom`.
+Instead of using `::` to access external package functions (`rlang::warn()`), specify imports explicitly via `#' @importFrom`.
 
-But if you are importing some functions multiple times, you should avoid specifying the import multiple times, and instead collect all imports in a single file.
+Collect repeated imports in a single file instead of specifying them multiple times.
 
 . . . 
 
@@ -1605,11 +1603,11 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 
 # Conclusion
 
-You can use these techniques to avoid repetition while developing R packages, which should make the development workflow faster, more maintainable, and less error-prone.
+These techniques make R package development faster, more maintainable, and less error-prone.
 
 # Advanced {.smaller}
 
-Although related to package development at a meta level, these issues are beyond the scope of the current presentation. I can only point to resources to help you get started.
+These meta-level topics are beyond this presentation's scope. See these resources to get started:
 
 - [DRY GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
 
