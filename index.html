@@ -12,7 +12,7 @@
   <meta name="generator" content="quarto-1.9.8">
 
   <meta name="author" content="Indrajeet Patil">
-  <meta name="dcterms.date" content="2025-10-19 22:24:56.574215">
+  <meta name="dcterms.date" content="2025-10-19 22:31:43.611381">
   <meta name="keywords" content="software-engineering, r-packages, best-practices, DRY">
   <title>DRY R Package Development</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1465,9 +1465,8 @@
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53" data-filename="foo1.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb53-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">check_only_positive</span>(x)</span>
-<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb53-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb53-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb53-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="code-with-filename">
@@ -1476,9 +1475,8 @@
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54" data-filename="foo2.R"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="" aria-hidden="true" tabindex="-1"></a>foo2 <span class="ot">&lt;-</span> <span class="cf">function</span>(y) {</span>
 <span id="cb54-2"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">check_only_positive</span>(y)</span>
-<span id="cb54-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb54-5"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb54-3"><a href="" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb54-4"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div></div>
 <p><strong>Unit testing</strong></p>
