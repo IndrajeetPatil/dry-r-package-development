@@ -1634,7 +1634,7 @@ And Happy (DRY) Package Development! 😊
 
 ::: {style="text-align: center; font-size: 0.7em;"}
 
-Check out my other [slide decks](https://sites.google.com/site/indrajeetspatilmorality/presentations) on software development best practices
+Check out my other [slide decks](https://indrajeetpatil.github.io/presentations/) on software development best practices
 
 :::
 
