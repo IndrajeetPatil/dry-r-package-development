@@ -1,4 +1,4 @@
-name: Build Presentation
+name: Build and Deploy Presentation
 
 on:
   push:
@@ -12,4 +12,6 @@ jobs:
     with:
       runner-os: macos-latest
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
