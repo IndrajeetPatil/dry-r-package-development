@@ -4,3 +4,8 @@
 .Ruserdata
 README.html
 .DS_Store
+
+# Quarto
+/.quarto/
+_site/
+_extensions/
