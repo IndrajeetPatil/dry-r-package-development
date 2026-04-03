@@ -9,8 +9,6 @@ on:
 jobs:
   build-and-deploy:
     uses: IndrajeetPatil/workflows/.github/workflows/build-presentation-r.yaml@main
-    with:
-      runner-os: macos-latest
     permissions:
       contents: read
       pages: write
