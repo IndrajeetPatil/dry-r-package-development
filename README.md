@@ -1,7 +1,7 @@
 # DRY R Package Development
 
 This presentation contains tips on how to develop R packages without
-violating the DRY (Don’t Repeat Yourself) Principle in
+violating the DRY (Don't Repeat Yourself) Principle in
 
 - documentation
 - unit testing
@@ -16,7 +16,4 @@ Link to slides:
 
 ## Code of Conduct
 
-Please note that the dry-r-package-development project is released with
-a [Contributor Code of
-Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
-By contributing to this project, you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/3/0/code_of_conduct/). By contributing to this project, you agree to abide by its terms.
