@@ -26,7 +26,7 @@ lang: "en"
 dir: "ltr"
 image: "media/social-media-card.png"
 image-alt: "Preview image for presentation about DRY (Don't Repeat Yourself) principle in R package development"
-canonical-url: "https://indrajeetpatil.github.io/dry-r-package-development/"
+canonical-url: "https://www.indrapatil.com/dry-r-package-development/"
 ---
 
 ## DRY Package Development in R {style="text-align: center;"}
@@ -1633,7 +1633,7 @@ And Happy (DRY) Package Development! 😊
 
 ::: {style="text-align: center; font-size: 0.7em;"}
 
-Check out my other [slide decks](https://indrajeetpatil.github.io/presentations/) on software development best practices
+Check out my other [slide decks](https://www.indrapatil.com/presentations/) on software development best practices
 
 :::
 
