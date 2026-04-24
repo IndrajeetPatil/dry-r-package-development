@@ -1,0 +1,27 @@
+# DRY R Package Development
+
+> A Quarto RevealJS presentation by Indrajeet Patil.
+
+Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable.
+
+## Primary URL
+
+- [Slides](https://www.indrapatil.com/dry-r-package-development/)
+
+## Source
+
+- [GitHub repository](https://github.com/IndrajeetPatil/dry-r-package-development/)
+
+## Topics
+
+- software engineering
+- r packages
+- best practices
+- DRY
+- r programming
+- presentation
+- slides
+
+## Machine-readable companion
+
+- [Full agent summary](https://www.indrapatil.com/dry-r-package-development/llms-full.txt)

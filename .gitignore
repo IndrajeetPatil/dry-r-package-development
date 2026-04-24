@@ -9,3 +9,5 @@ README.html
 /.quarto/
 _site/
 _extensions/
+
+**/*.quarto_ipynb

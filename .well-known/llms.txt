@@ -1,0 +1,7 @@
+# DRY R Package Development
+
+> A Quarto RevealJS presentation by Indrajeet Patil.
+
+Canonical slides: https://www.indrapatil.com/dry-r-package-development/
+Full agent summary: https://www.indrapatil.com/dry-r-package-development/llms-full.txt
+Source: https://github.com/IndrajeetPatil/dry-r-package-development/

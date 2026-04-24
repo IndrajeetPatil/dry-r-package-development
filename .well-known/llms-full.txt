@@ -1,0 +1,10 @@
+# DRY R Package Development
+
+This is the well-known discovery copy for agentic assistants.
+
+Canonical slides: https://www.indrapatil.com/dry-r-package-development/
+Root llms.txt: https://www.indrapatil.com/dry-r-package-development/llms.txt
+Root llms-full.txt: https://www.indrapatil.com/dry-r-package-development/llms-full.txt
+Source: https://github.com/IndrajeetPatil/dry-r-package-development/
+
+Summary: Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable.
