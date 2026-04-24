@@ -614,8 +614,6 @@ Example packages that use reusable component documents to repeat documentation.
 
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man)
 
-- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/tree/main/man)
-
 # Vignette Setup
 
 Avoiding repetition in vignette setup.
@@ -799,8 +797,6 @@ Modify common setup in *one* place only!
 Packages in the wild that use this trick.
 
 - [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R)
-
-- [`{statsExpressions}`](https://github.com/IndrajeetPatil/statsExpressions/blob/main/vignettes/setup.R)
 
 # Data
 
