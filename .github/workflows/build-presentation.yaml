@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    uses: IndrajeetPatil/workflows/.github/workflows/build-presentation-r.yaml@main
+    uses: IndrajeetPatil/workflows/.github/workflows/build-presentation-r.yaml@1e69930054a834a872713395ba85670ed7555084
     permissions:
       contents: read
       pages: write
