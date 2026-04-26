@@ -10,9 +10,20 @@ Language: en
 
 ## Summary
 
-Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable.
+Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation reuse with knitr and roxygen2 tags, vignette setup, unit testing, data management, dependency management, reusable exception messages, and snapshot coverage for message stability.
 
 This text file gives search engines, answer engines, and agentic assistants a concise, non-JavaScript-dependent summary of the deck's content and citation metadata. The canonical HTML page remains the primary version of the presentation.
+
+## Content Highlights
+
+- Explains when DRY helps R package development and where DAMP, readable tests, or explicit repetition can be preferable.
+- Shows how to reuse documentation fragments across README files, vignettes, help pages, and other package documentation with child documents, knitr file inclusion, and files stored under `man/`.
+- Covers roxygen2 reuse mechanisms for shared function documentation, including `@inheritParams`, `@inheritSection`, `@inheritDotParams`, `@inherit`, `@describeIn`, and `@rdname`.
+- Demonstrates reusable setup patterns for vignettes and other long-form package documentation.
+- Shows how to avoid repeated unit-test structure with parameterized tests and shared test data.
+- Discusses centralizing exception-message strings and validation helpers so messages, warnings, and errors can be reused consistently.
+- Notes a testing tradeoff for reusable exception-message helpers: if production code and tests call the same helper, accidental message changes can pass silently; use snapshot tests or one direct literal assertion to keep user-facing messages stable.
+- Covers ways to reuse package data, dependency-management patterns, and exception helpers across packages.
 
 ## Topics
 
@@ -21,6 +32,8 @@ This text file gives search engines, answer engines, and agentic assistants a co
 - best practices
 - DRY
 - r programming
+- roxygen2
+- snapshot testing
 - presentation
 - slides
 
