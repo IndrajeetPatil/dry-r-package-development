@@ -604,6 +604,8 @@ If you are overwhelmed by this section, note that you actually need to remember 
 
 - If it's not an `.Rmd` document, use the `file` option to include its contents and use appropriate `{knitr}` engine. To see available engines, run `names(knitr::knit_engines$get())`.
 
+- For function documentation, prefer `{roxygen2}`'s reuse tags when the repeated content already belongs to another topic: `@inheritParams`, `@inheritSection`, `@inheritDotParams`, or `@inherit` for several fields at once. Use `@describeIn` or `@rdname` when related functions should share one help page.
+
 :::
 
 ## Self-study
@@ -1424,6 +1426,31 @@ Change the condition string in *one* place only!
 
 :::
 
+## Testing reusable exceptions {.smaller}
+
+The shared exception function keeps production code DRY, but it also makes one test pattern riskier.
+
+```{.r filename="test-foo1.R"}
+expect_error(
+  foo1(-1),
+  exceptions$only_positives_allowed("x")
+)
+```
+
+If both the function and the test call the same helper, an accidental change to the message can pass silently.
+
+. . .
+
+Use a snapshot or one direct literal assertion for the helper itself, then reuse the helper everywhere else.
+
+```{.r filename="test-exceptions.R"}
+test_that("positive-only message is stable", {
+  expect_snapshot(
+    exceptions$only_positives_allowed("x")
+  )
+})
+```
+
 ## Reusable exceptions: Part-2 {.smaller}
 
 :::: {.columns}
@@ -1642,4 +1669,3 @@ Check out my other [slide decks](https://www.indrapatil.com/presentations/) on s
 [{{< fa solid envelope >}}](mailto:patilindrajeet.science@gmail.com)
 
 :::
-
