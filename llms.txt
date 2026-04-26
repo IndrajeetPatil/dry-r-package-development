@@ -2,7 +2,7 @@
 
 > A Quarto RevealJS presentation by Indrajeet Patil.
 
-Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable.
+Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation reuse with knitr and roxygen2 tags, vignette setup, unit testing, data management, dependency management, reusable exception messages, and snapshot coverage for message stability.
 
 ## Primary URL
 
@@ -19,6 +19,8 @@ Learn how to apply the DRY (Don't Repeat Yourself) principle to R package develo
 - best practices
 - DRY
 - r programming
+- roxygen2
+- snapshot testing
 - presentation
 - slides
 
