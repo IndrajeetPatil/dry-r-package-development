@@ -13,7 +13,3 @@ Link to slides:
 <https://www.indrapatil.com/dry-r-package-development/>
 
 <img src="media/simpsons.png" width="50%" alt="Simpsons cartoon where a character is writing on the blackboard that they will not repeat themselves while repeating themselves by writing the same thing again and again" />
-
-## Code of Conduct
-
-Please note that this project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/3/0/code_of_conduct/). By contributing to this project, you agree to abide by its terms.

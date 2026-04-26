@@ -11,3 +11,6 @@ _site/
 _extensions/
 
 **/*.quarto_ipynb
+
+# Claude
+/.claude/
