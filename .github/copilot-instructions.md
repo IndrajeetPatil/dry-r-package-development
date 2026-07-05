@@ -1,4 +1,6 @@
-# AGENTS.md
+# GitHub Copilot Instructions
+
+(This file is based on AGENTS.md)
 
 Guidance for AI coding agents working on this repository.
 
