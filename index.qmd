@@ -24,7 +24,7 @@ description-meta: "Learn how to apply the DRY (Don't Repeat Yourself) principle 
 license: "CC0 1.0 Universal"
 lang: "en"
 dir: "ltr"
-image: "media/social-media-card.png"
+image: "media/social-media-card.webp"
 image-alt: "Preview image for presentation about DRY (Don't Repeat Yourself) principle in R package development"
 canonical-url: "https://www.indrapatil.com/dry-r-package-development/"
 ---
