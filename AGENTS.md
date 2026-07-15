@@ -57,7 +57,8 @@ Check which set is present to know which language context applies.
 - **Image classes.** Images may use semantic classes (e.g. `.hero`, `.artifact`, `.illustration`) that control border, shadow, and rounding in `style.css`. Check the existing CSS before adding new image classes.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
-- **FontAwesome.** Icons use `{{< fa ... >}}` shortcodes via the `quarto-ext/fontawesome` extension.
+- **FontAwesome.** Icons use `{{< fa ... >}}` shortcodes via the `quarto-ext/fontawesome` extension. The custom stylesheet embeds small WOFF2 subsets and overrides the Font Awesome families so browsers do not download the full webfonts.\n  When an icon shortcode or Font Awesome version changes, regenerate every affected subset, update its data URL and `unicode-range`, render the deck, and verify every icon. Keep the extension while any shortcodes remain.
+- **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.
 - **No code execution.** The YAML front matter sets `execute: eval: false`. Code blocks are for display only; they are not executed during render.
 - **Compute engine.** Python decks declare `jupyter: python3` in the front matter; R decks declare `engine: knitr`. The virtualenv or renv exists to satisfy Quarto's engine, not to run slide code.
 
