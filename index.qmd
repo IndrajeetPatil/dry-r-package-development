@@ -43,7 +43,7 @@ Indrajeet Patil
 ```{r}
 #| echo: false
 #| eval: true
-knitr::include_graphics("media/simpsons.png")
+knitr::include_graphics("media/simpsons.webp")
 ```
 
 ::: {style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;"}
@@ -179,7 +179,7 @@ Some documentation is important enough to be included in multiple places (e.g. i
 ::: {.column width='60%'}
 
 ```{r, echo=FALSE, eval=TRUE, out.width="100%"}
-knitr::include_graphics("media/spiderman.jpeg")
+knitr::include_graphics("media/spiderman.webp")
 ```
 
 :::
