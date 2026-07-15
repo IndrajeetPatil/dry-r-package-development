@@ -8,4 +8,4 @@ project:
     - llms-full.txt
     - .well-known/llms.txt
     - .well-known/llms-full.txt
-    - media/social-media-card.png
+    - media/social-media-card.webp
