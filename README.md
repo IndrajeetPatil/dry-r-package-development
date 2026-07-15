@@ -12,7 +12,7 @@ violating the DRY (Don't Repeat Yourself) Principle in
 Link to slides:
 <https://www.indrapatil.com/dry-r-package-development/>
 
-<img src="media/simpsons.png" width="50%" alt="Simpsons cartoon where a character is writing on the blackboard that they will not repeat themselves while repeating themselves by writing the same thing again and again" />
+<img src="media/simpsons.webp" width="50%" alt="Simpsons cartoon where a character is writing on the blackboard that they will not repeat themselves while repeating themselves by writing the same thing again and again" />
 
 ## Development
 
