@@ -11,8 +11,6 @@ format:
     help: true
     include-in-header: meta-tags.html
     link-external-newwindow: true
-revealjs-plugins:
-  - fontawesome
 execute:
   echo: false
   eval: false
@@ -30,9 +28,6 @@ canonical-url: "https://www.indrapatil.com/dry-r-package-development/"
 ---
 
 ## DRY Package Development in R {style="text-align: center;"}
-
-<!-- Need to install extension from https://github.com/quarto-ext/fontawesome -->
-<!-- Run `quarto install extension quarto-ext/fontawesome` in terminal -->
 
 ::: {style="text-align: center;"}
 
@@ -146,15 +141,15 @@ Users consult different sources depending on context.
 
 . . .
 
-{{< fa brands readme size=2xl >}} **README**: While exploring the package repository.
+<span class="deck-icon deck-icon-2xl deck-icon-brands-readme" role="img" aria-label="readme"></span> **README**: While exploring the package repository.
 
 <br>
 
-{{< fa file size=2xl >}} **Vignettes**: When first learning how to use a package.
+<span class="deck-icon deck-icon-2xl deck-icon-solid-file" role="img" aria-label="file"></span> **Vignettes**: When first learning how to use a package.
 
 <br>
 
-{{< fa solid file-invoice size=2xl >}} **Manual**: When checking details about a specific function.
+<span class="deck-icon deck-icon-2xl deck-icon-solid-file-invoice" role="img" aria-label="file invoice"></span> **Manual**: When checking details about a specific function.
 
 <br>
 
@@ -1001,7 +996,7 @@ A **unit test** describes expected output.
 
 <br>
 
-(actual) {{< fa regular file-code size=2xl >}} {{< fa solid arrows-left-right size=2xl >}} {{< fa solid file-code size=2xl >}} (expected)
+(actual) <span class="deck-icon deck-icon-2xl deck-icon-regular-file-code" role="img" aria-label="file code"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-arrows-left-right" role="img" aria-label="arrows left right"></span> <span class="deck-icon deck-icon-2xl deck-icon-solid-file-code" role="img" aria-label="file code"></span> (expected)
 
 <br>
 
@@ -1662,10 +1657,10 @@ Check out my other [slide decks](https://www.indrapatil.com/presentations/) on s
 
 ::: {style="text-align: center; font-size: 1em;"}
 
-[{{< fa brands linkedin >}}](https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/)
+<a class="deck-icon-link" href="https://www.linkedin.com/in/indrajeet-patil-ph-d-397865174/" aria-label="LinkedIn"><span class="deck-icon deck-icon-brands-linkedin" aria-hidden="true"></span></a>
 &nbsp;&nbsp;
-[{{< fa brands github >}}](http://github.com/IndrajeetPatil) 
+<a class="deck-icon-link" href="http://github.com/IndrajeetPatil" aria-label="GitHub"><span class="deck-icon deck-icon-brands-github" aria-hidden="true"></span></a>
 &nbsp;&nbsp;
-[{{< fa solid envelope >}}](mailto:patilindrajeet.science@gmail.com)
+<a class="deck-icon-link" href="mailto:patilindrajeet.science@gmail.com" aria-label="Email"><span class="deck-icon deck-icon-solid-envelope" aria-hidden="true"></span></a>
 
 :::

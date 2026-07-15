@@ -24,7 +24,7 @@ llms-full.txt        # Extended machine-readable summary
 robots.txt           # Crawl rules
 sitemap.xml          # Sitemap for search engines
 .github/             # CI workflow (reusable, from IndrajeetPatil/workflows) and Dependabot
-_extensions/         # Quarto extensions (gitignored, installed by `just install`)
+_extensions/         # Optional Quarto extensions (gitignored; currently unused)
 _site/               # Build output (gitignored)
 ```
 
@@ -57,7 +57,9 @@ Check which set is present to know which language context applies.
 - **Image classes.** Images may use semantic classes (e.g. `.hero`, `.artifact`, `.illustration`) that control border, shadow, and rounding in `style.css`. Check the existing CSS before adding new image classes.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
-- **FontAwesome.** Icons use `{{< fa ... >}}` shortcodes via the `quarto-ext/fontawesome` extension.
+- **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
+  When adding an icon, add only its mask data, preserve the source licence attribution, keep an accessible label where the icon conveys meaning, and render the deck to verify it.
+- **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.
 - **No code execution.** The YAML front matter sets `execute: eval: false`. Code blocks are for display only; they are not executed during render.
 - **Compute engine.** Python decks declare `jupyter: python3` in the front matter; R decks declare `engine: knitr`. The virtualenv or renv exists to satisfy Quarto's engine, not to run slide code.
 
@@ -66,13 +68,13 @@ Check which set is present to know which language context applies.
 All commands use [just](https://github.com/casey/just). The recipes are the same across decks; only the dependency backend differs:
 
 ```bash
-just install   # Install Quarto extensions + language deps
+just install   # Install language dependencies
 just render    # Render index.qmd to _site/
 just preview   # Live-reload dev server
 just open      # Alias for preview (live-reload dev server over localhost)
 just clean     # Remove build artifacts
 just check     # Verify Quarto setup
-just update    # Update all deps (extensions + language packages)
+just update    # Update language dependencies
 ```
 
 Python decks prefix the render command with `QUARTO_PYTHON=.venv/bin/python`. R decks call `quarto render` directly (R is discovered automatically). See the `justfile` for exact commands.
