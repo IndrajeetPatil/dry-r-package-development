@@ -1,9 +1,8 @@
 # AGENTS.md
 
 Project-level instructions for AI coding agents working on this repository —
-Codex and other `AGENTS.md`-aware tools read this file directly; GitHub Copilot
-(code review and coding agent) reads it via the `.github/copilot-instructions.md`
-symlink, which GitHub resolves to this file's full content.
+Codex, GitHub Copilot (code review and coding agent), and other
+`AGENTS.md`-aware tools read this file directly.
 
 ## What this is
 
