@@ -21,13 +21,22 @@ const normalizeTabOrder = () => {
   });
 };
 
+const codeRegions = '.reveal pre, .reveal pre > code, .reveal div.sourceCode, .reveal code.sourceCode';
+const codeOverflow = (element) => {
+  if (!element.clientWidth || !element.clientHeight) return { x: false, y: false };
+  const style = getComputedStyle(element);
+  return {
+    x: /auto|scroll/.test(style.overflowX) && element.scrollWidth > element.clientWidth,
+    y: /auto|scroll/.test(style.overflowY) && element.scrollHeight > element.clientHeight,
+  };
+};
+
 // Only add tab stops to code regions that actually overflow.
 const focusScrollableCode = () => {
-  document.querySelectorAll('.reveal pre, .reveal pre > code, .reveal div.sourceCode, .reveal code.sourceCode').forEach((element) => {
+  document.querySelectorAll(codeRegions).forEach((element) => {
     if (!element.clientWidth || !element.clientHeight) return;
-    const style = getComputedStyle(element);
-    const scrolls = ((/auto|scroll/.test(style.overflowX) && element.scrollWidth > element.clientWidth) ||
-      (/auto|scroll/.test(style.overflowY) && element.scrollHeight > element.clientHeight));
+    const overflow = codeOverflow(element);
+    const scrolls = overflow.x || overflow.y;
     if (scrolls && !element.hasAttribute("tabindex")) {
       element.tabIndex = 0;
       element.dataset.scrollFocus = "true";
@@ -41,14 +50,17 @@ const focusScrollableCode = () => {
 // Reveal leaves opacity-zero slides in the DOM; keep their controls out of focus.
 const syncSlideFocus = () => {
   const scrolling = window.Reveal?.isScrollView?.();
+  const overview = window.Reveal?.isOverview?.();
   document.querySelectorAll('.reveal .slides section').forEach((slide) => {
     // Native scroll pages form a readable document. Reveal can leave stale
     // aria-hidden attributes on vertical slides after moving them into pages.
     const scrollPage = scrolling && slide.closest('.scroll-page');
-    if (scrollPage && slide.getAttribute("aria-hidden") === "true") {
+    // Overview exposes all thumbnails for pointer and keyboard interaction.
+    if (overview) slide.removeAttribute("hidden");
+    if ((scrollPage || overview) && slide.getAttribute("aria-hidden") === "true") {
       slide.removeAttribute("aria-hidden");
     }
-    const inactive = !scrollPage && slide.getAttribute("aria-hidden") === "true";
+    const inactive = !scrollPage && !overview && slide.getAttribute("aria-hidden") === "true";
     if (slide.inert !== inactive) slide.inert = inactive;
   });
 };
@@ -82,11 +94,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof previousKeyboardCondition === "function" && previousKeyboardCondition.call(this, event) === false) return false;
         if (previousKeyboardCondition === "focused" && !Reveal.isFocused()) return false;
         const focused = document.activeElement;
-        if (navigationKeys.has(event.key) && focused?.matches('.reveal [role="tab"], .reveal pre[tabindex], .reveal pre > code[tabindex], .reveal .sourceCode[tabindex]')) return false;
+        if (navigationKeys.has(event.key)) {
+          if (focused?.matches('.reveal [role="tab"]')) return false;
+          if (focused?.matches(codeRegions)) {
+            const overflow = codeOverflow(focused);
+            const horizontal = event.key === "ArrowLeft" || event.key === "ArrowRight";
+            if (horizontal ? overflow.x : overflow.y) return false;
+          }
+        }
         return true;
       },
     });
     ["ready", "slidechanged", "fragmentshown", "fragmenthidden", "resize"].forEach((event) => Reveal.on(event, updateCode));
+    ["overviewshown", "overviewhidden"].forEach((event) => Reveal.on(event, syncSlideFocus));
   }
   // Quarto's bundled Tabby only handles Home/End; restore arrow navigation.
   document.addEventListener("keydown", (event) => {
@@ -120,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.querySelector(".slide-menu-button a");
   if (!menu || !toggle) return;
   menu.id ||= "slide-menu";
-  toggle.setAttribute("aria-label", "Open slide menu");
+  toggle.setAttribute("aria-label", "Slide menu");
   toggle.setAttribute("aria-controls", menu.id);
   menu.querySelectorAll(".slide-menu-panel").forEach((panel) => {
     panel.tabIndex = 0;
@@ -130,19 +150,25 @@ document.addEventListener("DOMContentLoaded", () => {
     panel.setAttribute("aria-label", `${button?.textContent.trim() || "Slide"} menu`);
   });
   let wasOpen = false;
+  let previousPanel;
   const syncMenu = () => {
     const open = menu.classList.contains("active");
     menu.inert = !open;
     toggle.setAttribute("aria-expanded", String(open));
-    if (open && !wasOpen) {
-      menu.querySelector(".active-menu-panel")?.focus({ preventScroll: true });
+    const panel = menu.querySelector(".active-menu-panel");
+    if (open && (!wasOpen || panel !== previousPanel)) {
+      panel?.focus({ preventScroll: true });
     } else if (!open && wasOpen && menu.contains(document.activeElement)) {
       toggle.focus({ preventScroll: true });
     }
     wasOpen = open;
+    previousPanel = panel;
   };
   syncMenu();
-  new MutationObserver(syncMenu).observe(menu, {
+  new MutationObserver((changes) => {
+    if (changes.some(({ target }) => target === menu || target.matches(".slide-menu-panel"))) syncMenu();
+  }).observe(menu, {
+    subtree: true,
     attributes: true,
     attributeFilter: ["class"],
   });
