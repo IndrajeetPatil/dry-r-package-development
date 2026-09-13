@@ -13,6 +13,7 @@ A single-page [Quarto](https://quarto.org/) presentation rendered to [RevealJS](
 ```
 index.qmd           # All slide content (the only file you usually need to edit)
 _quarto.yml          # Quarto project config (output dir, resources list)
+_quarto-a11y.yml     # Opt-in axe accessibility report profile (`just axe`)
 style.css            # Custom RevealJS theme (fonts, colours, component classes)
 meta-tags.html       # OpenGraph, Twitter Card, JSON-LD, and analytics tags
 justfile             # Command runner (install, render, preview, clean, etc.)
@@ -56,6 +57,7 @@ Check which set is present to know which language context applies.
 - **Image classes.** Images may use semantic classes (e.g. `.hero`, `.artifact`, `.illustration`) that control border, shadow, and rounding in `style.css`. Check the existing CSS before adding new image classes.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
+  Use `just axe` to preview an accessibility report. Keep `axe` in `_quarto-a11y.yml` so normal builds omit the audit payload and report; CLI metadata cannot reliably override the deck's `format:` block. Links in muted text need a non-colour cue such as an underline.
 - **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
   When adding an icon, add only its mask data, preserve the source licence attribution, keep an accessible label where the icon conveys meaning, and render the deck to verify it.
 - **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.
@@ -73,10 +75,10 @@ just preview   # Live-reload dev server
 just open      # Alias for preview (live-reload dev server over localhost)
 just clean     # Remove build artifacts
 just check     # Verify Quarto setup
-just update    # Update language dependencies
+just axe       # Preview with an axe accessibility report
 ```
 
-Python decks prefix the render command with `QUARTO_PYTHON=.venv/bin/python`. R decks call `quarto render` directly (R is discovered automatically). See the `justfile` for exact commands.
+This R deck calls Quarto directly and discovers R automatically. It uses `DESCRIPTION` for dependencies. See the `justfile` for exact commands.
 
 ## Editing slides
 
@@ -100,7 +102,7 @@ When modifying `index.qmd`:
 
 ## CI/CD
 
-- The GitHub Actions workflow in `.github/workflows/` renders the deck and deploys to GitHub Pages on push to `main`. It calls a reusable workflow from `IndrajeetPatil/workflows` (Python and R decks use different workflow files). Do not inline the workflow; update the ref SHA if the upstream workflow changes.
+- The GitHub Actions workflow in `.github/workflows/` renders the deck and deploys to GitHub Pages on push to `main`. It calls a reusable workflow from `IndrajeetPatil/workflows` (Python and R decks use different workflow files). Do not inline the workflow. Track the first-party reusable workflow at `@main` so upstream fixes arrive without a manual SHA refresh.
 - Dependabot keeps GitHub Actions dependencies up to date weekly. Python decks also have Dependabot configured for `uv`; R decks do not use Dependabot for R packages.
 
 ## What not to do
@@ -111,3 +113,4 @@ When modifying `index.qmd`:
 - Do not enable code execution (`eval: true`) unless the presentation genuinely needs computed output.
 - Do not commit `_site/`, `_extensions/`, or `.quarto/` (all gitignored). For Python decks, `.venv/` is also gitignored; for R decks, `renv/library/` and `renv/staging/` are gitignored.
 - Do not modify the reusable CI workflow inline; it lives in a separate repository.
+- Do not pin the first-party reusable workflow to a commit SHA; use `@main`.

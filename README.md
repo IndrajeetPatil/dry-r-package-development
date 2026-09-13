@@ -40,9 +40,14 @@ just render   # Render slides to HTML
 just preview  # Start a live preview with auto-reload
 just open     # Alias for preview (live-reload dev server over localhost)
 just clean    # Remove generated files and caches
+just axe      # Preview with an accessibility report slide
 just check    # Check the Quarto and R version setup
 just          # Install dependencies and start live-reload preview
 ```
+
+The `just axe` command activates the `a11y` profile for Quarto's accessibility report.
+Normal renders omit the audit payload and report. Use
+`QUARTO_PROFILE=a11y quarto render index.qmd` for an audit build without a preview server.
 
 ## Feedback
 

@@ -1,0 +1,6 @@
+# Opt-in accessibility audit profile: `just axe`.
+# Keep the axe payload and report out of normal presentation builds.
+format:
+  revealjs:
+    axe:
+      output: document

@@ -42,7 +42,7 @@ knitr::include_graphics("media/simpsons.webp")
 ```
 
 ::: {style="text-align: center; font-size: 0.7em; margin-top: 2em; color: #666;"}
-Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/dry-r-package-development/).
+Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/dry-r-package-development/){style="text-decoration: underline;"}.
 :::
 
 # 
