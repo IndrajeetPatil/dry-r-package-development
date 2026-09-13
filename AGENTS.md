@@ -55,6 +55,7 @@ Check which set is present to know which language context applies.
 - **Slide syntax.** Slides are separated by `##` headings. Use Quarto's RevealJS dialect: fenced divs (`:::`), columns (`.columns` / `.column`), raw HTML blocks (`{=html}`), and the `{.smaller}` class for dense slides.
 - **Inline styling.** Visual design uses inline `style` attributes on fenced divs with a small palette of background colours (e.g. `#e3f2fd`, `#e8f5e9`, `#fff3e0`, `#ffebee`, `#FFFBC1`, `#f8f9fa`). The CSS maps these to the custom theme. Do not change these colour values without updating `style.css`.
 - **Image classes.** Images may use semantic classes (e.g. `.hero`, `.artifact`, `.illustration`) that control border, shadow, and rounding in `style.css`. Check the existing CSS before adding new image classes.
+  Keep `.nostretch` and the explicit output height on the title image: auto-stretch collapses it in native scroll view, while an unconstrained natural size overflows the title slide.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
   Use `just axe` to preview an accessibility report. Keep `axe` in `_quarto-a11y.yml` so normal builds omit the audit payload and report; CLI metadata cannot reliably override the deck's `format:` block. Links in muted text need a non-colour cue such as an underline.

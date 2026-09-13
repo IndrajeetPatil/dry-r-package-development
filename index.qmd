@@ -27,7 +27,7 @@ image-alt: "Preview image for presentation about DRY (Don't Repeat Yourself) pri
 canonical-url: "https://www.indrapatil.com/dry-r-package-development/"
 ---
 
-## DRY Package Development in R {style="text-align: center;"}
+## DRY Package Development in R {.nostretch style="text-align: center;"}
 
 ::: {style="text-align: center;"}
 
@@ -38,6 +38,7 @@ Indrajeet Patil
 ```{r}
 #| echo: false
 #| eval: true
+#| out-height: 390px
 knitr::include_graphics("media/simpsons.webp")
 ```
 
