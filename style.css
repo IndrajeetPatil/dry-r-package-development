@@ -92,3 +92,16 @@
 .reveal .nodeLabel {
   color: #405760 !important;
 }
+
+/* Plain directory trees use the body text contrast, including at scroll size. */
+.reveal pre > code:not(.sourceCode) {
+  color: #526971;
+}
+
+/* Diagram relationships remain distinguishable against the slide background. */
+.reveal .flowchart-link {
+  stroke: #526971 !important;
+}
+.reveal .arrowMarkerPath {
+  fill: #526971 !important;
+}

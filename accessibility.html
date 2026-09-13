@@ -38,10 +38,33 @@ const focusScrollableCode = () => {
   });
 };
 
+// Reveal leaves opacity-zero slides in the DOM; keep their controls out of focus.
+const syncSlideFocus = () => {
+  const scrolling = window.Reveal?.isScrollView?.();
+  document.querySelectorAll('.reveal .slides section').forEach((slide) => {
+    // Native scroll pages form a readable document. Reveal can leave stale
+    // aria-hidden attributes on vertical slides after moving them into pages.
+    const scrollPage = scrolling && slide.closest('.scroll-page');
+    if (scrollPage && slide.getAttribute("aria-hidden") === "true") {
+      slide.removeAttribute("aria-hidden");
+    }
+    const inactive = !scrollPage && slide.getAttribute("aria-hidden") === "true";
+    if (slide.inert !== inactive) slide.inert = inactive;
+  });
+};
+
 // Supply names and keyboard access missing from the bundled Reveal menu.
 document.addEventListener("DOMContentLoaded", () => {
   const updateCode = () => requestAnimationFrame(focusScrollableCode);
   normalizeTabOrder();
+  syncSlideFocus();
+  const slides = document.querySelector('.reveal .slides');
+  if (slides) new MutationObserver(syncSlideFocus).observe(slides, {
+    subtree: true,
+    childList: true,
+    attributes: true,
+    attributeFilter: ["aria-hidden"],
+  });
   new MutationObserver((changes) => {
     normalizeTabOrder();
     if (changes.some((change) => change.attributeName === "aria-selected")) updateCode();
