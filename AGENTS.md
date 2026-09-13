@@ -14,6 +14,7 @@ A single-page [Quarto](https://quarto.org/) presentation rendered to [RevealJS](
 index.qmd           # All slide content (the only file you usually need to edit)
 _quarto.yml          # Quarto project config (output dir, resources list)
 _quarto-a11y.yml     # Opt-in axe accessibility report profile (`just axe`)
+accessibility.html  # Browser zoom, keyboard navigation and generated-control accessibility
 style.css            # Custom RevealJS theme (fonts, colours, component classes)
 meta-tags.html       # OpenGraph, Twitter Card, JSON-LD, and analytics tags
 justfile             # Command runner (install, render, preview, clean, etc.)
@@ -58,7 +59,7 @@ Check which set is present to know which language context applies.
   Keep `.nostretch` and the explicit output height on the title image: auto-stretch collapses it in native scroll view, while an unconstrained natural size overflows the title slide.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
-  Use `just axe` to preview an accessibility report. Keep `axe` in `_quarto-a11y.yml` so normal builds omit the audit payload and report; CLI metadata cannot reliably override the deck's `format:` block. Links in muted text need a non-colour cue such as an underline.
+  Run `just axe --no-browser --port 8860` to preview an accessibility report. Fix actionable findings and test all slides, fragments, native scroll view, tabs, and keyboard controls; a clean opening slide is insufficient. Keep `axe` in `_quarto-a11y.yml` so normal builds omit the audit payload and report; CLI metadata cannot reliably override the deck's `format:` block. Links in muted text need a non-colour cue such as an underline.
 - **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
   When adding an icon, add only its mask data, preserve the source licence attribution, keep an accessible label where the icon conveys meaning, and render the deck to verify it.
 - **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.

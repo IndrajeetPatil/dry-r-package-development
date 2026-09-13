@@ -42,5 +42,6 @@ check:
     Rscript -e 'stopifnot(getRversion() >= "4.6.0")'
 
 # Audit accessibility with an opt-in report slide.
-axe:
-    QUARTO_PROFILE=a11y quarto preview index.qmd
+[positional-arguments]
+axe *args:
+    QUARTO_PROFILE=a11y quarto preview index.qmd "$@"

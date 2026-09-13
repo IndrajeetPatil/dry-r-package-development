@@ -56,3 +56,39 @@
 .deck-icon-solid-file-invoice {
   --deck-icon-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzODQgNTEyIj48cGF0aCBkPSJNNjQgMEMyOC43IDAgMCAyOC43IDAgNjRMMCA0NDhjMCAzNS4zIDI4LjcgNjQgNjQgNjRsMjU2IDBjMzUuMyAwIDY0LTI4LjcgNjQtNjRsMC0yODgtMTI4IDBjLTE3LjcgMC0zMi0xNC4zLTMyLTMyTDIyNCAwIDY0IDB6TTI1NiAwbDAgMTI4IDEyOCAwTDI1NiAwek04MCA2NGw2NCAwYzguOCAwIDE2IDcuMiAxNiAxNnMtNy4yIDE2LTE2IDE2TDgwIDk2Yy04LjggMC0xNi03LjItMTYtMTZzNy4yLTE2IDE2LTE2em0wIDY0bDY0IDBjOC44IDAgMTYgNy4yIDE2IDE2cy03LjIgMTYtMTYgMTZsLTY0IDBjLTguOCAwLTE2LTcuMi0xNi0xNnM3LjItMTYgMTYtMTZ6bTE2IDk2bDE5MiAwYzE3LjcgMCAzMiAxNC4zIDMyIDMybDAgNjRjMCAxNy43LTE0LjMgMzItMzIgMzJMOTYgMzUyYy0xNy43IDAtMzItMTQuMy0zMi0zMmwwLTY0YzAtMTcuNyAxNC4zLTMyIDMyLTMyem0wIDMybDAgNjQgMTkyIDAgMC02NEw5NiAyNTZ6TTI0MCA0MTZsNjQgMGM4LjggMCAxNiA3LjIgMTYgMTZzLTcuMiAxNi0xNiAxNmwtNjQgMGMtOC44IDAtMTYtNy4yLTE2LTE2czcuMi0xNiAxNi0xNnoiLz48L3N2Zz4=");
 }
+
+/* Retain the Solarized palette with readable text at small slide sizes. */
+:root {
+  --r-main-color: #526971;
+  --r-link-color: #006dad;
+  --r-link-color-hover: #00547f;
+}
+.reveal blockquote,
+.reveal .slide-number {
+  color: #526971;
+}
+.reveal .slide-number-b {
+  opacity: 1;
+}
+.reveal .slides a {
+  text-decoration: underline;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mermaid labels and filename bars retain contrast at scroll-view text sizes. */
+.reveal .code-with-filename-file {
+  color: #405760;
+}
+.reveal .nodeLabel {
+  color: #405760 !important;
+}

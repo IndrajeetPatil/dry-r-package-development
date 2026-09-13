@@ -1,0 +1,137 @@
+<script>
+(() => {
+// Quarto's Reveal template disables pinch zoom; preserve normal browser scaling.
+const viewport = document.querySelector('meta[name="viewport"]');
+if (viewport) {
+  viewport.content = viewport.content
+    .split(",")
+    .filter((value) => !/^(maximum-scale|user-scalable)\s*=/i.test(value.trim()))
+    .join(",");
+}
+
+// Keep generated controls in DOM order, with one tab stop per tabset.
+const normalizeTabOrder = () => {
+  document.querySelectorAll('[tabindex]').forEach((element) => {
+    if (element.getAttribute("role") === "tab") {
+      const index = element.getAttribute("aria-selected") === "true" ? 0 : -1;
+      if (element.tabIndex !== index) element.tabIndex = index;
+    } else if (element.tabIndex > 0) {
+      element.tabIndex = element.getAttribute("aria-hidden") === "true" ? -1 : 0;
+    }
+  });
+};
+
+// Only add tab stops to code regions that actually overflow.
+const focusScrollableCode = () => {
+  document.querySelectorAll('.reveal pre, .reveal pre > code, .reveal div.sourceCode, .reveal code.sourceCode').forEach((element) => {
+    if (!element.clientWidth || !element.clientHeight) return;
+    const style = getComputedStyle(element);
+    const scrolls = ((/auto|scroll/.test(style.overflowX) && element.scrollWidth > element.clientWidth) ||
+      (/auto|scroll/.test(style.overflowY) && element.scrollHeight > element.clientHeight));
+    if (scrolls && !element.hasAttribute("tabindex")) {
+      element.tabIndex = 0;
+      element.dataset.scrollFocus = "true";
+    } else if (!scrolls && element.dataset.scrollFocus === "true") {
+      element.removeAttribute("tabindex");
+      delete element.dataset.scrollFocus;
+    }
+  });
+};
+
+// Supply names and keyboard access missing from the bundled Reveal menu.
+document.addEventListener("DOMContentLoaded", () => {
+  const updateCode = () => requestAnimationFrame(focusScrollableCode);
+  normalizeTabOrder();
+  new MutationObserver((changes) => {
+    normalizeTabOrder();
+    if (changes.some((change) => change.attributeName === "aria-selected")) updateCode();
+  }).observe(document.body, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["tabindex", "aria-selected"],
+  });
+  if (window.Reveal) {
+    // Let code scroll and Tabby's arrow-key navigation run without changing slides.
+    const previousKeyboardCondition = Reveal.getConfig().keyboardCondition;
+    const navigationKeys = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "PageUp", "PageDown", "Home", "End", " "]);
+    Reveal.configure({
+      keyboardCondition(event) {
+        if (typeof previousKeyboardCondition === "function" && previousKeyboardCondition.call(this, event) === false) return false;
+        if (previousKeyboardCondition === "focused" && !Reveal.isFocused()) return false;
+        const focused = document.activeElement;
+        if (navigationKeys.has(event.key) && focused?.matches('.reveal [role="tab"], .reveal pre[tabindex], .reveal pre > code[tabindex], .reveal .sourceCode[tabindex]')) return false;
+        return true;
+      },
+    });
+    ["ready", "slidechanged", "fragmentshown", "fragmenthidden", "resize"].forEach((event) => Reveal.on(event, updateCode));
+  }
+  // Quarto's bundled Tabby only handles Home/End; restore arrow navigation.
+  document.addEventListener("keydown", (event) => {
+    const tab = event.target.closest?.('.reveal [role="tab"]');
+    if (!tab || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    // Tabby activates Home/End tabs but leaves native page scrolling enabled.
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      return;
+    }
+    const direction = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 }[event.key];
+    if (!direction) return;
+    // A future Tabby version may already have moved focus before this listener.
+    if (document.activeElement !== tab) return;
+    const tablist = tab.closest('[role="tablist"]');
+    if (!tablist) return;
+    const tabs = [...tablist.querySelectorAll('[role="tab"]')]
+      .filter((item) => item.closest('[role="tablist"]') === tablist && item.getAttribute("aria-disabled") !== "true");
+    const index = tabs.indexOf(tab);
+    if (index < 0 || tabs.length < 2) return;
+    event.preventDefault();
+    const next = tabs[(index + direction + tabs.length) % tabs.length];
+    next.click();
+    next.focus({ preventScroll: true });
+  });
+  document.addEventListener("tabby", updateCode);
+  window.addEventListener("resize", updateCode);
+  updateCode();
+  document.fonts.ready.then(updateCode);
+  const menu = document.querySelector(".slide-menu");
+  const toggle = document.querySelector(".slide-menu-button a");
+  if (!menu || !toggle) return;
+  menu.id ||= "slide-menu";
+  toggle.setAttribute("aria-label", "Open slide menu");
+  toggle.setAttribute("aria-controls", menu.id);
+  menu.querySelectorAll(".slide-menu-panel").forEach((panel) => {
+    panel.tabIndex = 0;
+    panel.setAttribute("role", "region");
+    const button = [...menu.querySelectorAll(".toolbar-panel-button")]
+      .find((item) => item.dataset.panel === panel.dataset.panel);
+    panel.setAttribute("aria-label", `${button?.textContent.trim() || "Slide"} menu`);
+  });
+  let wasOpen = false;
+  const syncMenu = () => {
+    const open = menu.classList.contains("active");
+    menu.inert = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    if (open && !wasOpen) {
+      menu.querySelector(".active-menu-panel")?.focus({ preventScroll: true });
+    } else if (!open && wasOpen && menu.contains(document.activeElement)) {
+      toggle.focus({ preventScroll: true });
+    }
+    wasOpen = open;
+  };
+  syncMenu();
+  new MutationObserver(syncMenu).observe(menu, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+});
+})();
+</script>
+<style>
+.reveal pre:focus-visible,
+.reveal pre > code:focus-visible,
+.reveal .sourceCode:focus-visible,
+.slide-menu-panel:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+</style>

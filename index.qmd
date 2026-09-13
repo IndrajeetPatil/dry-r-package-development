@@ -10,6 +10,7 @@ format:
     touch: true
     help: true
     include-in-header: meta-tags.html
+    include-after-body: accessibility.html
     link-external-newwindow: true
 execute:
   echo: false
@@ -39,6 +40,7 @@ Indrajeet Patil
 #| echo: false
 #| eval: true
 #| out-height: 390px
+#| fig-alt: "Bart Simpson repeatedly writes I will not repeat myself on a blackboard."
 knitr::include_graphics("media/simpsons.webp")
 ```
 
@@ -46,7 +48,7 @@ knitr::include_graphics("media/simpsons.webp")
 Source code for these slides can be found [on GitHub](https://github.com/IndrajeetPatil/dry-r-package-development/){style="text-decoration: underline;"}.
 :::
 
-# 
+# <span class="visually-hidden">Copy and paste</span> {#section}
 
 *"Copy and paste is a design error."* &nbsp; \- David Parnas
 
@@ -75,6 +77,7 @@ That is, you should not express the same thing in multiple places in multiple wa
 ::: {.column width='40%'}
 
 ```{r, echo=FALSE, eval=TRUE}
+#| fig-alt: "Animated illustration of a document."
 knitr::include_graphics("media/dry.gif")
 ```
 
@@ -175,6 +178,7 @@ Some documentation is important enough to be included in multiple places (e.g. i
 ::: {.column width='60%'}
 
 ```{r, echo=FALSE, eval=TRUE, out.width="100%"}
+#| fig-alt: "Three Spider-Man figures labelled README, examples, and vignettes point at one another, illustrating duplicated documentation."
 knitr::include_graphics("media/spiderman.webp")
 ```
 
@@ -584,7 +588,7 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 
 :::
 
-##  
+## <span class="visually-hidden">Documentation summary</span> {#section-1}
 
 :::{.callout-tip}
 
