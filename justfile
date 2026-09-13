@@ -9,6 +9,7 @@ help:
     @echo "  just preview       - Start Quarto preview with live reload"
     @echo "  just open          - Alias for preview (live-reload dev server)"
     @echo "  just clean         - Remove generated files and caches"
+    @echo "  just axe           - Preview with the axe accessibility checker enabled"
     @echo "  just check         - Check Quarto and R version setup"
     @echo "  just (default)     - Install dependencies and start live-reload preview"
 
@@ -39,3 +40,8 @@ clean:
 check:
     quarto check
     Rscript -e 'stopifnot(getRversion() >= "4.6.0")'
+
+# Audit accessibility with an opt-in report slide.
+[positional-arguments]
+axe *args:
+    QUARTO_PROFILE=a11y quarto preview index.qmd "$@"
