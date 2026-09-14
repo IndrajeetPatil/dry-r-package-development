@@ -4,7 +4,7 @@ default: install preview
 # Show help
 help:
     @echo "Available recipes:"
-    @echo "  just install       - Install R dependencies from DESCRIPTION"
+    @echo "  just install       - Install R dependencies and Quarto extensions"
     @echo "  just render        - Render the Quarto slides to HTML"
     @echo "  just preview       - Start Quarto preview with live reload"
     @echo "  just open          - Alias for preview (live-reload dev server)"
@@ -17,6 +17,7 @@ help:
 install:
     @echo "Installing R dependencies from DESCRIPTION..."
     Rscript -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org"); pak::pak(".")'
+    quarto add mcanouil/quarto-revealjs-a11y --no-prompt
 
 # Render slides
 render:

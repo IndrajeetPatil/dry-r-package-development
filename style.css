@@ -70,9 +70,6 @@
 .reveal .slide-number-b {
   opacity: 1;
 }
-.reveal .slides a {
-  text-decoration: underline;
-}
 .visually-hidden {
   position: absolute;
   width: 1px;
