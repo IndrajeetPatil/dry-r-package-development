@@ -620,7 +620,7 @@ If you are overwhelmed by this section, note that you actually need to remember 
 
 :::
 
-## Self-study
+## Self-study {aria-label="Self-study: Documentation"}
 
 Example packages that use reusable component documents to repeat documentation.
 
@@ -806,7 +806,7 @@ Modify common setup in *one* place only!
 
 :::
 
-## Self-study
+## Self-study {aria-label="Self-study: Vignette setup"}
 
 Packages in the wild that use this trick.
 
@@ -995,7 +995,7 @@ Update the dataset in *one* place only!
 
 :::
 
-## Self-study
+## Self-study {aria-label="Self-study: Data"}
 
 Examples of R packages that define datasets and use them repeatedly.
 
@@ -1252,7 +1252,7 @@ The exact path provided to `readRDS()` will depend on where the datasets are sto
 
 :::
 
-## Self-study
+## Self-study {aria-label="Self-study: Unit testing"}
 
 Examples of R packages that save datasets required for unit testing.
 
@@ -1564,7 +1564,7 @@ Lists offer advantages:
 
 :::
 
-## Self-study
+## Self-study {aria-label="Self-study: Exceptions"}
 
 Example of R package that create a list of exception functions and exports it:
 
@@ -1633,7 +1633,7 @@ NULL
 
 ::::
 
-## Self-study
+## Self-study {aria-label="Self-study: Dependency management"}
 
 Examples of R packages that list the `NAMESPACE` imports in a single file this way.
 

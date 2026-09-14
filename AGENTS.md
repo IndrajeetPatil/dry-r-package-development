@@ -64,6 +64,8 @@ Check which set is present to know which language context applies.
   slide isolation, and screen-reader announcements. Keep `accessibility.html` for
   code scrolling, menu focus, and vertical-slide semantics.
   This deck has no tabsets; reassess keyboard handling if adding any.
+  Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
+  landmarks have unique names.
   Disable the extension's slide-menu patch and settings menu as in the reference
   deck: version 0.2.3 introduces ARIA and contrast failures in those components.
 - **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
