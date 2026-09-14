@@ -14,7 +14,7 @@ A single-page [Quarto](https://quarto.org/) presentation rendered to [RevealJS](
 index.qmd           # All slide content (the only file you usually need to edit)
 _quarto.yml          # Quarto project config (output dir, resources list)
 _quarto-a11y.yml     # Opt-in axe accessibility report profile (`just axe`)
-accessibility.html  # Browser zoom, keyboard navigation and generated-control accessibility
+accessibility.html  # Compatibility fixes supplementing the a11y extension
 style.css            # Custom RevealJS theme (fonts, colours, component classes)
 meta-tags.html       # OpenGraph, Twitter Card, JSON-LD, and analytics tags
 justfile             # Command runner (install, render, preview, clean, etc.)
@@ -25,7 +25,7 @@ llms-full.txt        # Extended machine-readable summary
 robots.txt           # Crawl rules
 sitemap.xml          # Sitemap for search engines
 .github/             # CI workflow (reusable, from IndrajeetPatil/workflows) and Dependabot
-_extensions/         # Optional Quarto extensions (gitignored; currently unused)
+_extensions/         # Latest a11y extension, installed by `just install` and CI (gitignored)
 _site/               # Build output (gitignored)
 ```
 
@@ -60,6 +60,14 @@ Check which set is present to know which language context applies.
 - **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
   Run `just axe --no-browser --port 8860` to preview an accessibility report. Fix actionable findings and test all slides, fragments, native scroll view, tabs, and keyboard controls; a clean opening slide is insufficient. Keep `axe` in `_quarto-a11y.yml` so normal builds omit the audit payload and report; CLI metadata cannot reliably override the deck's `format:` block. Links in muted text need a non-colour cue such as an underline.
+  The `a11y` extension supplies zoom, focus indicators, link underlines, reduced motion,
+  slide isolation, and screen-reader announcements. Keep `accessibility.html` for
+  code scrolling, menu focus, and vertical-slide semantics.
+  This deck has no tabsets; reassess keyboard handling if adding any.
+  Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
+  landmarks have unique names.
+  Disable the extension's slide-menu patch and settings menu as in the reference
+  deck: version 0.2.3 introduces ARIA and contrast failures in those components.
 - **Icons.** Icons use lightweight HTML spans backed by only the required SVG path data in the custom stylesheet; no icon-font or Quarto icon extension is needed.
   When adding an icon, add only its mask data, preserve the source licence attribution, keep an accessible label where the icon conveys meaning, and render the deck to verify it.
 - **Mermaid performance boundary.** Keep Mermaid diagrams as Mermaid source. Do not replace them with pre-rendered SVGs solely to reduce the website bundle.
@@ -71,7 +79,7 @@ Check which set is present to know which language context applies.
 All commands use [just](https://github.com/casey/just). The recipes are the same across decks; only the dependency backend differs:
 
 ```bash
-just install   # Install language dependencies
+just install   # Install language dependencies and the latest a11y extension
 just render    # Render index.qmd to _site/
 just preview   # Live-reload dev server
 just open      # Alias for preview (live-reload dev server over localhost)
@@ -105,6 +113,9 @@ When modifying `index.qmd`:
 ## CI/CD
 
 - The GitHub Actions workflow in `.github/workflows/` renders the deck and deploys to GitHub Pages on push to `main`. It calls a reusable workflow from `IndrajeetPatil/workflows` (Python and R decks use different workflow files). Do not inline the workflow. Track the first-party reusable workflow at `@main` so upstream fixes arrive without a manual SHA refresh.
+- Install the latest a11y extension directly from upstream with
+  `quarto add mcanouil/quarto-revealjs-a11y --no-prompt` in both `justfile` and CI.
+  This extension is trusted; do not add version pins, vendoring, or checksum checks.
 - Dependabot keeps GitHub Actions dependencies up to date weekly. Python decks also have Dependabot configured for `uv`; R decks do not use Dependabot for R packages.
 
 ## What not to do

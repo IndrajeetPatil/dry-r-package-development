@@ -1,26 +1,5 @@
 <script>
 (() => {
-// Quarto's Reveal template disables pinch zoom; preserve normal browser scaling.
-const viewport = document.querySelector('meta[name="viewport"]');
-if (viewport) {
-  viewport.content = viewport.content
-    .split(",")
-    .filter((value) => !/^(maximum-scale|user-scalable)\s*=/i.test(value.trim()))
-    .join(",");
-}
-
-// Keep generated controls in DOM order, with one tab stop per tabset.
-const normalizeTabOrder = () => {
-  document.querySelectorAll('[tabindex]').forEach((element) => {
-    if (element.getAttribute("role") === "tab") {
-      const index = element.getAttribute("aria-selected") === "true" ? 0 : -1;
-      if (element.tabIndex !== index) element.tabIndex = index;
-    } else if (element.tabIndex > 0) {
-      element.tabIndex = element.getAttribute("aria-hidden") === "true" ? -1 : 0;
-    }
-  });
-};
-
 const codeRegions = '.reveal pre, .reveal pre > code, .reveal div.sourceCode, .reveal code.sourceCode';
 const codeOverflow = (element) => {
   if (!element.clientWidth || !element.clientHeight) return { x: false, y: false };
@@ -47,46 +26,32 @@ const focusScrollableCode = () => {
   });
 };
 
-// Reveal leaves opacity-zero slides in the DOM; keep their controls out of focus.
-const syncSlideFocus = () => {
+// The extension handles inert slides. Reveal 5 still leaves stale hidden
+// attributes in scroll/overview views, and a11y 0.2.3 labels stacks as duplicate
+// landmarks. A vertical stack groups slides; each slide remains its own region.
+const syncSlideSemantics = () => {
   const scrolling = window.Reveal?.isScrollView?.();
-  const overview = window.Reveal?.isOverview?.();
   document.querySelectorAll('.reveal .slides section').forEach((slide) => {
-    // Native scroll pages form a readable document. Reveal can leave stale
-    // aria-hidden attributes on vertical slides after moving them into pages.
-    const scrollPage = scrolling && slide.closest('.scroll-page');
-    // Overview exposes all thumbnails for pointer and keyboard interaction.
-    if (overview) slide.removeAttribute("hidden");
-    if ((scrollPage || overview) && slide.getAttribute("aria-hidden") === "true") {
-      slide.removeAttribute("aria-hidden");
+    if (slide.classList.contains('stack') || (scrolling && slide.parentElement.matches('.slides'))) {
+      slide.setAttribute('role', 'group');
     }
-    const inactive = !scrollPage && !overview && slide.getAttribute("aria-hidden") === "true";
-    if (slide.inert !== inactive) slide.inert = inactive;
+    if (window.Reveal?.isOverview?.() || (scrolling && slide.closest('.scroll-page'))) {
+      slide.removeAttribute('hidden');
+      slide.removeAttribute('aria-hidden');
+    }
   });
 };
 
-// Supply names and keyboard access missing from the bundled Reveal menu.
+// Keep overflowing code keyboard-accessible without changing slides.
 document.addEventListener("DOMContentLoaded", () => {
   const updateCode = () => requestAnimationFrame(focusScrollableCode);
-  normalizeTabOrder();
-  syncSlideFocus();
-  const slides = document.querySelector('.reveal .slides');
-  if (slides) new MutationObserver(syncSlideFocus).observe(slides, {
-    subtree: true,
-    childList: true,
-    attributes: true,
-    attributeFilter: ["aria-hidden"],
-  });
-  new MutationObserver((changes) => {
-    normalizeTabOrder();
-    if (changes.some((change) => change.attributeName === "aria-selected")) updateCode();
-  }).observe(document.body, {
-    subtree: true,
-    attributes: true,
-    attributeFilter: ["tabindex", "aria-selected"],
+  syncSlideSemantics();
+  new MutationObserver(syncSlideSemantics).observe(document.querySelector('.reveal .slides'), {
+    subtree: true, childList: true, attributes: true, attributeFilter: ['aria-hidden'],
   });
   if (window.Reveal) {
-    // Let code scroll and Tabby's arrow-key navigation run without changing slides.
+    ['ready', 'overviewshown', 'overviewhidden'].forEach((event) => Reveal.on(event, syncSlideSemantics));
+    // Let arrow/page keys scroll focused code instead of navigating the deck.
     const previousKeyboardCondition = Reveal.getConfig().keyboardCondition;
     const navigationKeys = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "PageUp", "PageDown", "Home", "End", " "]);
     Reveal.configure({
@@ -95,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (previousKeyboardCondition === "focused" && !Reveal.isFocused()) return false;
         const focused = document.activeElement;
         if (navigationKeys.has(event.key)) {
-          if (focused?.matches('.reveal [role="tab"]')) return false;
           if (focused?.matches(codeRegions)) {
             const overflow = codeOverflow(focused);
             const horizontal = event.key === "ArrowLeft" || event.key === "ArrowRight";
@@ -106,33 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     });
     ["ready", "slidechanged", "fragmentshown", "fragmenthidden", "resize"].forEach((event) => Reveal.on(event, updateCode));
-    ["overviewshown", "overviewhidden"].forEach((event) => Reveal.on(event, syncSlideFocus));
   }
-  // Quarto's bundled Tabby only handles Home/End; restore arrow navigation.
-  document.addEventListener("keydown", (event) => {
-    const tab = event.target.closest?.('.reveal [role="tab"]');
-    if (!tab || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    // Tabby activates Home/End tabs but leaves native page scrolling enabled.
-    if (event.key === "Home" || event.key === "End") {
-      event.preventDefault();
-      return;
-    }
-    const direction = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 }[event.key];
-    if (!direction) return;
-    // A future Tabby version may already have moved focus before this listener.
-    if (document.activeElement !== tab) return;
-    const tablist = tab.closest('[role="tablist"]');
-    if (!tablist) return;
-    const tabs = [...tablist.querySelectorAll('[role="tab"]')]
-      .filter((item) => item.closest('[role="tablist"]') === tablist && item.getAttribute("aria-disabled") !== "true");
-    const index = tabs.indexOf(tab);
-    if (index < 0 || tabs.length < 2) return;
-    event.preventDefault();
-    const next = tabs[(index + direction + tabs.length) % tabs.length];
-    next.click();
-    next.focus({ preventScroll: true });
-  });
-  document.addEventListener("tabby", updateCode);
   window.addEventListener("resize", updateCode);
   updateCode();
   document.fonts.ready.then(updateCode);
@@ -176,9 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 <style>
-.reveal pre:focus-visible,
-.reveal pre > code:focus-visible,
-.reveal .sourceCode:focus-visible,
 .slide-menu-panel:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
