@@ -1,9 +1,14 @@
 <script>
 (() => {
+// Quarto tabsets only. Third-party widgets (DT, plotly, leaflet, crosstalk)
+// also emit role="tab" and ship their own keyboard behaviour, so matching on
+// the role alone would override it.
+const tabSelector = '.reveal .panel-tabset [role="tab"]';
+
 // Keep generated controls in DOM order, with one tab stop per tabset.
 const normalizeTabOrder = () => {
-  document.querySelectorAll('[tabindex]').forEach((element) => {
-    if (element.getAttribute("role") === "tab") {
+  document.querySelectorAll('.reveal [tabindex]').forEach((element) => {
+    if (element.matches(tabSelector)) {
       const index = element.getAttribute("aria-selected") === "true" ? 0 : -1;
       if (element.tabIndex !== index) element.tabIndex = index;
     } else if (element.tabIndex > 0) {
@@ -81,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (previousKeyboardCondition === "focused" && !Reveal.isFocused()) return false;
         const focused = document.activeElement;
         if (navigationKeys.has(event.key)) {
-          if (focused?.matches('.reveal [role="tab"]')) return false;
+          if (focused?.matches(tabSelector)) return false;
           if (focused?.matches(codeRegions)) {
             const overflow = codeOverflow(focused);
             const horizontal = event.key === "ArrowLeft" || event.key === "ArrowRight";
@@ -95,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   // Quarto's bundled Tabby only handles Home/End; restore arrow navigation.
   document.addEventListener("keydown", (event) => {
-    const tab = event.target.closest?.('.reveal [role="tab"]');
+    const tab = event.target.closest?.(tabSelector);
     if (!tab || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     // Tabby activates Home/End tabs but leaves native page scrolling enabled.
     if (event.key === "Home" || event.key === "End") {
