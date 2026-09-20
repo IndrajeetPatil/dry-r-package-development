@@ -624,7 +624,7 @@ If you are overwhelmed by this section, note that you actually need to remember 
 
 Example packages that use reusable component documents to repeat documentation.
 
-- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments)
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/v2.0.9/man/rmd-fragments)
 
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man)
 
