@@ -54,7 +54,7 @@ clean:
 # Check Quarto and R setup
 check:
     quarto check
-    Rscript -e 'stopifnot(getRversion() >= "4.6.0")'
+    Rscript -e 'stopifnot(getRversion() >= "4.6.1")'
 
 # Audit accessibility with axe-core, appending a violations report slide to the deck.
 # Uses the a11y profile because `-M axe:true` cannot override the format block in index.qmd.
