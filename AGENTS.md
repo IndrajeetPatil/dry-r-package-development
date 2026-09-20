@@ -43,9 +43,7 @@ uv.lock              # Locked Python dependencies
 R-based decks have instead:
 
 ```
-renv.lock            # Locked R dependencies
-renv/                # renv library and infrastructure (library/ is gitignored)
-.Rprofile            # Bootstraps renv on session start
+DESCRIPTION          # Project metadata and R dependencies (installed with pak)
 ```
 
 Check which set is present to know which language context applies.
@@ -80,6 +78,8 @@ All commands use [just](https://github.com/casey/just). The recipes are the same
 
 ```bash
 just install   # Install language dependencies and the latest a11y extension
+just sync      # Alias for install
+just update    # Update language dependencies
 just render    # Render index.qmd to _site/
 just preview   # Live-reload dev server
 just open      # Alias for preview (live-reload dev server over localhost)
@@ -88,7 +88,7 @@ just check     # Verify Quarto setup
 just axe       # Preview with an axe accessibility report
 ```
 
-This R deck calls Quarto directly and discovers R automatically. It uses `DESCRIPTION` for dependencies. See the `justfile` for exact commands.
+This deck renders with Quarto. R dependencies are declared in `DESCRIPTION` and installed with `pak`; CI installs them with `r-lib/actions/setup-r-dependencies`. Slides live in `index.qmd`.
 
 ## Editing slides
 

@@ -1,5 +1,7 @@
 # DRY R Package Development
 
+[![Build and Deploy Presentation](https://github.com/IndrajeetPatil/dry-r-package-development/actions/workflows/build-presentation.yaml/badge.svg)](https://github.com/IndrajeetPatil/dry-r-package-development/actions/workflows/build-presentation.yaml)
+
 This presentation contains tips on how to develop R packages without
 violating the DRY (Don't Repeat Yourself) Principle in
 
@@ -36,6 +38,8 @@ just install
 ```bash
 just help     # Show all available commands
 just install  # Install R dependencies and the a11y extension
+just sync     # Alias for install
+just update   # Update R dependencies
 just render   # Render slides to HTML
 just preview  # Start a live preview with auto-reload
 just open     # Alias for preview (live-reload dev server over localhost)
