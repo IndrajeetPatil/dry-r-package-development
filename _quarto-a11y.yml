@@ -1,5 +1,5 @@
-# Opt-in accessibility audit profile: `just axe`.
-# Keep the axe payload and report out of normal presentation builds.
+# Opt-in accessibility audit profile: `just axe` (or QUARTO_PROFILE=a11y quarto render).
+# Kept out of index.qmd so the deployed deck never ships the axe-core payload.
 format:
   revealjs:
     axe:

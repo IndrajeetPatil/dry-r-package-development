@@ -1,5 +1,22 @@
 <script>
 (() => {
+// Quarto tabsets only. Third-party widgets (DT, plotly, leaflet, crosstalk)
+// also emit role="tab" and ship their own keyboard behaviour, so matching on
+// the role alone would override it.
+const tabSelector = '.reveal .panel-tabset [role="tab"]';
+
+// Keep generated controls in DOM order, with one tab stop per tabset.
+const normalizeTabOrder = () => {
+  document.querySelectorAll('.reveal [tabindex]').forEach((element) => {
+    if (element.matches(tabSelector)) {
+      const index = element.getAttribute("aria-selected") === "true" ? 0 : -1;
+      if (element.tabIndex !== index) element.tabIndex = index;
+    } else if (element.tabIndex > 0) {
+      element.tabIndex = element.getAttribute("aria-hidden") === "true" ? -1 : 0;
+    }
+  });
+};
+
 const codeRegions = '.reveal pre, .reveal pre > code, .reveal div.sourceCode, .reveal code.sourceCode';
 const codeOverflow = (element) => {
   if (!element.clientWidth || !element.clientHeight) return { x: false, y: false };
@@ -42,12 +59,21 @@ const syncSlideSemantics = () => {
   });
 };
 
-// Keep overflowing code keyboard-accessible without changing slides.
+// Keep tab navigation and code scrolling from changing slides.
 document.addEventListener("DOMContentLoaded", () => {
   const updateCode = () => requestAnimationFrame(focusScrollableCode);
+  normalizeTabOrder();
   syncSlideSemantics();
   new MutationObserver(syncSlideSemantics).observe(document.querySelector('.reveal .slides'), {
     subtree: true, childList: true, attributes: true, attributeFilter: ['aria-hidden'],
+  });
+  new MutationObserver((changes) => {
+    normalizeTabOrder();
+    if (changes.some((change) => change.attributeName === "aria-selected")) updateCode();
+  }).observe(document.body, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["tabindex", "aria-selected"],
   });
   if (window.Reveal) {
     ['ready', 'overviewshown', 'overviewhidden'].forEach((event) => Reveal.on(event, syncSlideSemantics));
@@ -60,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (previousKeyboardCondition === "focused" && !Reveal.isFocused()) return false;
         const focused = document.activeElement;
         if (navigationKeys.has(event.key)) {
+          if (focused?.matches(tabSelector)) return false;
           if (focused?.matches(codeRegions)) {
             const overflow = codeOverflow(focused);
             const horizontal = event.key === "ArrowLeft" || event.key === "ArrowRight";
@@ -71,9 +98,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     ["ready", "slidechanged", "fragmentshown", "fragmenthidden", "resize"].forEach((event) => Reveal.on(event, updateCode));
   }
+  // Quarto's bundled Tabby only handles Home/End; restore arrow navigation.
+  document.addEventListener("keydown", (event) => {
+    const tab = event.target.closest?.(tabSelector);
+    if (!tab || event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    // Tabby activates Home/End tabs but leaves native page scrolling enabled.
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      return;
+    }
+    const direction = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 }[event.key];
+    if (!direction) return;
+    // A future Tabby version may already have moved focus before this listener.
+    if (document.activeElement !== tab) return;
+    const tablist = tab.closest('[role="tablist"]');
+    if (!tablist) return;
+    const tabs = [...tablist.querySelectorAll('[role="tab"]')]
+      .filter((item) => item.closest('[role="tablist"]') === tablist && item.getAttribute("aria-disabled") !== "true");
+    const index = tabs.indexOf(tab);
+    if (index < 0 || tabs.length < 2) return;
+    event.preventDefault();
+    const next = tabs[(index + direction + tabs.length) % tabs.length];
+    next.click();
+    next.focus({ preventScroll: true });
+  });
+  document.addEventListener("tabby", updateCode);
   window.addEventListener("resize", updateCode);
   updateCode();
   document.fonts.ready.then(updateCode);
+  // Footnotes move to the references slide; Pandoc leaves an empty aside behind.
+  document.querySelectorAll(".reveal .slides aside:empty").forEach((aside) => aside.remove());
+
   const menu = document.querySelector(".slide-menu");
   const toggle = document.querySelector(".slide-menu-button a");
   if (!menu || !toggle) return;

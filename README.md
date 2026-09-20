@@ -1,5 +1,7 @@
 # DRY R Package Development
 
+[![Build and Deploy Presentation](https://github.com/IndrajeetPatil/dry-r-package-development/actions/workflows/build-presentation.yaml/badge.svg)](https://github.com/IndrajeetPatil/dry-r-package-development/actions/workflows/build-presentation.yaml)
+
 This presentation contains tips on how to develop R packages without
 violating the DRY (Don't Repeat Yourself) Principle in
 
@@ -16,7 +18,7 @@ Link to slides:
 
 ## Development
 
-This project uses R 4.6.0 or later (declared in `DESCRIPTION`), [Quarto](https://quarto.org/) for rendering slides, and [just](https://github.com/casey/just) as a command runner.
+This project uses R 4.6.1 or later (declared in `DESCRIPTION`), [Quarto](https://quarto.org/) for rendering slides, and [just](https://github.com/casey/just) as a command runner.
 
 ### Prerequisites
 
@@ -36,6 +38,8 @@ just install
 ```bash
 just help     # Show all available commands
 just install  # Install R dependencies and the a11y extension
+just sync     # Alias for install
+just update   # Update R dependencies
 just render   # Render slides to HTML
 just preview  # Start a live preview with auto-reload
 just open     # Alias for preview (live-reload dev server over localhost)
@@ -59,8 +63,12 @@ from upstream with `quarto add mcanouil/quarto-revealjs-a11y --no-prompt`.
 The extension handles browser zoom, slide isolation, focus indicators, link
 underlines, reduced motion, and screen-reader announcements.
 
-The `accessibility.html` helper still handles scrollable code, slide-menu focus,
-and vertical-slide semantics. Unused tabset handling has been removed.
+The `accessibility.html` helper handles scrollable code, slide-menu focus,
+vertical-slide semantics, and tabset keyboard navigation (tab-order
+normalisation plus the arrow-key handling Quarto's bundled Tabby omits). This
+deck currently has no tabsets, but the helper is shared verbatim across the
+whole deck fleet — by convention the copies are kept in sync by hand — so the
+tabset code stays in place.
 The extension's slide-menu patch and accessibility settings panel are disabled
 as in the reference deck: version 0.2.3 introduces ARIA and contrast failures in
 those components.

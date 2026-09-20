@@ -1,0 +1,7 @@
+# LinkedIn returns HTTP 999 to every automated client as an anti-scraping
+# measure; the profile resolves normally in a browser.
+https://www\.linkedin\.com/.*
+
+# Stack Overflow returns HTTP 403 to non-browser user agents; the question
+# resolves normally in a browser.
+https://stackoverflow\.com/.*

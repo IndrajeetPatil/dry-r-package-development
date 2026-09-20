@@ -1,16 +1,25 @@
+# macOS
+.DS_Store
+
+# R
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-README.html
-.DS_Store
 
 # Quarto
 /.quarto/
 _site/
-_extensions/
-
-**/*.quarto_ipynb
+README.html
 
 # Claude
 /.claude/
+
+# Generated files
+_extensions/
+index.html
+index_files/
+index.quarto_ipynb
+
+**/*.quarto_ipynb
+**/*.quarto_ipynb_*

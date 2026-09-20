@@ -5,7 +5,7 @@ Format: Quarto RevealJS presentation
 Canonical URL: https://www.indrapatil.com/dry-r-package-development/
 Source: https://github.com/IndrajeetPatil/dry-r-package-development/
 License: CC0 1.0 Universal
-Publication date: 2026-04-24
+Publication date: 2022-11-17
 Language: en
 
 ## Summary

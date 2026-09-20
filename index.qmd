@@ -25,14 +25,14 @@ format:
     include-after-body: accessibility.html
     link-external-newwindow: true
 execute:
-  echo: false
+  echo: true
   eval: false
 keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
-pagetitle: "DRY R Package Development"
-author-meta: "Indrajeet Patil"
-date-meta: "`r Sys.time()`"
 description-meta: "Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable."
 license: "CC0 1.0 Universal"
+pagetitle: "DRY R Package Development"
+author-meta: "Indrajeet Patil"
+date-meta: "2022-11-17"
 lang: "en"
 dir: "ltr"
 image: "media/social-media-card.webp"
@@ -624,7 +624,7 @@ If you are overwhelmed by this section, note that you actually need to remember 
 
 Example packages that use reusable component documents to repeat documentation.
 
-- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/main/man/rmd-fragments)
+- [`{pkgdown}`](https://github.com/r-lib/pkgdown/tree/v2.0.9/man/rmd-fragments) (pinned to `v2.0.9`: the fragments were removed upstream after that release)
 
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man)
 

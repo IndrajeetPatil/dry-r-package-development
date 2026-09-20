@@ -43,9 +43,7 @@ uv.lock              # Locked Python dependencies
 R-based decks have instead:
 
 ```
-renv.lock            # Locked R dependencies
-renv/                # renv library and infrastructure (library/ is gitignored)
-.Rprofile            # Bootstraps renv on session start
+DESCRIPTION          # Project metadata and R dependencies (installed with pak)
 ```
 
 Check which set is present to know which language context applies.
@@ -63,7 +61,10 @@ Check which set is present to know which language context applies.
   The `a11y` extension supplies zoom, focus indicators, link underlines, reduced motion,
   slide isolation, and screen-reader announcements. Keep `accessibility.html` for
   code scrolling, menu focus, and vertical-slide semantics.
-  This deck has no tabsets; reassess keyboard handling if adding any.
+  This deck currently has no tabsets, but `accessibility.html` still carries the
+  tabset tab-order and Tabby arrow-key handling. Do not strip it: the file is
+  shared verbatim across the deck fleet, and the copies are kept in sync by hand.
+  Adding tabsets therefore needs no new keyboard code.
   Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
   landmarks have unique names.
   Disable the extension's slide-menu patch and settings menu as in the reference
@@ -80,6 +81,8 @@ All commands use [just](https://github.com/casey/just). The recipes are the same
 
 ```bash
 just install   # Install language dependencies and the latest a11y extension
+just sync      # Alias for install
+just update    # Update language dependencies
 just render    # Render index.qmd to _site/
 just preview   # Live-reload dev server
 just open      # Alias for preview (live-reload dev server over localhost)
@@ -88,7 +91,7 @@ just check     # Verify Quarto setup
 just axe       # Preview with an axe accessibility report
 ```
 
-This R deck calls Quarto directly and discovers R automatically. It uses `DESCRIPTION` for dependencies. See the `justfile` for exact commands.
+This deck renders with Quarto. R dependencies are declared in `DESCRIPTION` and installed with `pak`; CI installs them with `r-lib/actions/setup-r-dependencies`. Slides live in `index.qmd`.
 
 ## Editing slides
 
