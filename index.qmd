@@ -32,7 +32,7 @@ description-meta: "Learn how to apply the DRY (Don't Repeat Yourself) principle 
 license: "CC0 1.0 Universal"
 pagetitle: "DRY R Package Development"
 author-meta: "Indrajeet Patil"
-date-meta: "2026-04-24"
+date-meta: "2022-11-17"
 lang: "en"
 dir: "ltr"
 image: "media/social-media-card.webp"
