@@ -63,8 +63,8 @@ Check which set is present to know which language context applies.
   code scrolling, menu focus, and vertical-slide semantics.
   This deck currently has no tabsets, but `accessibility.html` still carries the
   tabset tab-order and Tabby arrow-key handling. Do not strip it: the file is
-  shared byte-identical across the deck fleet and `check-template-drift.yaml`
-  enforces that. Adding tabsets therefore needs no new keyboard code.
+  shared verbatim across the deck fleet, and the copies are kept in sync by hand.
+  Adding tabsets therefore needs no new keyboard code.
   Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
   landmarks have unique names.
   Disable the extension's slide-menu patch and settings menu as in the reference
