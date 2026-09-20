@@ -25,7 +25,7 @@ format:
     include-after-body: accessibility.html
     link-external-newwindow: true
 execute:
-  echo: true
+  echo: false
   eval: false
 keywords: ["software-engineering", "r-packages", "best-practices", "DRY"]
 description-meta: "Learn how to apply the DRY (Don't Repeat Yourself) principle to R package development. Covers documentation, vignette setup, unit testing, data management, dependency management, and exception handling to make your R packages more maintainable."
