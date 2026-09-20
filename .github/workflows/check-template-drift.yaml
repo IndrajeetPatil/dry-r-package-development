@@ -1,0 +1,14 @@
+name: Check Template Drift
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  check-template-drift:
+    uses: IndrajeetPatil/workflows/.github/workflows/check-presentation-drift.yaml@main
+    with:
+      backend: r
+    permissions:
+      contents: read

@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
+# Explicitly allow AI crawlers for GEO and agentic access
 User-agent: GPTBot
 Allow: /
 
@@ -14,6 +15,9 @@ User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
 Allow: /
 
 User-agent: PerplexityBot
