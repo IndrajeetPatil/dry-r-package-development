@@ -63,8 +63,12 @@ from upstream with `quarto add mcanouil/quarto-revealjs-a11y --no-prompt`.
 The extension handles browser zoom, slide isolation, focus indicators, link
 underlines, reduced motion, and screen-reader announcements.
 
-The `accessibility.html` helper still handles scrollable code, slide-menu focus,
-and vertical-slide semantics. Unused tabset handling has been removed.
+The `accessibility.html` helper handles scrollable code, slide-menu focus,
+vertical-slide semantics, and tabset keyboard navigation (tab-order
+normalisation plus the arrow-key handling Quarto's bundled Tabby omits). This
+deck currently has no tabsets, but the helper is shared verbatim across the
+whole deck fleet — `check-template-drift.yaml` requires it to stay
+byte-identical — so the tabset code stays in place.
 The extension's slide-menu patch and accessibility settings panel are disabled
 as in the reference deck: version 0.2.3 introduces ARIA and contrast failures in
 those components.

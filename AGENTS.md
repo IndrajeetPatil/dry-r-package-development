@@ -61,7 +61,10 @@ Check which set is present to know which language context applies.
   The `a11y` extension supplies zoom, focus indicators, link underlines, reduced motion,
   slide isolation, and screen-reader announcements. Keep `accessibility.html` for
   code scrolling, menu focus, and vertical-slide semantics.
-  This deck has no tabsets; reassess keyboard handling if adding any.
+  This deck currently has no tabsets, but `accessibility.html` still carries the
+  tabset tab-order and Tabby arrow-key handling. Do not strip it: the file is
+  shared byte-identical across the deck fleet and `check-template-drift.yaml`
+  enforces that. Adding tabsets therefore needs no new keyboard code.
   Keep explicit `aria-label` attributes on repeated slide headings so scroll-view
   landmarks have unique names.
   Disable the extension's slide-menu patch and settings menu as in the reference
