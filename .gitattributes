@@ -1,0 +1,7 @@
+# Ignore supplementary asset files in language statistics
+# to ensure the repository is classified primarily as an HTML presentation.
+*.css       linguist-detectable=false
+*.scss      linguist-detectable=false
+*.py        linguist-detectable=false
+*.R         linguist-detectable=false
+justfile    linguist-detectable=false
