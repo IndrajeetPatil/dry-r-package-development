@@ -55,7 +55,7 @@ Check which set is present to know which language context applies.
 - **Inline styling.** Visual design uses inline `style` attributes on fenced divs with a small palette of background colours (e.g. `#e3f2fd`, `#e8f5e9`, `#fff3e0`, `#ffebee`, `#FFFBC1`, `#f8f9fa`). The CSS maps these to the custom theme. Do not change these colour values without updating `style.css`.
 - **Image classes.** Images may use semantic classes (e.g. `.hero`, `.artifact`, `.illustration`) that control border, shadow, and rounding in `style.css`. Check the existing CSS before adding new image classes.
   Keep `.nostretch` and the explicit output height on the title image: auto-stretch collapses it in native scroll view, while an unconstrained natural size overflows the title slide.
-- **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centered div. Keep this pattern.
+- **Sources.** Every factual claim has a source citation at the bottom of its slide in a small-font centred div. Keep this pattern.
 - **Accessibility.** Images must have `fig-alt` text. Raw HTML widgets use `role="img"` and `aria-label`. Keep these.
   Run `just axe --no-browser --port 8860` to preview an accessibility report. Fix actionable findings and test all slides, fragments, native scroll view, tabs, and keyboard controls; a clean opening slide is insufficient. Keep `axe` in `_quarto-a11y.yml` so normal builds omit the audit payload and report; CLI metadata cannot reliably override the deck's `format:` block. Links in muted text need a non-colour cue such as an underline.
   The `a11y` extension supplies zoom, focus indicators, link underlines, reduced motion,
@@ -86,7 +86,7 @@ just update    # Update language dependencies
 just render    # Render index.qmd to _site/
 just preview   # Live-reload dev server
 just open      # Alias for preview (live-reload dev server over localhost)
-just clean     # Remove build artifacts
+just clean     # Remove build artefacts
 just check     # Verify Quarto setup
 just axe       # Preview with an axe accessibility report
 ```
@@ -130,3 +130,4 @@ When modifying `index.qmd`:
 - Do not commit `_site/`, `_extensions/`, or `.quarto/` (all gitignored). For Python decks, `.venv/` is also gitignored; for R decks, `renv/library/` and `renv/staging/` are gitignored.
 - Do not modify the reusable CI workflow inline; it lives in a separate repository.
 - Do not pin the first-party reusable workflow to a commit SHA; use `@main`.
+- **Spelling and punctuation.** Use British spelling in prose (colour, licence, catalogue, artefact) and the Oxford comma in lists of three or more. Leave code, identifiers, file names, URLs, quotations, and proper names (`license` in YAML, `.well-known/api-catalog`) as they are.
