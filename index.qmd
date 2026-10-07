@@ -708,7 +708,7 @@ How can this repetition be avoided?
 
 ::: {.column width='60%'}
 
-Avoid this by moving **common** setup to a script and sourcing it from vignettes. If you have many reusable artifacts, store scripts in a `/setup` folder.
+Avoid this by moving **common** setup to a script and sourcing it from vignettes. If you have many reusable artefacts, store scripts in a `/setup` folder.
 
 :::
 
@@ -1654,7 +1654,7 @@ These meta-level topics are beyond this presentation's scope. See these resource
    - <https://github.com/krlmlr/actions-sync>
    - <https://github.com/rstudio/education-workflows>
 
-- [DRY pkdown website templates for multiple packages in organizations](https://pkgdown.r-lib.org/articles/customise.html#template-packages)
+- [DRY pkdown website templates for multiple packages in organisations](https://pkgdown.r-lib.org/articles/customise.html#template-packages)
 
    - <https://github.com/tidyverse/tidytemplate>
    - <https://github.com/easystats/easystatstemplate>
