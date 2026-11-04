@@ -27,7 +27,7 @@ commit them.
 ## Commands
 
 ```bash
-just install   # Install R dependencies with pak and the latest a11y extension
+just install   # Install R dependencies with pak and Quarto extensions
 just update    # Upgrade R dependencies
 just render    # Render index.qmd to _site/ (run after every change)
 just preview   # Live-reload dev server

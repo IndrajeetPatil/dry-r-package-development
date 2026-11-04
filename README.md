@@ -37,7 +37,7 @@ just install
 
 ```bash
 just help     # Show all available commands
-just install  # Install R dependencies and the a11y extension
+just install  # Install R dependencies and Quarto extensions
 just sync     # Alias for install
 just update   # Update R dependencies
 just render   # Render slides to HTML
