@@ -62,9 +62,7 @@ Source code for these slides can be found [on GitHub](https://github.com/Indraje
 :::
 
 ::: {.notes}
-- Welcome everyone to this presentation on applying the DRY principle to R package development.
-- Introduce the motivation: R package development involves multiple interrelated artefacts including documentation, tests, vignettes, and code.
-- Frame the core challenge: keeping these components consistent without drowning in duplicate maintenance.
+Welcome to this talk about applying the principle of Don't Repeat Yourself to R packages. A package contains code, tests, documentation, and data that must agree with each other. We will look at ways to keep those parts consistent without maintaining the same knowledge in several places.
 :::
 
 # <span class="visually-hidden">Copy and paste</span> {#section}
@@ -72,8 +70,7 @@ Source code for these slides can be found [on GitHub](https://github.com/Indraje
 *"Copy and paste is a design error."* &nbsp; \- David Parnas
 
 ::: {.notes}
-- Pause on this classic quote by computer scientist David Parnas: "Copy and paste is a design error."
-- Emphasise that copying and pasting is often the easiest short-term action, but it creates hidden long-term technical debt.
+David Parnas described copying and pasting as a design error. It is often convenient in the moment, but each copy creates another place that may need to change later. The cost appears when those copies start to diverge.
 :::
 
 # Why So DRY
@@ -81,8 +78,7 @@ Source code for these slides can be found [on GitHub](https://github.com/Indraje
 Why should you not repeat yourself?
 
 ::: {.notes}
-- Transition into the introductory section: Why So DRY.
-- Introduce the motivation for eliminating repetition in software projects.
+The reason to reduce repetition is easier maintenance. We want a change in knowledge to have one clear place to be made and checked.
 :::
 
 ## Don't Repeat Yourself (DRY) Principle {.smaller}
@@ -131,9 +127,7 @@ Thus, it applies to all programming entities that encode knowledge:
 :::
 
 ::: {.notes}
-- Define the DRY principle as formulated by Andy Hunt and Dave Thomas in "The Pragmatic Programmer".
-- Emphasise that every piece of knowledge must have a single, unambiguous, authoritative representation within a system.
-- Walk through the callout note: stress that DRY applies to knowledge, not merely lines of code; this includes documentation, data structures, and tests.
+The DRY principle is about knowledge, rather than simply reducing line counts. Hunt and Thomas describe a single, unambiguous, authoritative representation of each piece of knowledge. That includes documentation and tests as well as implementation code.
 :::
 
 ## Benefits of DRY codebase {.smaller}
@@ -159,12 +153,7 @@ Thus, it applies to all programming entities that encode knowledge:
 :::
 
 ::: {.notes}
-- Walk through the four key benefits of maintaining a DRY codebase:
-  - Eliminating parallel changes across multiple files.
-  - Making maintenance easier by updating knowledge in exactly one location.
-  - Reducing bug surface area, since bug fixes immediately propagate everywhere.
-  - Improving readability and lowering cognitive overhead for new contributors.
-- Highlight the recommended reading in the callout box: *The Pragmatic Programmer* (pp. 30–38) and the distinction between DRY and DAMP (Descriptive And Meaningful Phrases) in testing contexts.
+A single source reduces parallel edits, makes fixes easier to propagate, and helps a reader find the authoritative definition. The further reading also distinguishes this goal from making tests so abstract that their meaning becomes difficult to see.
 :::
 
 # Plan
@@ -178,13 +167,7 @@ Apply DRY to remove duplication in:
 - Exceptions
 
 ::: {.notes}
-- Outline the agenda for the talk across six package development domains:
-  - Documentation,
-  - Vignette setup,
-  - Example data,
-  - Unit testing,
-  - Exceptions and error handling, and
-  - Dependency management.
+We will apply the idea to six areas: documentation, vignette setup, example data, tests, exception handling, and dependency management. Each has its own kinds of duplication and useful reuse mechanisms.
 :::
 
 # Documentation
@@ -192,8 +175,7 @@ Apply DRY to remove duplication in:
 Avoiding repetition in documentation.
 
 ::: {.notes}
-- Transition to the first major topic: eliminating repetition across R package documentation.
-- Highlight that documentation is often the most duplicated artefact in an R package.
+Documentation is a useful starting point because a package often needs to explain the same idea in several places.
 :::
 
 ## What do users read? {.smaller}
@@ -221,11 +203,7 @@ Users consult different sources depending on context.
 Including crucial information in only one place risks users missing it in certain contexts.
 
 ::: {.notes}
-- Contrast the different entry points through which users encounter package documentation:
-  - Function reference manual pages (via help queries or pkgdown references),
-  - Long-form vignettes (via `vignette()` or online articles), and
-  - The repository README and website landing page.
-- Note that each surface serves a different user journey and context.
+Users arrive through help pages, vignettes, the README, and the package website. These surfaces serve different purposes, but they often share information such as installation instructions or parameter descriptions.
 :::
 
 ## Go forth and multiply (without repetition) {.smaller}
@@ -254,8 +232,7 @@ knitr::include_graphics("media/spiderman.webp")
 ::::
 
 ::: {.notes}
-- Explain the dilemma: certain crucial content (such as installation instructions, citations, or common parameter descriptions) belongs on multiple documentation surfaces.
-- Frame the problem: copying markdown text between README, vignettes, and roxygen comments leads to divergence and stale docs.
+Copying a paragraph into several documentation files creates several maintenance obligations. A correction can reach one copy and leave another behind. Reusing a common source helps those surfaces stay consistent.
 :::
 
 ## Child documents {.smaller}
@@ -279,9 +256,7 @@ graph LR
 Information is stored *once* in child documents and reused *multiple* times across parents.
 
 ::: {.notes}
-- Introduce knitr child documents as a fundamental building block for modular documentation.
-- Explain the syntax: using ````{r, child="child.Rmd"}```` to include another document during rendering.
-- Note that child documents are rendered in the environment of the parent document, allowing dynamic reuse.
+A knitr child document is a reusable document fragment that is rendered as part of a parent. The child option names the file to include, and the fragment is evaluated in the parent's rendering environment.
 :::
 
 ## Storing child documents in package {.smaller}
@@ -334,9 +309,7 @@ This is some crucial information to be repeated across documentation.
 :::
 
 ::: {.notes}
-- Walk through where child documents should reside within an R package directory structure.
-- Point to the tree diagram: store reusable `.Rmd` fragments in `man/rmd-fragments/`.
-- Explain the advantages: `man/` is a standard package directory that roxygen2 natively inspects, keeping fragments cleanly organised away from primary vignettes.
+A dedicated directory for reusable fragments makes them easier to find. The directory tree shows how these documents can live alongside the rest of the package documentation instead of being scattered across vignettes.
 :::
 
 ## Using child documents in package: Part-1 {.smaller}
@@ -415,9 +388,7 @@ README content.
 ::::
 
 ::: {.notes}
-- Demonstrate including child documents in vignettes and `README.Rmd`.
-- Walk through knitr's ````{r, child="..."}```` chunk option across both files.
-- Note the relative path difference: `../man/rmd-children/` from the `vignettes/` directory versus `man/rmd-children/` from the repository root for `README.Rmd`.
+The same child document can be included from a vignette and from the README. The relative path differs because those parent files live in different directories. The shared content remains in one place even though the inclusion paths differ.
 :::
 
 ## Using child documents in package: Part-2 {.smaller}
@@ -467,9 +438,7 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 :::
 
 ::: {.notes}
-- Demonstrate including the same child document in roxygen2 function documentation.
-- Show how the knitr chunk is placed inside a roxygen `@section` block in `R/foo1.R`.
-- Highlight the callout: this pattern relies on roxygen2 to process and stitch the markdown fragment into generated `.Rd` manual files.
+Function documentation can include that shared material too. The example places the inclusion inside a roxygen section, so rendering the manual page brings in the common fragment. A correction to the fragment can then reach every document that includes it.
 :::
 
 ## What about non-child documents? {.smaller}
@@ -495,8 +464,7 @@ graph TD
 ```
 
 ::: {.notes}
-- Address content that does not naturally live in a `.Rmd` child document.
-- Examples include plain markdown files, system requirement lists, citation files (`CITATION.cff`), or external licenses.
+Not every reusable source is an R Markdown child document. A plain Markdown file, a requirements list, or a citation file may already be the authoritative source. Those can be included using mechanisms suited to their format.
 :::
 
 ## Storing other documentation files in package {.smaller}
@@ -561,9 +529,7 @@ Name folders to describe their contents (e.g., `r-examples`, `yaml-snippets`, `m
 :::
 
 ::: {.notes}
-- Explain package conventions for storing arbitrary documentation files.
-- Discuss using `man/` or `inst/` depending on whether the files need to be accessible at package runtime.
-- Review the note on folder naming and avoiding name collisions with standard R directories.
+The location depends on how the file is used. Documentation-only fragments and files needed after installation have different requirements. Follow the package's directory conventions and choose a location that makes that purpose clear.
 :::
 
 ## Using non-child documents in package: Part-1 {.smaller}
@@ -648,9 +614,7 @@ README content.
 ::::
 
 ::: {.notes}
-- Demonstrate including non-child files in vignettes and `README.Rmd`.
-- Walk through knitr's `asis` engine with the `file` chunk option for `.md` fragments, and the `r` engine with `file` for external `.R` scripts.
-- Note how relative directory paths are structured between `vignettes/` and the package root.
+The file option lets knitr include material from an external source. A plain Markdown fragment and an R script need different handling, but both avoid copying the source into every parent document. Paths remain relative to the document doing the inclusion.
 :::
 
 ## Using non-child documents in package: Part-2 {.smaller}
@@ -701,9 +665,7 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 :::
 
 ::: {.notes}
-- Demonstrate including non-child documents in roxygen2 function documentation.
-- Show how external markdown fragments are included via knitr's `file` chunk option, and external R code is attached via roxygen's `@example` tag.
-- Emphasise that documentation and example code update automatically when the single source file is modified.
+Roxygen documentation can reuse external prose and example code as well. The example mechanisms link the generated documentation back to its source file, so the source is maintained once rather than copied into multiple help topics.
 :::
 
 ## <span class="visually-hidden">Documentation summary</span> {#section-1}
@@ -727,9 +689,7 @@ If you are overwhelmed by this section, note that you actually need to remember 
 :::
 
 ::: {.notes}
-- Summarise the core documentation reuse rules: keep reusable documents in `/man` and specify paths relative to the calling document.
-- Recap the knitr mechanisms: use the `child` option for child `.Rmd` documents, and the `file` option with an appropriate engine for non-`.Rmd` files.
-- Recap roxygen2 inheritance tags (`@inheritParams`, `@inheritSection`, `@inheritDotParams`, `@inherit`) when repeating documentation across function topics, or `@describeIn` and `@rdname` to combine related functions into a single topic.
+For document fragments, choose between rendering a child document and including a file with the appropriate engine. For shared function documentation, roxygen's inheritance tags and combined topics provide additional reuse. The aim is one authoritative explanation with several appropriate entry points.
 :::
 
 ## Self-study {aria-label="Self-study: Documentation"}
@@ -741,8 +701,7 @@ Example packages that use reusable component documents to repeat documentation.
 - [`{ggstatsplot}`](https://github.com/IndrajeetPatil/ggstatsplot/tree/main/man)
 
 ::: {.notes}
-- Direct attendees to real-world packages demonstrating reusable documentation fragments.
-- Highlight packages like `{pkgdown}` and `{ggstatsplot}` as real-world references in the R ecosystem.
+The linked packages show these patterns in real projects. Inspecting their documentation sources can help connect the small examples here with a package that has several authors and many help topics.
 :::
 
 # Vignette Setup
@@ -750,8 +709,7 @@ Example packages that use reusable component documents to repeat documentation.
 Avoiding repetition in vignette setup.
 
 ::: {.notes}
-- Transition to the second domain: vignette setup chunks.
-- Discuss the common pain point of duplicating chunk options, package attachments, and hooks across multiple vignettes.
+Vignette setup is another common source of repetition. Several articles may need the same chunk options, package attachments, and rendering configuration.
 :::
 
 ## Setup chunks in vignettes {.smaller}
@@ -825,9 +783,7 @@ options(crayon.enabled = TRUE)
 How can this repetition be avoided?
 
 ::: {.notes}
-- Point out the typical boilerplate repeated at the start of every package vignette.
-- Walk through the example: setting `knitr::opts_chunk$set(...)`, loading libraries, and configuring graphics devices.
-- Highlight the maintenance hazard: changing a default chunk option requires manually editing every vignette in the package.
+If every vignette carries its own setup block, changing a shared option means editing every copy. That makes consistency depend on remembering all the locations. The repeated setup is a candidate for a shared script.
 :::
 
 ## Sourcing setup chunks in vignettes {.smaller}
@@ -935,9 +891,7 @@ Modify common setup in *one* place only!
 :::
 
 ::: {.notes}
-- Present the DRY solution: extract common vignette configuration into a dedicated script such as `vignettes/setup.R`.
-- Show how each vignette simply sources this file using `source("setup.R")` or knitr chunk options.
-- Highlight the slide callout: parallel modifications are completely eliminated when global vignette settings change.
+A common setup file gives each vignette a single place from which to load its configuration. The individual articles remain separate, but a shared default can be updated once. This removes parallel edits when the common setup changes.
 :::
 
 ## Self-study {aria-label="Self-study: Vignette setup"}
@@ -947,8 +901,7 @@ Packages in the wild that use this trick.
 - [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R)
 
 ::: {.notes}
-- Provide real-world package references that adopt centralised vignette setup scripts.
-- Mention `{dm}` as a prime example of cleanly factored vignette configuration.
+The linked dm examples show centralised vignette configuration in an existing package. They provide a useful reference for deciding which settings should be shared and which should remain specific to an article.
 :::
 
 # Data
@@ -956,8 +909,7 @@ Packages in the wild that use this trick.
 Avoiding repetition with example datasets.
 
 ::: {.notes}
-- Transition to the third domain: managing example datasets in R packages.
-- Frame the problem: generating ad-hoc mock datasets repeatedly across examples, tests, and documentation.
+Example data has a similar problem. Rebuilding the same illustrative dataset separately in documentation and tests creates another set of copies to maintain.
 :::
 
 ## Illustrative example datasets {.smaller}
@@ -1026,8 +978,7 @@ foo(exdat)
 How can this repetition be avoided?
 
 ::: {.notes}
-- Explain why built-in datasets like `mtcars` or `iris` are often insufficient for demonstrating package-specific features or complex workflows.
-- Show how developers frequently reinvent mock dataframes in every vignette and test script.
+A standard dataset may not demonstrate the feature a package needs to explain. A small package-specific dataset can be clearer. Keeping its definition in one place avoids slightly different mock data appearing in every example.
 :::
 
 ## Shipping data in a package {.smaller}
@@ -1082,9 +1033,7 @@ save(exdat, file="data/exdat.rdata")
 :::
 
 ::: {.notes}
-- Walk through the standard R pattern for saving reusable package datasets: saving to `data/` or using `usethis::use_data()`.
-- Explain that data saved in `data/` is compressed and lazily loaded when `LazyData: true` is configured in `DESCRIPTION`.
-- Highlight the caution callout: keep the creation script in `data-raw/` for reproducibility, and remember that dataset documentation must still be written separately in `R/data.R`.
+Reusable package data can be saved through the usual data tools, with its creation script retained for reproducibility. The creation script and the dataset's documentation serve different purposes, so both need to be maintained.
 :::
 
 ## Reusable dataset {.smaller}
@@ -1151,12 +1100,7 @@ Update the dataset in *one* place only!
 :::
 
 ::: {.notes}
-- Walk through the three reuse contexts shown across the columns:
-  - In roxygen2 function examples (`foo.R`).
-  - In package vignettes (`vignette.Rmd`).
-  - In the package `README.Rmd`.
-- Emphasise that `exdat` is loaded automatically across all three contexts without repeated setup code.
-- Highlight the tip callout: any schema modification or data correction is made once in the `data-raw/` creation script, which is then re-run to regenerate `data/exdat.rdata` so all downstream consumers automatically receive the updated artefact.
+The example dataset is used in a function example, a vignette, and the README. When its definition changes, edit the creation script and regenerate the saved data. Those consumers then use the same updated artefact instead of maintaining separate copies.
 :::
 
 ## Self-study {aria-label="Self-study: Data"}
@@ -1168,8 +1112,7 @@ Examples of R packages that define datasets and use them repeatedly.
 - [`{effectsize}`](https://github.com/easystats/effectsize)
 
 ::: {.notes}
-- Point attendees to packages that bundle dedicated datasets to illustrate complex statistical or domain models.
-- Cite `{ggstatsplot}` and `{effectsize}` as examples where curated datasets power documentation, examples, and tests.
+The linked packages provide examples of curated datasets used to explain statistical and domain-specific features. Their sources show how the data, its creation, and its documentation fit together.
 :::
 
 # Unit testing
@@ -1177,8 +1120,7 @@ Examples of R packages that define datasets and use them repeatedly.
 Avoiding repetition in unit tests.
 
 ::: {.notes}
-- Transition to the fourth domain: eliminating repetition in unit testing suites.
-- Emphasise that test suites should be concise, expressive, and maintainable.
+Test suites also benefit from clear reuse. The goal is to remove duplicate test logic without making each case's purpose harder to understand.
 :::
 
 ## Repeated test patterns {.smaller}
@@ -1235,9 +1177,7 @@ test_that(
 ::::
 
 ::: {.notes}
-- Describe the anti-pattern of copy-pasting test blocks with minor variation in inputs and expectations.
-- Walk through the slide showing the combinatorial explosion of `expect_equal()` statements.
-- Point out that when a function signature changes, updating dozens of identical test blocks is tedious and error-prone.
+Copying a test block for each input combination repeats the same assertion structure. A change to the function or contract can then require many parallel edits. A table of cases can make that variation explicit while keeping the test logic in one place.
 :::
 
 ## Parametrized unit testing {.smaller}
@@ -1303,9 +1243,7 @@ The parametrized version may not seem impressive for this simple example, but it
 :::
 
 ::: {.notes}
-- Introduce `{patrick}` for parametrised unit testing in `testthat`.
-- Explain the syntax: `with_parameters_test_that()` accepts a test description, a test function, and a grid or dataframe of test cases.
-- Highlight the benefits: test logic is written once, and adding new test cases simply requires appending a row to the parameter table.
+The patrick example separates a test function from the data describing its cases. New cases become rows in that table. This is useful when the same behaviour should be checked across a set of clearly defined inputs.
 :::
 
 ## Repeated usage of testing datasets {.smaller}
@@ -1364,8 +1302,7 @@ Always save the script used to create datasets. This script:
 :::
 
 ::: {.notes}
-- Distinguish user-facing example data from internal developer-facing test fixtures.
-- Explain that complex test suites often require specific mock datasets with missing values, extreme outliers, or edge case types that do not belong in public package data.
+Public example data and internal test fixtures have different audiences. Tests may need missing values, unusual types, or deliberately extreme cases that would be distracting in user-facing data. Keep the fixture's purpose clear and preserve the script that creates it.
 :::
 
 ## Using test datasets {.smaller}
@@ -1444,9 +1381,7 @@ The exact path provided to `readRDS()` will depend on where the datasets are sto
 :::
 
 ::: {.notes}
-- Explain how to store and load test fixtures in `tests/testthat/fixtures/` using `testthat::test_path()`.
-- Contrast regenerating mock data in every test file with loading shared test datasets once.
-- Highlight how `helper.R` files in `tests/testthat/` can also define shared objects that `testthat` automatically loads before test execution.
+Shared fixtures can live under the test directory and be located with testthat's path helper. Helper files can also define objects used across tests. This avoids reconstructing the same setup independently in every test file.
 :::
 
 ## Self-study {aria-label="Self-study: Unit testing"}
@@ -1458,8 +1393,7 @@ Examples of R packages that save datasets required for unit testing.
 - [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
 ::: {.notes}
-- Point attendees to packages with exemplary test fixture organisation, such as `{ospsuite}` and `{dm}`.
-- Encourage inspecting how open-source packages structure shared test data and helpers.
+The linked repositories show examples of shared fixtures and helpers in larger test suites. The useful question is how to make each test easy to understand while keeping common setup consistent.
 :::
 
 # Exceptions
@@ -1467,8 +1401,7 @@ Examples of R packages that save datasets required for unit testing.
 Avoiding repetition when signaling exceptions
 
 ::: {.notes}
-- Transition to the fifth domain: exception handling, error signals, and input validation.
-- Highlight that consistent, helpful error messages are a hallmark of high-quality R packages.
+Exception handling is the next area where duplication can hide. A package needs consistent signals and messages across functions that enforce the same rule.
 :::
 
 ## Sending signals {.smaller}
@@ -1544,9 +1477,7 @@ expect_error(
 How can this repetition be avoided?
 
 ::: {.notes}
-- Explain how R packages signal unexpected states and validation failures using messages, warnings, and errors.
-- Point out the duplication trap: writing identical warning strings or error conditions across multiple public functions.
-- Inconsistent error text confuses users and complicates automated error handling.
+R provides messages, warnings, and errors for different kinds of condition. Repeating the same message text across many functions makes a later correction harder and can lead to inconsistent wording for the same problem.
 :::
 
 ## List of exception functions {.smaller}
@@ -1577,9 +1508,7 @@ But this is not done here to address the most general case where:
 :::
 
 ::: {.notes}
-- Present the pattern of defining a centralised list of exception functions.
-- Show how each list element returns a formatted error string using `paste0()`, such as `only_positives_allowed(arg_name)`.
-- Explain the callout note: returning just the message string keeps it flexible for errors, warnings, or messages outside simple `if` statements.
+A shared message helper can generate consistent text from the relevant argument information. Returning the text separately leaves the caller free to use it in an error, a warning, or another diagnostic context.
 :::
 
 ## Reusable exceptions: Part-1 {.smaller}
@@ -1658,9 +1587,7 @@ Change the condition string in *one* place only!
 :::
 
 ::: {.notes}
-- Demonstrate invoking `exceptions$only_positives_allowed()` inside input validation checks (`stop(...)`) and test assertions (`expect_error(...)`).
-- Highlight the tip block: when the message changes, update it in one place rather than in every validation check and unit test.
-- Emphasise that this eliminates duplicate strings and enforces uniform error formatting across the entire package.
+The validation code and its tests can refer to the shared message helper. That removes duplicate strings and keeps the wording consistent across callers. It also introduces a testing concern: the shared helper itself needs an independent expectation.
 :::
 
 ## Testing reusable exceptions {.smaller}
@@ -1689,9 +1616,7 @@ test_that("positive-only message is stable", {
 ```
 
 ::: {.notes}
-- Emphasise the testing safeguard when using shared exception helpers: never rely solely on calling the helper in test assertions, as accidental message changes would pass silently.
-- Explain the two-tier strategy shown on the slide: verify the helper message itself with an independent snapshot test (`expect_snapshot()`) or literal string check in `test-exceptions.R`.
-- Once the helper is validated independently, tests across the package can safely assert on the helper call or condition class.
+If a test asks the implementation's own helper what the expected message should be, an accidental change can go unnoticed. First verify the helper's message against an independent reference. Other tests can then check how callers use that verified helper or the relevant condition class.
 :::
 
 ## Reusable exceptions: Part-2 {.smaller}
@@ -1776,9 +1701,7 @@ Since the validation has moved to a new function, you only need to test it once.
 ::::
 
 ::: {.notes}
-- Extend the pattern by moving the entire validation logic and condition check into a helper function such as `check_only_positive()`.
-- Walk through how `check_only_positive(x)` checks `arg < 0` and signals the error with `stop()`, reducing boilerplate in `foo1()` and `foo2()` down to a single call.
-- Point out the unit testing advantage: test the validation helper once directly (`expect_error(exceptions$check_only_positive(x), ...)`), rather than re-testing identical validation branches across every calling function.
+The next step is to share the validation behaviour as well as its message. A helper can check the input and signal the condition consistently. Test that helper directly, while retaining the caller tests needed to verify how the larger operation behaves.
 :::
 
 ## DRY once, DRY multiple times {.smaller}
@@ -1802,9 +1725,7 @@ Lists offer advantages:
 :::
 
 ::: {.notes}
-- Discuss scaling exception helpers across an ecosystem or suite of companion packages.
-- Explain how exporting generic validation helpers allows sister packages to maintain consistent error handling without duplicating code.
-- Review the callout note addressing why a named list is preferred over scattered global functions.
+Shared validation helpers can also serve related packages. A named collection provides an organised place to find them and can support consistent extensions. The choice should make ownership and intended reuse clear.
 :::
 
 ## Self-study {aria-label="Self-study: Exceptions"}
@@ -1818,8 +1739,7 @@ Example of R package that imports this list and appends it:
 [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R)
 
 ::: {.notes}
-- Direct attendees to `{ospsuite.utils}` as an exemplary package exporting a centralised list of exception functions (`messages.R`).
-- Highlight `{ospsuite}` as the companion package that imports this exception list and appends domain-specific errors to it.
+The ospsuite examples show an exception collection in a utility package and its use by a companion package. They illustrate how common messages can remain central while domain-specific conditions are added where they belong.
 :::
 
 # Dependency management
@@ -1827,8 +1747,7 @@ Example of R package that imports this list and appends it:
 Avoiding repetition when importing external functions.
 
 ::: {.notes}
-- Transition to the final topic: managing package namespace imports.
-- Frame the trade-offs between namespace prefixing and centralised `@importFrom` directives.
+The final area is dependency management. A clear location for import declarations makes external dependencies easier to inspect and maintain.
 :::
 
 ## Imports {.smaller}
@@ -1887,8 +1806,7 @@ NULL
 ::::
 
 ::: {.notes}
-- Contrast scattered `pkg::fun()` calls and dispersed `@importFrom` tags with centralising all namespace imports into a single file like `R/<pkgname>-package.R`.
-- Explain how a single imports file provides an immediate audit trail of external dependencies and prevents forgotten imports.
+The example collects import declarations in a package-level documentation file instead of scattering them across many files. That gives a maintainer a useful overview of the namespace imports and reduces the places to check when a dependency changes.
 :::
 
 ## Self-study {aria-label="Self-study: Dependency management"}
@@ -1900,7 +1818,7 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 - [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R)
 
 ::: {.notes}
-- Point attendees to packages in the wild that consolidate imports in a dedicated package-level documentation file, such as `{usethis}` and `{lintr}`.
+The linked usethis and lintr sources show package-level documentation files in practice. They are examples to inspect when deciding how to organise imports in your own package.
 :::
 
 # Conclusion
@@ -1908,8 +1826,7 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 These techniques make R package development faster, more maintainable, and less error-prone.
 
 ::: {.notes}
-- Transition to the conclusion.
-- Summarise how applying DRY across documentation, vignettes, data, tests, exceptions, and dependencies creates maintainable, robust R packages.
+Across documentation, data, tests, validation, and imports, the aim is the same: keep shared knowledge in an authoritative location and make its uses easy to follow.
 :::
 
 # Advanced {.smaller}
@@ -1927,8 +1844,7 @@ These meta-level topics are beyond this presentation's scope. See these resource
    - <https://github.com/easystats/easystatstemplate>
 
 ::: {.notes}
-- Acknowledge advanced DRY topics beyond the scope of this talk: metaprogramming, code generation, and GitHub Actions workflow reuse.
-- Encourage attendees to explore these techniques as their package development skills mature.
+Metaprogramming, code generation, and reusable automation offer further ways to reduce repetition. They also add abstraction, so use them when they make the maintenance problem clearer rather than merely making the source shorter.
 :::
 
 # Thank You 
@@ -1955,7 +1871,5 @@ Check out my other [slide decks](https://www.indrapatil.com/presentations/) on s
 :::
 
 ::: {.notes}
-- Conclude the talk and open the floor for audience questions and discussion.
-- Provide links to other presentation decks on software development best practices on indrapatil.com.
-- Share contact information and GitHub handle.
+Thank you for listening. Questions and examples from your own packages are welcome. The links on this slide lead to related presentations and ways to get in touch.
 :::
