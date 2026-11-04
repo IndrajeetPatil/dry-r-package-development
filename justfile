@@ -18,8 +18,9 @@ help:
 # Install/sync dependencies
 install:
     @echo "Installing R dependencies from DESCRIPTION..."
-    Rscript -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org"); pak::pak(".")'
+    Rscript -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org"); pak::local_install_deps(".", upgrade = FALSE)'
     quarto add mcanouil/quarto-revealjs-a11y --no-prompt
+    quarto add IndrajeetPatil/quarto-read-aloud --no-prompt
 
 # Alias for install
 alias sync := install
@@ -27,7 +28,7 @@ alias sync := install
 # Update all dependencies
 update:
     @echo "Updating R dependencies..."
-    Rscript -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org"); pak::pak(".", upgrade = TRUE)'
+    Rscript -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org"); pak::local_install_deps(".", upgrade = TRUE)'
     @echo "All dependencies updated!"
 
 # Render slides
