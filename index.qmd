@@ -163,7 +163,7 @@ Thus, it applies to all programming entities that encode knowledge:
   - Making maintenance easier by updating knowledge in exactly one location.
   - Reducing bug surface area, since bug fixes immediately propagate everywhere.
   - Improving readability and lowering cognitive overhead for new contributors.
-- Highlight the recommended reading in the callout box: "The Pragmatic Programmer" and Steve McConnell's "Code Complete".
+- Highlight the recommended reading in the callout box: *The Pragmatic Programmer* (pp. 30–38) and the distinction between DRY and DAMP (Descriptive And Meaningful Phrases) in testing contexts.
 :::
 
 # Plan
@@ -1155,7 +1155,7 @@ Update the dataset in *one* place only!
   - In package vignettes (`vignette.Rmd`).
   - In the package `README.Rmd`.
 - Emphasise that `exdat` is loaded automatically across all three contexts without repeated setup code.
-- Highlight the tip callout: any schema modification or data correction is done once in `data-raw/`, propagating everywhere automatically.
+- Highlight the tip callout: any schema modification or data correction is made once in the `data-raw/` creation script, which is then re-run to regenerate `data/exdat.rdata` so all downstream consumers automatically receive the updated artefact.
 :::
 
 ## Self-study {aria-label="Self-study: Data"}
