@@ -726,8 +726,9 @@ If you are overwhelmed by this section, note that you actually need to remember 
 :::
 
 ::: {.notes}
-- Review the summary table comparing child documents and non-child files across roxygen2 and knitr.
-- Provide a quick rule of thumb for authors: use `man/rmd-fragments/` with `@includeRmd` for rich prose, and plain text files with `readLines()` for raw metadata.
+- Summarise the core documentation reuse rules: keep reusable documents in `/man` and specify paths relative to the calling document.
+- Recap the knitr mechanisms: use the `child` option for child `.Rmd` documents, and the `file` option with an appropriate engine for non-`.Rmd` files.
+- Recap roxygen2 inheritance tags (`@inheritParams`, `@inheritSection`, `@inheritDotParams`, `@inherit`) when repeating documentation across function topics, or `@describeIn` and `@rdname` to combine related functions into a single topic.
 :::
 
 ## Self-study {aria-label="Self-study: Documentation"}
@@ -740,7 +741,7 @@ Example packages that use reusable component documents to repeat documentation.
 
 ::: {.notes}
 - Direct attendees to real-world packages demonstrating reusable documentation fragments.
-- Highlight packages like `{targets}`, `{pak}`, and `{broom}` as exemplary references in the R ecosystem.
+- Highlight packages like `{pkgdown}` and `{ggstatsplot}` as real-world references in the R ecosystem.
 :::
 
 # Vignette Setup
@@ -945,7 +946,7 @@ Packages in the wild that use this trick.
 - [`{dm}`](https://github.com/cynkra/dm/blob/main/vignettes/setup/setup.R)
 
 ::: {.notes}
-- Provide real-world package references that adopt centralized vignette setup scripts.
+- Provide real-world package references that adopt centralised vignette setup scripts.
 - Mention `{dm}` as a prime example of cleanly factored vignette configuration.
 :::
 
@@ -1454,7 +1455,7 @@ Examples of R packages that save datasets required for unit testing.
 - [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
 ::: {.notes}
-- Point attendees to packages with exemplary test fixture organization, such as `{ospsuite}`.
+- Point attendees to packages with exemplary test fixture organisation, such as `{ospsuite}`.
 - Encourage inspecting how open-source packages structure shared test data and helpers.
 :::
 
@@ -1573,9 +1574,9 @@ But this is not done here to address the most general case where:
 :::
 
 ::: {.notes}
-- Present the pattern of defining a centralized list of exception functions.
-- Show how each list element is a function returning formatted error text using `cli` or `rlang`.
-- Explain the benefits: message templates, typography, and phrasing live in a single file, making updates effortless.
+- Present the pattern of defining a centralised list of exception functions.
+- Show how each list element returns a formatted error string using `paste0()`, such as `only_positives_allowed(arg_name)`.
+- Explain the callout note: returning just the message string keeps it flexible for errors, warnings, or messages outside simple `if` statements.
 :::
 
 ## Reusable exceptions: Part-1 {.smaller}
@@ -1654,8 +1655,8 @@ Change the condition string in *one* place only!
 :::
 
 ::: {.notes}
-- Demonstrate invoking the centralized exception functions inside input validation checks.
-- Contrast the caution block (hardcoded error strings) with the tip block (calling `exceptions$invalid_arg(...)`).
+- Demonstrate invoking `exceptions$only_positives_allowed()` inside input validation checks (`stop(...)`) and test assertions (`expect_error(...)`).
+- Highlight the tip block: when the message changes, update it in one place rather than in every validation check and unit test.
 - Emphasise that this eliminates duplicate strings and enforces uniform error formatting across the entire package.
 :::
 
@@ -1772,9 +1773,9 @@ Since the validation has moved to a new function, you only need to test it once.
 ::::
 
 ::: {.notes}
-- Extend the pattern to full validation helpers that combine condition checking and error signaling.
-- Walk through the example: an `assert_dataframe()` or `assert_numeric()` helper that encapsulates both the check and the error dispatch.
-- Point out how this reduces multiple lines of validation boilerplate in functions down to a single declarative line.
+- Extend the pattern by moving the entire validation logic and condition check into a helper function such as `check_only_positive()`.
+- Walk through how `check_only_positive(x)` checks `arg < 0` and signals the error with `stop()`, reducing boilerplate in `foo1()` and `foo2()` down to a single call.
+- Point out the unit testing advantage: test the validation helper once directly (`expect_error(exceptions$check_only_positive(x), ...)`), rather than re-testing identical validation branches across every calling function.
 :::
 
 ## DRY once, DRY multiple times {.smaller}
@@ -1814,7 +1815,7 @@ Example of R package that imports this list and appends it:
 [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R)
 
 ::: {.notes}
-- Direct attendees to `{insight}` and `{easystats}` as premier examples of packages exporting centralized exception and validation functions across an ecosystem.
+- Direct attendees to `{insight}` and `{easystats}` as premier examples of packages exporting centralised exception and validation functions across an ecosystem.
 :::
 
 # Dependency management
@@ -1823,7 +1824,7 @@ Avoiding repetition when importing external functions.
 
 ::: {.notes}
 - Transition to the final topic: managing package namespace imports.
-- Frame the trade-offs between namespace prefixing and centralized `@importFrom` directives.
+- Frame the trade-offs between namespace prefixing and centralised `@importFrom` directives.
 :::
 
 ## Imports {.smaller}
