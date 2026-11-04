@@ -414,9 +414,9 @@ README content.
 ::::
 
 ::: {.notes}
-- Explain how to include child documents in roxygen2 function documentation.
-- Walk through the `@includeRmd` tag syntax: `#' @includeRmd man/rmd-fragments/reuse-me.Rmd`.
-- Explain how roxygen2 compiles the fragment directly into the generated `.Rd` manual page during `devtools::document()`.
+- Demonstrate including child documents in vignettes and `README.Rmd`.
+- Walk through knitr's ````{r, child="..."}```` chunk option across both files.
+- Note the relative path difference: `../man/rmd-children/` from the `vignettes/` directory versus `man/rmd-children/` from the repository root for `README.Rmd`.
 :::
 
 ## Using child documents in package: Part-2 {.smaller}
@@ -466,9 +466,9 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 :::
 
 ::: {.notes}
-- Show how the exact same fragment in `man/rmd-fragments/` is consumed in a vignette or `README.Rmd`.
-- Contrast the roxygen `@includeRmd` tag on the left with the knitr child chunk option on the right.
-- Emphasise the DRY outcome: a single `.Rmd` fragment simultaneously populates function man pages and long-form vignettes.
+- Demonstrate including the same child document in roxygen2 function documentation.
+- Show how the knitr chunk is placed inside a roxygen `@section` block in `R/foo1.R`.
+- Highlight the callout: this pattern relies on roxygen2 to process and stitch the markdown fragment into generated `.Rd` manual files.
 :::
 
 ## What about non-child documents? {.smaller}
@@ -647,8 +647,9 @@ README content.
 ::::
 
 ::: {.notes}
-- Demonstrate including arbitrary files in roxygen2 documentation using inline R expressions or `@includeRmd`.
-- Walk through the code snippet showing how to read and inject file content dynamically during roxygen rendering.
+- Demonstrate including non-child files in vignettes and `README.Rmd`.
+- Walk through knitr's `asis` engine with the `file` chunk option for `.md` fragments, and the `r` engine with `file` for external `.R` scripts.
+- Note how relative directory paths are structured between `vignettes/` and the package root.
 :::
 
 ## Using non-child documents in package: Part-2 {.smaller}
@@ -699,9 +700,9 @@ The underlying assumption here is that you are using [`{roxygen2}`](https://roxy
 :::
 
 ::: {.notes}
-- Demonstrate including non-child document contents in vignettes and README documents.
-- Contrast reading file contents programmatically using `readLines()` with knitr's raw output rendering.
-- Point out that modifying the single underlying source file immediately updates all output formats.
+- Demonstrate including non-child documents in roxygen2 function documentation.
+- Show how external markdown fragments are included via knitr's `file` chunk option, and external R code is attached via roxygen's `@example` tag.
+- Emphasise that documentation and example code update automatically when the single source file is modified.
 :::
 
 ## <span class="visually-hidden">Documentation summary</span> {#section-1}
@@ -1079,9 +1080,9 @@ save(exdat, file="data/exdat.rdata")
 :::
 
 ::: {.notes}
-- Walk through the standard R mechanism for packaging reusable datasets: `usethis::use_data()`.
-- Explain how data saved in `data/` is automatically documented, compressed, and made available when the package loads.
-- Remind developers to document the dataset properly in `R/data.R`.
+- Walk through the standard R pattern for saving reusable package datasets: saving to `data/` or using `usethis::use_data()`.
+- Explain that data saved in `data/` is compressed and lazily loaded when `LazyData: true` is configured in `DESCRIPTION`.
+- Highlight the caution callout: keep the creation script in `data-raw/` for reproducibility, and remember that dataset documentation must still be written separately in `R/data.R`.
 :::
 
 ## Reusable dataset {.smaller}
@@ -1684,8 +1685,9 @@ test_that("positive-only message is stable", {
 ```
 
 ::: {.notes}
-- Discuss the testing benefits of centralized exception functions.
-- Explain that instead of testing complex, fragile regexes against hardcoded strings in every test file, tests can verify custom condition classes or call the shared exception function directly.
+- Emphasise the testing safeguard when using shared exception helpers: never rely solely on calling the helper in test assertions, as accidental message changes would pass silently.
+- Explain the two-tier strategy shown on the slide: verify the helper message itself with an independent snapshot test (`expect_snapshot()`) or literal string check in `test-exceptions.R`.
+- Once the helper is validated independently, tests across the package can safely assert on the helper call or condition class.
 :::
 
 ## Reusable exceptions: Part-2 {.smaller}
