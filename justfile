@@ -20,6 +20,7 @@ install:
     @echo "Installing R dependencies from DESCRIPTION..."
     Rscript -e 'if (!requireNamespace("pak", quietly = TRUE)) install.packages("pak", repos = "https://cloud.r-project.org"); pak::pak(".")'
     quarto add mcanouil/quarto-revealjs-a11y --no-prompt
+    quarto add IndrajeetPatil/quarto-read-aloud --no-prompt
 
 # Alias for install
 alias sync := install

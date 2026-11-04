@@ -5,6 +5,7 @@ format:
     theme: solarized
     revealjs-plugins:
       - a11y
+      - read-aloud
     revealjs-a11y:
       # 0.2.3's menus introduce ARIA failures; retain our slide-menu handling.
       slide-menu-a11y: false
