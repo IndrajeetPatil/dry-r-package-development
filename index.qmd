@@ -1150,10 +1150,12 @@ Update the dataset in *one* place only!
 :::
 
 ::: {.notes}
-- Contrast code with and without a bundled dataset:
-  - On the left, repeated mock data generation across multiple vignettes.
-  - On the right, clean code referencing `exdat` directly.
-- Emphasise that any schema update or bug fix to the example dataset is performed once in the data creation script.
+- Walk through the three reuse contexts shown across the columns:
+  - In roxygen2 function examples (`foo.R`).
+  - In package vignettes (`vignette.Rmd`).
+  - In the package `README.Rmd`.
+- Emphasise that `exdat` is loaded automatically across all three contexts without repeated setup code.
+- Highlight the tip callout: any schema modification or data correction is done once in `data-raw/`, propagating everywhere automatically.
 :::
 
 ## Self-study {aria-label="Self-study: Data"}
@@ -1166,7 +1168,7 @@ Examples of R packages that define datasets and use them repeatedly.
 
 ::: {.notes}
 - Point attendees to packages that bundle dedicated datasets to illustrate complex statistical or domain models.
-- Cite `{ggstatsplot}` as an example where curated datasets power documentation, examples, and tests.
+- Cite `{ggstatsplot}` and `{effectsize}` as examples where curated datasets power documentation, examples, and tests.
 :::
 
 # Unit testing
@@ -1455,7 +1457,7 @@ Examples of R packages that save datasets required for unit testing.
 - [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
 ::: {.notes}
-- Point attendees to packages with exemplary test fixture organisation, such as `{ospsuite}`.
+- Point attendees to packages with exemplary test fixture organisation, such as `{ospsuite}` and `{dm}`.
 - Encourage inspecting how open-source packages structure shared test data and helpers.
 :::
 
@@ -1815,7 +1817,8 @@ Example of R package that imports this list and appends it:
 [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R)
 
 ::: {.notes}
-- Direct attendees to `{insight}` and `{easystats}` as premier examples of packages exporting centralised exception and validation functions across an ecosystem.
+- Direct attendees to `{ospsuite.utils}` as an exemplary package exporting a centralised list of exception functions (`messages.R`).
+- Highlight `{ospsuite}` as the companion package that imports this exception list and appends domain-specific errors to it.
 :::
 
 # Dependency management
@@ -1883,7 +1886,7 @@ NULL
 ::::
 
 ::: {.notes}
-- Contrast scattered `pkg::fun()` calls and dispersed `@importFrom` tags with centralizing all namespace imports into a single file like `R/<pkgname>-package.R`.
+- Contrast scattered `pkg::fun()` calls and dispersed `@importFrom` tags with centralising all namespace imports into a single file like `R/<pkgname>-package.R`.
 - Explain how a single imports file provides an immediate audit trail of external dependencies and prevents forgotten imports.
 :::
 
@@ -1896,7 +1899,7 @@ Examples of R packages that list the `NAMESPACE` imports in a single file this w
 - [`{lintr}`](https://github.com/r-lib/lintr/blob/main/R/lintr-package.R)
 
 ::: {.notes}
-- Point attendees to packages in the wild that consolidate imports in a dedicated package-level documentation file.
+- Point attendees to packages in the wild that consolidate imports in a dedicated package-level documentation file, such as `{usethis}` and `{lintr}`.
 :::
 
 # Conclusion
