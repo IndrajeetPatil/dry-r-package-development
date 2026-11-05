@@ -55,6 +55,9 @@ just axe       # Preview with the axe accessibility checker enabled
   catalogue, artefact) and the Oxford comma in lists of three or more. Leave
   code, identifiers, file names, URLs, quotations, and proper names (`license`
   in YAML, `.well-known/api-catalog`) as they are.
+- **Spoken notes.** The read-aloud control speaks the `.notes` content. Write
+  complete, audience-facing narration; keep staging cues, private reminders,
+  and delivery checklists outside these blocks.
 - **Accessibility.** Images must have `fig-alt` text; raw HTML widgets use
   `role="img"` and `aria-label`. Load the `check-accessibility` skill before
   changing markup, styles, widgets or the a11y setup.
