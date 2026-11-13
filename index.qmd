@@ -162,9 +162,10 @@ Apply DRY to remove duplication in:
 
 - Documentation
 - Vignette setup
+- Data
 - Unit testing
-- Dependency management
 - Exceptions
+- Dependency management
 
 ::: {.notes}
 We will apply the idea to six areas: documentation, vignette setup, example data, tests, exception handling, and dependency management. Each has its own kinds of duplication and useful reuse mechanisms.
