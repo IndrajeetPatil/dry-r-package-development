@@ -50,7 +50,7 @@ the build.
   Pages, pull requests build without deploying. Do not inline or modify that
   workflow here.
 - Reference reusable workflows as `@main`, never a commit SHA: they are
-  first-party, and a pinned SHA once went five months stale.
+  first-party, and a pinned SHA goes stale unnoticed.
 - `check-link-rot.yaml` checks external links; list false positives in
   `.lycheeignore`.
 
