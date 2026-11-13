@@ -49,8 +49,13 @@ the build.
   `IndrajeetPatil/workflows`: pushes to `main` build and deploy to GitHub
   Pages, pull requests build without deploying. Do not inline or modify that
   workflow here.
-- Reference reusable workflows as `@main`, never a commit SHA: they are
-  first-party, and a pinned SHA goes stale unnoticed.
+- Reference `IndrajeetPatil/workflows` reusable workflows as `@main`, never a
+  commit SHA. The owner maintains them and is the only person who can
+  contribute to this repository, so there is no external-contributor risk, and
+  `@main` keeps it on the latest version. Code scanners (CodeQL
+  `actions/unpinned-tag`, zizmor `unpinned-uses`) flag this by design: do not
+  report it or propose a pin; dismiss such alerts as "won't fix" with this
+  reason.
 - `check-link-rot.yaml` checks external links; list false positives in
   `.lycheeignore`.
 
