@@ -16,12 +16,12 @@ the build.
 - **Title image.** Keep `.nostretch` and the explicit output height on the
   title image: auto-stretch collapses it in native scroll view, while an
   unconstrained natural size overflows the title slide.
-- **Sources.** Every factual claim has a source citation at the bottom of its
-  slide in a small-font centred div. Keep this pattern.
+- **Sources.** References go in "Further Reading" tip callouts, and example
+  packages in each section's "Self-study" slide. Follow this pattern.
 - **Spelling and punctuation.** Use British spelling in prose (colour, licence,
   catalogue, artefact) and the Oxford comma in lists of three or more. Leave
   code, identifiers, file names, URLs, quotations, and proper names (`license`
-  in YAML, `.well-known/api-catalog`) as they are.
+  in YAML, `color` in `style.css`) as they are.
 - **Spoken notes.** The read-aloud control speaks the `.notes` content. Write
   complete, audience-facing narration; keep staging cues, private reminders,
   and delivery checklists outside these blocks.
