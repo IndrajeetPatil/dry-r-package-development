@@ -1,6 +1,8 @@
 project:
   type: default
   output-dir: _site
+  render:
+    - index.qmd
   resources:
     - robots.txt
     - sitemap.xml
