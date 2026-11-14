@@ -33,10 +33,7 @@ description: >
   `quarto add mcanouil/quarto-revealjs-a11y --no-prompt` (in both `justfile`
   and CI). This extension is trusted; do not add version pins, vendoring, or
   checksum checks.
-- Version 0.2.3's slide-menu patch and settings menu introduce ARIA and
+- The extension's slide-menu patch and settings menu introduce ARIA and
   contrast failures, so both are disabled in `index.qmd`.
 - Keep `accessibility.html` for code scrolling, menu focus, and
-  vertical-slide semantics. This deck has no tabsets, but
-  `accessibility.html` still ships the shared tabset keyboard handling: the
-  file is copied verbatim across decks and kept in sync by hand, so never
-  trim it locally.
+  vertical-slide semantics.
