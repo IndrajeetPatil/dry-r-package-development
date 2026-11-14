@@ -64,14 +64,8 @@ The extension handles browser zoom, slide isolation, focus indicators, link
 underlines, reduced motion, and screen-reader announcements.
 
 The `accessibility.html` helper handles scrollable code, slide-menu focus,
-vertical-slide semantics, and tabset keyboard navigation (tab-order
-normalisation plus the arrow-key handling Quarto's bundled Tabby omits). This
-deck currently has no tabsets, but the helper is shared verbatim across the
-whole deck fleet — by convention the copies are kept in sync by hand — so the
-tabset code stays in place.
-The extension's slide-menu patch and accessibility settings panel are disabled
-as in the reference deck: version 0.2.3 introduces ARIA and contrast failures in
-those components.
+and vertical-slide semantics. The extension's slide-menu patch and accessibility
+settings panel are disabled because they introduce ARIA and contrast failures.
 
 Use `just axe` to inspect slides, fragments, and menu panels in presentation and
 scroll views. Normal builds omit the axe checker.

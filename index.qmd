@@ -7,7 +7,7 @@ format:
       - a11y
       - read-aloud
     revealjs-a11y:
-      # 0.2.3's menus introduce ARIA failures; retain our slide-menu handling.
+      # The extension's menus introduce ARIA failures; retain our slide-menu handling.
       slide-menu-a11y: false
       menu: false
       # Use the extension's core accessibility fixes without extra UI/shortcuts.
