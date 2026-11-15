@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-deploy:
-    uses: IndrajeetPatil/workflows/.github/workflows/build-presentation-r.yaml@main
+    uses: IndrajeetPatil/workflows/.github/workflows/build-presentation-r.yaml@feat/presentation-axe-audit
     permissions:
       contents: read
       pages: write
