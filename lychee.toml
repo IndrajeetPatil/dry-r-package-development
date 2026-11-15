@@ -1,0 +1,20 @@
+# Local development servers, which are only up while they run.
+exclude_loopback = true
+
+# Don't check mail addresses.
+include_mail = false
+
+# Links that work in a browser but that automated link checkers cannot
+# verify reliably. Keep each entry narrow and say why, so a real breakage
+# elsewhere on the same site still fails.
+exclude = [
+  # LinkedIn returns HTTP 999 to automated clients as an anti-scraping
+  # measure; the profile resolves normally in a browser.
+  '^https://www\.linkedin\.com/',
+  # Stack Overflow returns HTTP 403 to non-browser user agents; questions
+  # resolve normally in a browser.
+  '^https://stackoverflow\.com/',
+  # revealjs.com drops TLS handshakes from clients offering post-quantum
+  # key shares (X25519MLKEM768), terminating with unexpected EOF.
+  '^https://revealjs\.com/',
+]
