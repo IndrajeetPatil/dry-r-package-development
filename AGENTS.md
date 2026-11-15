@@ -43,6 +43,34 @@ the build.
   their `.well-known/` mirrors) when the content changes significantly.
 - **No new top-level files** without a clear reason; the structure is flat.
 
+## Pull requests
+
+- Load the shared `pull-requests` skill. Keep the title and body in sync with
+  the net diff, update stale metadata without asking, and verify the live values.
+
+- Publish PRs directly as ready for review with `gh pr create`; never use
+  `--draft`.
+
+- When a PR needs visual evidence (such as slide layout or styling changes),
+  use the shared `pr-screenshot` skill to post verified screenshots. Verify the
+  uploaded images render in the comment.
+
+- After creating a PR and after each push, wait for CI. Investigate failures,
+  make the needed fixes, push, and repeat until all builds and required checks
+  pass; never weaken checks to obtain green results.
+
+- Request Codex review when it is not automatic. Evaluate findings, fix merited
+  issues, reply and resolve addressed threads, and request another review after
+  changes. Repeat until Codex gives a thumbs-up for the current head and no
+  unresolved findings remain. An old-head approval or silence is insufficient.
+
+- If Codex reports exhausted usage, take no workaround action: leave the PR
+  open, do not merge, and report the review limit. CI work can still finish.
+
+- Once CI is green and Codex is happy with the current head, squash-merge with
+  the owner's authenticated `gh` credentials. Recheck head, checks, and review
+  immediately before merging; respect branch protection and never bypass it.
+
 ## CI/CD
 
 - `.github/workflows/build-presentation.yaml` calls a reusable workflow from
