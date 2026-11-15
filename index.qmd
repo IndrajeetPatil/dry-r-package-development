@@ -238,7 +238,7 @@ Copying a paragraph into several documentation files creates several maintenance
 
 ## Child documents {.smaller}
 
-You can stitch an R Markdown document from smaller [child documents](https://bookdown.org/yihui/rmarkdown-cookbook/child-document.html).
+You can stitch an R Markdown document from smaller [child documents](https://pkg.yihui.org/rmarkdown-cookbook/child-document).
 
 ```{mermaid}
 %%| eval: true
@@ -1389,7 +1389,7 @@ Shared fixtures can live under the test directory and be located with testthat's
 
 Examples of R packages that save datasets required for unit testing.
 
-- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/develop/tests/data)
+- [`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/tree/main/tests/data)
 
 - [`{dm}`](https://github.com/cynkra/dm/tree/main/tests/testthat/dm)
 
@@ -1733,11 +1733,11 @@ Shared validation helpers can also serve related packages. A named collection pr
 
 Example of R package that create a list of exception functions and exports it:
 
-[`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/develop/R/messages.R)
+[`{ospsuite.utils}`](https://github.com/Open-Systems-Pharmacology/OSPSuite.RUtils/blob/archived_develop/R/messages.R)
 
 Example of R package that imports this list and appends it:
 
-[`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/develop/R/messages.R)
+[`{ospsuite}`](https://github.com/Open-Systems-Pharmacology/OSPSuite-R/blob/main/R/messages.R)
 
 ::: {.notes}
 The ospsuite examples show an exception collection in a utility package and its use by a companion package. They illustrate how common messages can remain central while domain-specific conditions are added where they belong.
@@ -1834,7 +1834,7 @@ Across documentation, data, tests, validation, and imports, the aim is the same:
 
 These meta-level topics are beyond this presentation's scope. See these resources to get started:
 
-- [DRY GitHub Actions workflows](https://docs.github.com/en/actions/using-workflows/reusing-workflows)
+- [DRY GitHub Actions workflows](https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows)
 
    - <https://github.com/krlmlr/actions-sync>
    - <https://github.com/rstudio/education-workflows>
