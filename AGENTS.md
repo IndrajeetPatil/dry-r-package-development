@@ -88,11 +88,3 @@ the build.
 
 - `check-link-rot.yaml` checks external links; list false positives in
   `lychee.toml`.
-
-## Agent skills
-
-Skills live in `.agents/skills/<name>/SKILL.md`. Load one before its task:
-
-| Skill | Load before |
-| --- | --- |
-| `check-accessibility` | Changing slide markup, styles, widgets, menus or the a11y setup; any accessibility audit |
