@@ -59,16 +59,19 @@ the build.
   make the needed fixes, push, and repeat until all builds and required checks
   pass; never weaken checks to obtain green results.
 
-- Request Codex review when it is not automatic. Evaluate findings, fix merited
-  issues, reply and resolve addressed threads, and request another review after
-  changes. Repeat until Codex gives a thumbs-up for the current head and no
-  unresolved findings remain. An old-head approval or silence is insufficient.
+- Codex reviews every PR automatically and decides itself whether later
+  pushes need another review, so never comment `@codex review`. Evaluate
+  findings, fix merited issues, and reply and resolve addressed threads.
+  Repeat until Codex gives a thumbs-up and no unresolved findings remain;
+  silence before any approval is insufficient.
 
 - If Codex reports exhausted usage, take no workaround action: leave the PR
   open, do not merge, and report the review limit. CI work can still finish.
+  Once usage refreshes, comment `@codex review` once; this is the only case
+  that needs the comment.
 
-- Once CI is green and Codex is happy with the current head, squash-merge with
-  the owner's authenticated `gh` credentials. Recheck head, checks, and review
+- Once CI is green and Codex is happy with the PR, squash-merge with the
+  owner's authenticated `gh` credentials. Recheck head, checks, and review
   immediately before merging; respect branch protection and never bypass it.
 
 ## CI/CD
