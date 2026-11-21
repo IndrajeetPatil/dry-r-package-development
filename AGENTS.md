@@ -70,6 +70,10 @@ the build.
   Once usage refreshes, comment `@codex review` once; this is the only case
   that needs the comment.
 
+- Never write `@codex` anywhere else in a PR title, body, or comment, not
+  even inside backticks: Codex treats any mention as a task request and skips
+  its automatic review.
+
 - Once CI is green and Codex is happy with the PR, squash-merge with the
   owner's authenticated `gh` credentials. Recheck head, checks, and review
   immediately before merging; respect branch protection and never bypass it.
